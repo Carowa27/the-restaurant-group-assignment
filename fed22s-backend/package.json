@@ -1,0 +1,11 @@
+{
+  "name": "fed22s-backend",
+  "version": "1.0.0",
+  "description": "Contains the api for the restaurant assignment",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC"
+}
