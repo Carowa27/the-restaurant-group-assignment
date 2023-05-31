@@ -1,7 +1,13 @@
-require("dotenv").config();
-const Products = require("../src/models/Products");
-const { mockProductData } = require("./products");
+// require("dotenv").config();
+// const Products = require("../src/models/Products");
+// const { mockProductData } = require("./products");
 
+const mongoose = require("mongoose");
+
+//ändra för ts
+//vite har inbyggt env så vi kan använda denna
+
+const connectionString = import.meta.env.VITE_APP_MONGODB;
 const populateDb = async (connectionString) => {
   try {
     mongoose.set("strictQuery", false);
