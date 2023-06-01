@@ -1,8 +1,5 @@
 // require("dotenv").config();
-// const Products = require("../src/models/Products");
-// const { mockProductData } = require("./products");
-
-const mongoose = require("mongoose");
+const Bookings = require("../fed22s-therestaurant/src/models/IBooking");
 
 //ändra för ts
 //vite har inbyggt env så vi kan använda denna
@@ -14,7 +11,7 @@ const populateDb = async (connectionString) => {
     const conn = await mongoose.connect(connectionString);
     console.log(`MongoDB connected: ${conn.connection.host}`);
 
-    await Products.deleteMany();
+    await Bookings.deleteMany();
   } catch (error) {
     console.error(error);
   } finally {
