@@ -1,0 +1,27 @@
+import styled from "styled-components";
+
+export const HeaderStyled = styled.header`
+  display: flex;
+  flex-direction: column;
+  background: #cfcfcf;
+  padding: 1%;
+  justify-content: center;
+
+  h2 {
+    display: flex;
+    justify-content: center;
+  }
+
+  ul {
+    list-style: none;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+  }
+
+  a {
+    text-decoration: none;
+    color: black;
+    display: flex;
+  }
+`;
