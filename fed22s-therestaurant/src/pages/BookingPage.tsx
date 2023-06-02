@@ -15,7 +15,6 @@ export const BookingPage = () => {
           }}
         >
           <SearchAvailabilityForm></SearchAvailabilityForm>
-          <SittingForm></SittingForm>
         </section>
         <section>
           <CreateNewBooking></CreateNewBooking>
