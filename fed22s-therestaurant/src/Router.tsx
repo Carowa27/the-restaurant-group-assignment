@@ -1,6 +1,6 @@
 import { createBrowserRouter } from "react-router-dom";
 import { Admin } from "./components/Admin/Admin";
-import { AdminWrapper } from "./components/styled/Wrappers";
+import { AdminWrapper } from "./components/styled/AdminStyle/Wrappers";
 import { BookingPage } from "./pages/BookingPage";
 import { ContactPage } from "./pages/ContactPage";
 import { LandingPage } from "./pages/LandingPage";
