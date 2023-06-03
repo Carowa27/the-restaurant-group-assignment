@@ -1,25 +1,26 @@
-// // require("dotenv").config();
-// // const Products = require("../src/models/Products");
-// // const { mockProductData } = require("./products");
-
+require("dotenv").config();
 // const mongoose = require("mongoose");
+const Booking = require("../src/models/Booking");
+const { mockBookingsData } = require("./bookings");
 
-// //ändra för ts
-// //vite har inbyggt env så vi kan använda denna
+const createMockBookingsDB = async () => {
+  let connection;
+  try {
+    mongoose.set("strictQuery", false);
+    connection = await mongoose.connect(process.env.MONGO_CONNECTION_STRING);
 
-// const connectionString = import.meta.env.VITE_APP_MONGODB;
-// const populateDb = async (connectionString) => {
-//   try {
-//     mongoose.set("strictQuery", false);
-//     const conn = await mongoose.connect(connectionString);
-//     console.log(`MongoDB connected: ${conn.connection.host}`);
+    console.log("Clearing database...");
+    await Booking.deleteMany();
 
-//     await Products.deleteMany();
-//   } catch (error) {
-//     console.error(error);
-//   } finally {
-//     process.exit(0);
-//   }
-// };
+    console.log("Adding data...");
+    await Booking.create(mockBookingsData);
 
-// populateDb(process.env.MONGODB);
+    console.log("Database successfully populated with data...");
+  } catch (error) {
+    console.error(error);
+  } finally {
+    if (connection) connection.disconnect();
+    process.exit(0);
+  }
+};
+createMockBookingsDB();

@@ -1,3 +1,4 @@
+import { HttpCode } from "./HttpErrorCode";
 import express, { Express, NextFunction, Request, Response } from "express";
 exports.catchErrors = (fn: any) => {
   return function (req: Request, res: Response, next: NextFunction) {
@@ -14,7 +15,8 @@ class CustomAPIError extends Error {
 class NotFoundError extends CustomAPIError {
   constructor(message: string) {
     super(message);
-    this.statusCode = 404;
+    httpCode: HttpCode.NOT_FOUND;
+    // this.statusCode = 404;
     this.name = "NotFound";
   }
 }
@@ -22,7 +24,8 @@ class NotFoundError extends CustomAPIError {
 class BadRequestError extends CustomAPIError {
   constructor(message: string) {
     super(message);
-    this.statusCode = 400;
+    httpCode: HttpCode.BAD_REQUEST;
+    // this.statusCode = 400;
     this.name = "BadRequest";
   }
 }
