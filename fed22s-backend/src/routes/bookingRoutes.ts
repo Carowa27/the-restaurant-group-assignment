@@ -11,9 +11,9 @@ const {
 
 router.post("/", createBooking);
 router.get("/", getBookings);
-router.get("/:cartId", getBookingById);
-router.put("/:cartId", updateBookingById);
-router.delete("/:cartId", deleteBookingById);
+router.get("/:bookingId", getBookingById);
+// router.put("/:bookingId", updateBookingById);
+router.delete("/:bookingId", deleteBookingById);
 
 module.exports = router;
 

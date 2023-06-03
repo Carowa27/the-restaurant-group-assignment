@@ -3,7 +3,7 @@ const {
   NotFoundError,
   CustomAPIError,
   BadRequestError,
-} = require("../libs/errorHandling");
+} = require("../lib/errorHandling");
 const Booking = require("../models/Booking");
 
 exports.createBooking = async (req: Request, res: Response) => {

@@ -5,9 +5,10 @@ const { mockBookingsData } = require("./bookings");
 
 const createMockBookingsDB = async () => {
   let connection;
+  const connectionString = process.env.MONGO_CONNECTION_STRING;
   try {
     mongoose.set("strictQuery", false);
-    connection = await mongoose.connect(process.env.MONGO_CONNECTION_STRING);
+    connection = await mongoose.connect(connectionString as string);
 
     console.log("Clearing database...");
     await Booking.deleteMany();
