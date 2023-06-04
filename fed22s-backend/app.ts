@@ -1,4 +1,4 @@
-import express, { Express, Request, Response } from "express";
+import express, { Express, NextFunction, Request, Response } from "express";
 import dotenv from "dotenv";
 import mongoose from "mongoose";
 const bookingRoutes = require("./src/routes/bookingRoutes");
@@ -12,11 +12,12 @@ let connectionString = process.env.MONGODB_BOOKINGS_KEY as string;
 
 app.use(express.json());
 
-app.use((req, res, next) => {
+app.use((req: Request, res: Response, next: NextFunction) => {
   console.log(`Processing ${req.method} request to ${req.path}`);
 
   next();
 });
+
 app.use("/api/v1/bookings", bookingRoutes);
 
 async function run() {

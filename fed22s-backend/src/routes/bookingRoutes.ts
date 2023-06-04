@@ -5,7 +5,7 @@ const {
   createBooking,
   getBookings,
   getBookingById,
-  updateBookingById,
+  // updateBookingById,
   deleteBookingById,
 } = require("../controllers/bookingControllers");
 

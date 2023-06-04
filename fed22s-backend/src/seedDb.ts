@@ -24,4 +24,4 @@ const createMockBookingsDB = async () => {
     process.exit(0);
   }
 };
-createMockBookingsDB();
+// createMockBookingsDB();
