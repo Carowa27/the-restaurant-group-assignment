@@ -1,10 +1,7 @@
-import {
-  SubmitBookingButton,
-  TimeBookingButton,
-} from "../styled/AdminStyle/Buttons";
-import { BookingForm, GuestInformationForm } from "../styled/AdminStyle/Forms";
-import { H1, H2, H3 } from "../styled/AdminStyle/Headings";
-import { DateInput } from "../styled/AdminStyle/Inputs";
+import { SubmitBookingButton, TimeBookingButton } from "../styled/Buttons";
+import { BookingForm, GuestInformationForm } from "../styled/Forms";
+import { H1, H3Bold, H3Normal } from "../styled/Headings";
+import { DateInput } from "../styled/Inputs";
 import {
   BookingWrapper,
   DateInputWrapper,
@@ -12,7 +9,7 @@ import {
   GuestInformationWrapper,
   NumberOfGuestWrapper,
   TimeBookingWrapper,
-} from "../styled/AdminStyle/Wrappers";
+} from "../styled/Wrappers";
 
 export const Booking = () => {
   /*Denna komponent är för alla users, man ska kunna boka, 
@@ -29,14 +26,14 @@ export const Booking = () => {
     <>
       <BookingWrapper>
         <H1>Estiatório Tegel</H1>
-        <H2>VÄLKOMMEN ATT BOKA BORD</H2>
+        <H3Bold>VÄLKOMMEN ATT BOKA BORD</H3Bold>
 
         <BookingForm>
           <NumberOfGuestWrapper>
-            <H3>VÄLJ ANTAL PERSONER</H3>
+            <H3Normal>VÄLJ ANTAL PERSONER</H3Normal>
           </NumberOfGuestWrapper>
           <DateInputWrapper>
-            <H3>Datum</H3>
+            <H3Normal>Datum</H3Normal>
             <DateInput type="date" name="date"></DateInput>
           </DateInputWrapper>
           <TimeBookingWrapper>
@@ -46,7 +43,7 @@ export const Booking = () => {
         </BookingForm>
         <GuestInformationWrapper>
           <GuestInformationForm>
-            <H3>KONTAKTUPPGIFTER</H3>
+            <H3Normal>KONTAKTUPPGIFTER</H3Normal>
             <GuestInformationDiv>
               <label htmlFor="firstname">FÖRNAMN</label>
               <input

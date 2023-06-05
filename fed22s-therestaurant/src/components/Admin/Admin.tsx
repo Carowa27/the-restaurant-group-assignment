@@ -1,12 +1,9 @@
-import { BookButton, SearchBookingButton } from "../styled/AdminStyle/Buttons";
-import { AdminForm } from "../styled/AdminStyle/Forms";
-import { H1, H2, H4 } from "../styled/AdminStyle/Headings";
-import {
-  AdminSearchBookingInput,
-  DateInput,
-} from "../styled/AdminStyle/Inputs";
-import { AvailableTimes } from "../styled/AdminStyle/Paragraph";
-import { AdminWrapper } from "../styled/AdminStyle/Wrappers";
+import { BookButton, SearchBookingButton } from "../styled/Buttons";
+import { AdminForm } from "../styled/Forms";
+import { H1, H3Bold, H4 } from "../styled/Headings";
+import { AdminSearchBookingInput, DateInput } from "../styled/Inputs";
+import { AvailableTimes } from "../styled/Paragraph";
+import { AdminWrapper } from "../styled/Wrappers";
 
 export const Admin = () => {
   /*Denna komponent ska vi kunna se bokningar och 
@@ -17,11 +14,11 @@ export const Admin = () => {
     <>
       <AdminWrapper>
         <H1>Estiatório Tegel</H1>
-        <H2>Administratör</H2>
+        <H3Bold>Administratör</H3Bold>
         <BookButton>Boka nytt bord</BookButton>
         <AdminForm>
           <DateInput type="date" name="date"></DateInput>
-          <H2>Sök bokningsnummer</H2>
+          <H3Bold>Sök bokningsnummer</H3Bold>
           <AdminSearchBookingInput
             type="text"
             name="id"
