@@ -3,7 +3,7 @@ import { AdminForm } from "../styled/AdminStyle/Forms";
 import { H1, H2, H4 } from "../styled/AdminStyle/Headings";
 import {
   AdminSearchBookingInput,
-  CalenderInput,
+  DateInput,
 } from "../styled/AdminStyle/Inputs";
 import { AvailableTimes } from "../styled/AdminStyle/Paragraph";
 import { AdminWrapper } from "../styled/AdminStyle/Wrappers";
@@ -16,11 +16,11 @@ export const Admin = () => {
   return (
     <>
       <AdminWrapper>
-        <H1>The Resturant</H1>
+        <H1>Estiatório Tegel</H1>
         <H2>Administratör</H2>
         <BookButton>Boka nytt bord</BookButton>
         <AdminForm>
-          <CalenderInput type="date" name="date"></CalenderInput>
+          <DateInput type="date" name="date"></DateInput>
           <H2>Sök bokningsnummer</H2>
           <AdminSearchBookingInput
             type="text"
