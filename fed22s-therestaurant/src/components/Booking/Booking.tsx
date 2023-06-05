@@ -68,7 +68,7 @@ export const Booking = () => {
               <input
                 type="email"
                 id="epost"
-                placeholder="EPOST"
+                placeholder="EMAIL"
                 name="email"
                 required
               />
