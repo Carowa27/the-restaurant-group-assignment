@@ -43,6 +43,8 @@ exports.getBookings = async (req: Request, res: Response) => {
     const allBookings = await Booking.find();
 
     if (!allBookings) throw new NotFoundError("No bookings were found");
+    console.log(res);
+    console.log(allBookings);
     return res.json({ data: allBookings });
   } catch (error) {
     console.log(error);
