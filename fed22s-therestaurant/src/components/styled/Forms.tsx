@@ -6,5 +6,4 @@ export const StyledForm = styled.form`
   max-width: 20rem;
   gap: 0.5rem;
   padding: 1rem 2rem;
-  background-color: #55ff55;
 `;
