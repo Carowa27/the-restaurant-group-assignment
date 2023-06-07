@@ -2,15 +2,45 @@ const mongoose = require("mongoose");
 
 const BookingSchema = new mongoose.Schema(
   {
-    ordernumber: { type: Number },
-    guests: { type: Number },
-    date: { type: String },
+    ordernumber: {
+      type: Number,
+      // required: true
+    },
+    guests: {
+      type: Number,
+      // required: true
+    },
+    date: {
+      type: String,
+      // required: true
+    },
     sessionstart: {
       type: Number,
+      // required: true,
     },
     user: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "user",
+      firstname: {
+        type: String,
+        // required: true,
+        minLength: 2,
+        maxLength: 20,
+      },
+      lastname: {
+        type: String,
+        // required: true,
+        minLength: 2,
+        maxLength: 20,
+      },
+      email: {
+        type: String,
+        // required: true,
+      },
+      phone: {
+        type: Number,
+        // required: true,
+        minLength: 7,
+        maxLength: 10,
+      },
     },
   },
   {

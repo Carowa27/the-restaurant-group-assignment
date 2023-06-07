@@ -26,7 +26,7 @@ app.use((req, res, next) => {
   next();
 });
 
-app.use("/api/v1/Bookings", bookingRoutes);
+app.use("/api/v1/bookings", bookingRoutes);
 
 async function run() {
   try {

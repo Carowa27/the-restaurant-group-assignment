@@ -3,11 +3,8 @@
   "version": "1.0.0",
   "description": "Contains the api for the restaurant assignment",
   "main": "index.js",
-  "types": "index.d.ts",
   "scripts": {
-    "start": "node dist/app.js",
-    "dev": "npx ts-node app.ts",
-    "build": "tsc -p .",
+    "start": "node app.js",
     "seedDb": "node ./src/seedDb.js"
   },
   "author": "",
