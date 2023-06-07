@@ -15,9 +15,10 @@ const createMockBookingsDB = async () => {
     await Booking.deleteMany();
 
     console.log("Adding data...");
+
     await Booking.create(mockBookingsData);
 
-    console.log("Database successfully populated with data...");
+    await console.log("Database successfully populated with data...");
   } catch (error) {
     console.error(error);
   } finally {
@@ -26,3 +27,5 @@ const createMockBookingsDB = async () => {
   }
 };
 createMockBookingsDB();
+
+// createMockBookingsDB(process.env.MONGO_BOOKINGS_KEY);
