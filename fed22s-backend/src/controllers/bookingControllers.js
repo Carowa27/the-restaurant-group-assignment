@@ -1,4 +1,3 @@
-import express, { Express, Request, Response } from "express";
 const {
   NotFoundError,
   CustomAPIError,
@@ -6,7 +5,7 @@ const {
 } = require("../lib/errorHandling");
 const Booking = require("../models/Booking");
 
-exports.createBooking = async (req: Request, res: Response) => {
+exports.createBooking = async (req, res) => {
   try {
     const ordernumber = req.body.ordernumber;
     const guests = req.body.guests;
@@ -38,7 +37,7 @@ exports.createBooking = async (req: Request, res: Response) => {
   }
 };
 
-exports.getBookings = async (req: Request, res: Response) => {
+exports.getBookings = async (req, res) => {
   try {
     const allBookings = await Booking.find();
 
@@ -53,7 +52,7 @@ exports.getBookings = async (req: Request, res: Response) => {
   }
 };
 
-exports.getBookingById = async (req: Request, res: Response) => {
+exports.getBookingById = async (req, res) => {
   try {
     const bookingId = req.params.bookingId;
     // if (bookingId.length != 24) {
@@ -73,7 +72,7 @@ exports.getBookingById = async (req: Request, res: Response) => {
 
 //updateBooking
 
-exports.deleteBookingById = async (req: Request, res: Response) => {
+exports.deleteBookingById = async (req, res) => {
   try {
     const bookingId = req.params.bookingId;
     //   if (bookingId.length != 24) {
