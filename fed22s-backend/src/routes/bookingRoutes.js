@@ -16,16 +16,3 @@ router.put("/:bookingId", updateBookingById);
 router.delete("/:bookingId", deleteBookingById);
 
 module.exports = router;
-
-// USER NEEDS
-//      createBooking
-//      getBookingById,
-//      updateBookingById,
-//      deleteBookingById,
-
-// ADMIN NEEDS
-//      createBooking,
-//      getBookings,
-//      getBookingById,
-//      updateBookingById,
-//      deleteBookingById,
