@@ -1,5 +1,5 @@
 require("dotenv").config();
-// const mongoose = require("mongoose");
+// const mongoose = require("mongoose"); // enligt ts ska denna vara utkommenterad
 const Booking = require("../src/models/Booking");
 const { mockBookingsData } = require("../src/data/bookings");
 const { mockUsersData } = require("../src/data/user");
