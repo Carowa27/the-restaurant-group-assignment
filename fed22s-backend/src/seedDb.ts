@@ -1,7 +1,8 @@
 require("dotenv").config();
 // const mongoose = require("mongoose");
 const Booking = require("../src/models/Booking");
-const { mockBookingsData } = require("./bookings");
+const { mockBookingsData } = require("../src/data/bookings");
+const { mockUsersData } = require("../src/data/user");
 
 const createMockBookingsDB = async () => {
   let connection;
@@ -24,4 +25,4 @@ const createMockBookingsDB = async () => {
     process.exit(0);
   }
 };
-// createMockBookingsDB();
+createMockBookingsDB();
