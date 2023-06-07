@@ -4,13 +4,23 @@ exports.mockBookingsData = [
     guests: 4,
     date: "2023-07-01",
     sessionstart: 1300,
-    user: 23456,
+    user: {
+      firstname: "lars",
+      lastname: "larsson",
+      email: "lars@larsson.se",
+      phone: 1234567890,
+    },
   },
   {
     ordernumber: 2,
     guests: 2,
     date: "2023-07-01",
-    sessionstart: 1300,
-    user: 23457,
+    sessionstart: 1500,
+    user: {
+      firstname: "lars",
+      lastname: "larsson",
+      email: "lars@larsson.se",
+      phone: 1234567890,
+    },
   },
 ];
