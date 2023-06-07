@@ -1,15 +1,15 @@
 require("dotenv").config();
-// const mongoose = require("mongoose"); // enligt ts ska denna vara utkommenterad
-const Booking = require("../src/models/Booking");
-const { mockBookingsData } = require("../src/data/bookings");
-const { mockUsersData } = require("../src/data/user");
+const mongoose = require("mongoose");
+
+const Booking = require("./models/Booking");
+const { mockBookingsData } = "../src/data/bookings";
 
 const createMockBookingsDB = async () => {
   let connection;
-  const connectionString = process.env.MONGO_CONNECTION_STRING;
+  const connectionString = process.env.MONGO_BOOKINGS_KEY;
   try {
     mongoose.set("strictQuery", false);
-    connection = await mongoose.connect(connectionString as string);
+    connection = await mongoose.connect(connectionString);
 
     console.log("Clearing database...");
     await Booking.deleteMany();

@@ -1,4 +1,3 @@
-import express, { Express, NextFunction, Request, Response } from "express";
 import dotenv from "dotenv";
 import mongoose from "mongoose";
 const cors = require("cors");
@@ -6,9 +5,9 @@ const bookingRoutes = require("./src/routes/bookingRoutes");
 
 dotenv.config();
 
-const app: Express = express();
-const port = (process.env.PORT as string) || "2525";
-const connectionString = process.env.MONGODB_BOOKINGS_KEY as string;
+const app = express();
+const port = process.env.PORT || "2525";
+const connectionString = process.env.MONGO_BOOKINGS_KEY;
 //fixa conntectionstring som är kopplad t bookings
 
 app.use(express.json());
@@ -20,7 +19,7 @@ app.use(
   })
 );
 
-app.use((req: Request, res: Response, next: NextFunction) => {
+app.use((req, res, next) => {
   console.log(`Processing ${req.method} request to ${req.path}`);
 
   next();

@@ -2,12 +2,11 @@ const mongoose = require("mongoose");
 
 const BookingSchema = new mongoose.Schema(
   {
-    ordernumber: { type: Number, required: true },
-    guests: { type: Number, required: true },
-    date: { type: String, required: true },
+    ordernumber: { type: Number },
+    guests: { type: Number },
+    date: { type: String },
     sessionstart: {
       type: Number,
-      required: true,
     },
     user: {
       type: mongoose.Schema.Types.ObjectId,
