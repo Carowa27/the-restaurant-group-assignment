@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "5fc74c1d-6644-48d0-abdf-b3b38dc6529f",
+		"_postman_id": "fd9c884e-c425-4de6-8574-91492ad3a064",
 		"name": "The Resturant",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
@@ -90,14 +90,22 @@
 		{
 			"name": "Create booking",
 			"request": {
+				"auth": {
+					"type": "noauth"
+				},
 				"method": "POST",
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\"ordernumber\":\"\",\r\n\"guests\":,\r\n\"date\":\"\",\r\n\"sessionstart\":,\r\n\"user\":{\r\n    \"firstname\":\"\",\r\n    \"lastname\":\"\",\r\n    \"email\":\"\",\r\n    \"phone\":\r\n    }\r\n}"
+					"raw": "{\r\n  \"ordernumber\": 1,\r\n  \"guests\": 4,\r\n  \"date\": \"2023-07-01\",\r\n  \"sessionstart\": \"13:00\",\r\n  \"user\": {\r\n    \"firstname\": \"Lars\",\r\n    \"lastname\": \"Larsson\",\r\n    \"email\": \"lars@larsson.se\",\r\n    \"phone\": \"1234567890\"\r\n  }\r\n}\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
 				},
 				"url": {
-					"raw": "http://localhost:4000/api/v1/bookings/",
+					"raw": "http://localhost:4000/api/v1/bookings",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -106,8 +114,7 @@
 					"path": [
 						"api",
 						"v1",
-						"bookings",
-						""
+						"bookings"
 					]
 				}
 			},
