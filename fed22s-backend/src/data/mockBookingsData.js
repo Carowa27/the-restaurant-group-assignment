@@ -1,4 +1,4 @@
-[
+exports.mockBookingsData = [
   {
     ordernumber: 1,
     guests: 4,
