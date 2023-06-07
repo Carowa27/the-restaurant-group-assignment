@@ -1,6 +1,6 @@
 import { createBrowserRouter } from "react-router-dom";
 import { Admin } from "./components/Admin/Admin";
-import { AdminWrapper } from "./components/styled/AdminStyle/Wrappers";
+import { BookingConfirmedPage } from "./pages/BookingConfirmedPage";
 import { BookingPage } from "./pages/BookingPage";
 import { ContactPage } from "./pages/ContactPage";
 import { LandingPage } from "./pages/LandingPage";
@@ -27,6 +27,10 @@ export const Router = createBrowserRouter([
       {
         path: "/admin",
         element: <Admin></Admin>,
+      },
+      {
+        path: "/bookingconfirmed",
+        element: <BookingConfirmedPage></BookingConfirmedPage>,
       },
     ],
   },

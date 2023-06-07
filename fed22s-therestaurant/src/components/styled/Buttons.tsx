@@ -5,6 +5,7 @@ export const StyledButton = styled.button`
   display: flex;
   align-self: center;
   justify-content: center;
+  border: none;
 `;
 
 export const BookButton = styled.button`
@@ -13,6 +14,7 @@ export const BookButton = styled.button`
   margin: 15px;
   background-color: #212524;
   color: white;
+  border: none;
   &:hover {
     cursor: pointer;
     transform: scale(1.01);
@@ -27,6 +29,7 @@ export const SearchBookingButton = styled.button`
   background-color: black;
   color: white;
   border-radius: 45%;
+  border: none;
   &:hover {
     cursor: pointer;
     transform: scale(1.01);
@@ -41,6 +44,7 @@ export const TimeBookingButton = styled.button`
   background-color: black;
   color: white;
   border-radius: 4px;
+  border: none;
   &:hover {
     cursor: pointer;
     transform: scale(1.01);
@@ -54,7 +58,9 @@ export const SubmitBookingButton = styled.button`
   color: white;
   border-radius: 2px;
   transition: all 0.1s linear;
-  padding: 1rem;
+  margin: 3%;
+  padding: 2%;
+  border: none;
   &:hover {
     cursor: pointer;
     transform: scale(1.01);

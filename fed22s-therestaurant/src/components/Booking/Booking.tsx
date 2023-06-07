@@ -78,10 +78,10 @@ export const Booking = () => {
                 pattern="[0-9]{10}"
                 required
               />
+              <SubmitBookingButton>Boka</SubmitBookingButton>
             </GuestInformationDiv>
           </GuestInformationForm>
         </GuestInformationWrapper>
-        <SubmitBookingButton>Boka</SubmitBookingButton>
       </BookingWrapper>
     </>
   );
