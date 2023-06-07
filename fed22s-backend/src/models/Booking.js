@@ -3,11 +3,11 @@ const mongoose = require("mongoose");
 const BookingSchema = new mongoose.Schema(
   {
     ordernumber: {
-      type: Number,
+      type: String,
       // required: true
     },
     guests: {
-      type: Number,
+      type: String,
       // required: true
     },
     date: {
@@ -15,7 +15,7 @@ const BookingSchema = new mongoose.Schema(
       // required: true
     },
     sessionstart: {
-      type: Number,
+      type: String,
       // required: true,
     },
     user: {
@@ -36,7 +36,7 @@ const BookingSchema = new mongoose.Schema(
         // required: true,
       },
       phone: {
-        type: Number,
+        type: String,
         // required: true,
         minLength: 7,
         maxLength: 10,

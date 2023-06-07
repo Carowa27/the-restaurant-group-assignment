@@ -3,27 +3,75 @@ const {
   CustomAPIError,
   BadRequestError,
 } = require("../lib/errorHandling");
+
+//maisahs controller:
 const Booking = require("../models/Booking");
+const { mockBookingsData } = require("../data/mockBookingsData");
+
+exports.getBookings = async (req, res) => {
+  try {
+    const allBookings = await Booking.find();
+
+    if (!allBookings) throw new NotFoundError("No bookings were found");
+    console.log(res);
+    console.log(allBookings);
+    return res.json({ data: allBookings });
+  } catch (error) {
+    console.log(error);
+
+    return res.sendStatus(500).json({ message: "Internal error" });
+  }
+};
+
+exports.createBooking = async (req, res) => {
+  try {
+    const {
+      ordernumber,
+      guests,
+      date,
+      sessionstart,
+      user: { firstname, lastname, email, phone },
+    } = req.body;
+
+    const newBooking = await Booking.create({
+      ordernumber,
+      guests,
+      date,
+      sessionstart,
+      user: {
+        firstname,
+        lastname,
+        email,
+        phone,
+      },
+    });
+
+    if (!newBooking) throw new CustomAPIError("Internal error");
+
+    return res
+      .setHeader(
+        "Location",
+        `http://localhost:${process.env.PORT}/api/v1/bookings/${newBooking._id}`
+      )
+      .status(201)
+      .json(newBooking);
+  } catch (error) {
+    console.log(error);
+
+    return res.sendStatus(500).json({ message: "Internal error" });
+  }
+};
 
 // exports.createBooking = async (req, res) => {
 //   try {
-//     // const {
-//     //   ordernumber,
-//     //   guests,
-//     //   date,
-//     //   sessionstart,
-//     //   user: { firstname, lastname, email, phone },
-//     // } = req.body;
-//     // const newBooking = await new Booking({
-//     //   ordernumber,
-//     //   guests,
-//     //   date,
-//     //   sessionstart,
-//     //   firstname,
-//     //   lastname,
-//     //   email,
-//     //   phone,
-//     // });
+//     const {
+//       ordernumber,
+//       guests,
+//       date,
+//       sessionstart,
+//       user: { firstname, lastname, email, phone },
+//     } = req.body;
+
 //     const newBooking = await Booking.create({
 //       ordernumber: req.body.ordernumber,
 //       guests: req.body.guests,
@@ -52,21 +100,6 @@ const Booking = require("../models/Booking");
 //     return res.sendStatus(500).json({ message: "Internal error" });
 //   }
 // };
-
-exports.getBookings = async (req, res) => {
-  try {
-    const allBookings = await Booking.find();
-
-    if (!allBookings) throw new NotFoundError("No bookings were found");
-    console.log(res);
-    console.log(allBookings);
-    return res.json({ data: allBookings });
-  } catch (error) {
-    console.log(error);
-
-    return res.sendStatus(500).json({ message: "Internal error" });
-  }
-};
 
 // exports.getBookingById = async (req, res) => {
 //   try {

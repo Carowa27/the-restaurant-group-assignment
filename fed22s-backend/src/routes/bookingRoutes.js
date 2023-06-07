@@ -2,14 +2,14 @@ const express = require("express");
 const router = express.Router();
 
 const {
-  // createBooking,
+  createBooking,
   getBookings,
   // getBookingById,
   // updateBookingById,
   // deleteBookingById,
 } = require("../controllers/bookingControllers");
 
-// router.post("/", createBooking);
+router.post("/", createBooking);
 router.get("/", getBookings);
 // router.get("/:bookingId", getBookingById);
 // router.put("/:bookingId", updateBookingById);
