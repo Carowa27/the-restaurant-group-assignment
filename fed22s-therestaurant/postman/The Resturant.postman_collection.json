@@ -33,7 +33,7 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "http://localhost:4000/api/v1/bookings/:id",
+					"raw": "http://localhost:4000/api/v1/bookings/",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -43,13 +43,7 @@
 						"api",
 						"v1",
 						"bookings",
-						":id"
-					],
-					"variable": [
-						{
-							"key": "id",
-							"value": ""
-						}
+						""
 					]
 				}
 			},
@@ -97,7 +91,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n  \"ordernumber\": 1,\r\n  \"guests\": 4,\r\n  \"date\": \"2023-07-01\",\r\n  \"sessionstart\": \"13:00\",\r\n  \"user\": {\r\n    \"firstname\": \"Lars\",\r\n    \"lastname\": \"Larsson\",\r\n    \"email\": \"lars@larsson.se\",\r\n    \"phone\": \"1234567890\"\r\n  }\r\n}\r\n",
+					"raw": "{\r\n  \"ordernumber\":2,\r\n  \"guests\": 2,\r\n  \"date\": \"2023-07-01\",\r\n  \"sessionstart\": \"13:00\",\r\n  \"user\": {\r\n    \"firstname\": \"Bert\",\r\n    \"lastname\": \"Karlsson\",\r\n    \"email\": \"Bert.Karlsson@hotmail.com\",\r\n    \"phone\": \"0760824679\"\r\n  }\r\n}\r\n",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -125,8 +119,17 @@
 			"request": {
 				"method": "PUT",
 				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"ordernumber\":2,\r\n  \"guests\": 2,\r\n  \"date\": \"2023-07-01\",\r\n  \"sessionstart\": \"13:00\",\r\n  \"user\": {\r\n    \"firstname\": \"Sofie\",\r\n    \"lastname\": \"Karlsson\",\r\n    \"email\": \"Sofie.Karlsson@hotmail.com\",\r\n    \"phone\": \"0760824679\"\r\n  }\r\n}\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
 				"url": {
-					"raw": "http://localhost:4000/api/v1/companies/:id",
+					"raw": "http://localhost:4000/api/v1/bookings/",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -135,14 +138,8 @@
 					"path": [
 						"api",
 						"v1",
-						"companies",
-						":id"
-					],
-					"variable": [
-						{
-							"key": "id",
-							"value": ""
-						}
+						"bookings",
+						""
 					]
 				}
 			},
@@ -151,26 +148,32 @@
 		{
 			"name": "Delete booking by id",
 			"request": {
+				"auth": {
+					"type": "noauth"
+				},
 				"method": "DELETE",
 				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
 				"url": {
-					"raw": "http://localhost:3000/api/v1/companies/:id",
+					"raw": "http://localhost:4000/api/v1/bookings/",
 					"protocol": "http",
 					"host": [
 						"localhost"
 					],
-					"port": "3000",
+					"port": "4000",
 					"path": [
 						"api",
 						"v1",
-						"companies",
-						":id"
-					],
-					"variable": [
-						{
-							"key": "id",
-							"value": ""
-						}
+						"bookings",
+						""
 					]
 				}
 			},
