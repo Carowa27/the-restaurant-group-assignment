@@ -9,7 +9,6 @@ const bookingRoutes = require("./src/routes/bookingRoutes");
 const app = express();
 const port = process.env.PORT || "2525";
 const connectionString = process.env.MONGO_BOOKINGS_KEY;
-//fixa conntectionstring som är kopplad t bookings
 
 app.use(express.json());
 
