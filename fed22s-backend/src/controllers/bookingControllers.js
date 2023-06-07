@@ -4,7 +4,7 @@ const {
   BadRequestError,
 } = require("../lib/errorHandling");
 
-//maisahs controller:
+//fungerar ✓
 const Booking = require("../models/Booking");
 const { mockBookingsData } = require("../data/mockBookingsData");
 
@@ -23,6 +23,24 @@ exports.getBookings = async (req, res) => {
   }
 };
 
+//fungerar ✓
+exports.getBookingById = async (req, res) => {
+  try {
+    const bookingId = req.params.bookingId;
+    const bookingToFind = await Booking.findById(bookingId);
+
+    if (!bookingToFind)
+      throw new NotFoundError(" SORRY! This booking was not found");
+
+    return res.json(bookingToFind);
+  } catch (error) {
+    console.log(error);
+
+    return res.sendStatus(500).json({ message: "Internal error" });
+  }
+};
+
+// fungerar ✓
 exports.createBooking = async (req, res) => {
   try {
     const {
@@ -62,82 +80,64 @@ exports.createBooking = async (req, res) => {
   }
 };
 
-// exports.createBooking = async (req, res) => {
-//   try {
-//     const {
-//       ordernumber,
-//       guests,
-//       date,
-//       sessionstart,
-//       user: { firstname, lastname, email, phone },
-//     } = req.body;
+// fungerar ✓
+exports.deleteBookingById = async (req, res) => {
+  try {
+    const bookingId = req.params.bookingId;
 
-//     const newBooking = await Booking.create({
-//       ordernumber: req.body.ordernumber,
-//       guests: req.body.guests,
-//       date: req.body.date,
-//       sessionstart: req.body.sessionstart,
-//       user: {
-//         firstname: req.body.user.firstname,
-//         lastname: req.body.user.lastname,
-//         email: req.body.user.email,
-//         phone: req.body.user.phone,
-//       },
-//     });
+    const bookingToDelete = await Booking.findById(bookingId);
+    if (!bookingToDelete) {
+      throw new NotFoundError("This booking was not found");
+    }
 
-//     if (!newBooking) throw new CustomAPIError("Internal error");
+    await Booking.findByIdAndDelete(bookingId);
 
-//     return res
-//       .setHeader(
-//         "Location",
-//         `http://localhost:${process.env.PORT}/api/v1/bookings/${newBooking._id}`
-//       )
-//       .status(201)
-//       .json(newBooking);
-//   } catch (error) {
-//     console.log(error);
+    return res.sendStatus(204);
+  } catch (error) {
+    console.log(error);
 
-//     return res.sendStatus(500).json({ message: "Internal error" });
-//   }
-// };
+    return res.sendStatus(500).json({ message: "Internal error" });
+  }
+};
 
-// exports.getBookingById = async (req, res) => {
-//   try {
-//     const bookingId = req.params.bookingId;
-//     // if (bookingId.length != 24) {
-//     //   return res.status(400).json({ message: "id is invalid" });
-//     // }
-//     const bookingToFind = await Booking.findById(bookingId);
+//  fungerar ✓
 
-//     if (!bookingToFind) throw new NotFoundError("This booking was not found");
+exports.updateBookingById = async (req, res) => {
+  try {
+    const bookingId = req.params.bookingId;
+    const {
+      ordernumber,
+      guests,
+      date,
+      sessionstart,
+      user: { firstname, lastname, email, phone },
+    } = req.body;
 
-//     return res.json(bookingToFind);
-//   } catch (error) {
-//     console.log(error);
+    if (!bookingId) {
+      throw new BadRequestError("You must provide a bookingId");
+    }
 
-//     return res.sendStatus(500).json({ message: "Internal error" });
-//   }
-// };
+    const bookingToUpdate = await Booking.findById(bookingId);
+    if (!bookingToUpdate) {
+      throw new NotFoundError("This booking does not exist");
+    }
 
-//updateBooking
+    if (ordernumber) bookingToUpdate.ordernumber = ordernumber;
+    if (guests) bookingToUpdate.guests = guests;
+    if (date) bookingToUpdate.date = date;
+    if (sessionstart) bookingToUpdate.sessionstart = sessionstart;
 
-// exports.deleteBookingById = async (req, res) => {
-//   try {
-//     const bookingId = req.params.bookingId;
-//     //   if (bookingId.length != 24) {
-//     //     return res.status(400).json({ message: "id is invalid" });
-//     //   }
+    if (firstname) bookingToUpdate.user.firstname = firstname;
+    if (lastname) bookingToUpdate.user.lastname = lastname;
+    if (email) bookingToUpdate.user.email = email;
+    if (phone) bookingToUpdate.user.phone = phone;
 
-//     const bookingIdToDelete = await Booking.findById(bookingId);
-//     if (!bookingIdToDelete)
-//       throw new NotFoundError("This booking was not found");
+    const updatedBooking = await bookingToUpdate.save();
 
-//     await bookingIdToDelete.delete();
+    return res.json(updatedBooking);
+  } catch (error) {
+    console.log(error);
 
-//     return res.sendStatus(204);
-//   } catch (error) {
-//     console.log(error);
-
-//     return res.sendStatus(500).json({ message: "Internal error" });
-//   }
-// };
+    return res.sendStatus(500).json({ message: "Internal error" });
+  }
+};
