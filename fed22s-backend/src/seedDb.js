@@ -1,14 +1,15 @@
 require("dotenv").config();
-// const mongoose = require("mongoose");
-const Booking = require("../src/models/Booking");
-const { mockBookingsData } = require("./bookings");
+const mongoose = require("mongoose");
+
+const Booking = require("./models/Booking");
+const { mockBookingsData } = "../src/data/mockBookingsData";
 
 const createMockBookingsDB = async () => {
   let connection;
-  const connectionString = process.env.MONGO_CONNECTION_STRING;
+  const connectionString = process.env.MONGO_BOOKINGS_KEY;
   try {
     mongoose.set("strictQuery", false);
-    connection = await mongoose.connect(connectionString as string);
+    connection = await mongoose.connect(connectionString);
 
     console.log("Clearing database...");
     await Booking.deleteMany();
@@ -24,4 +25,4 @@ const createMockBookingsDB = async () => {
     process.exit(0);
   }
 };
-// createMockBookingsDB();
+createMockBookingsDB();
