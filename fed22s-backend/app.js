@@ -1,9 +1,10 @@
-import dotenv from "dotenv";
-import mongoose from "mongoose";
+require("dotenv").config();
+const mongoose = require("mongoose");
+const express = require("express");
 const cors = require("cors");
 const bookingRoutes = require("./src/routes/bookingRoutes");
 
-dotenv.config();
+// dotenv.config();
 
 const app = express();
 const port = process.env.PORT || "2525";

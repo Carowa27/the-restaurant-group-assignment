@@ -5,9 +5,9 @@
   "main": "index.js",
   "types": "index.d.ts",
   "scripts": {
-    "start": "node dist/app.js",
-    "dev": "npx ts-node app.ts",
-    "build": "tsc -p ."
+    "start": "node app.js",
+    "build": "tsc -p .",
+    "seedDb": "node ./src/seedDB.js"
   },
   "author": "",
   "license": "ISC",

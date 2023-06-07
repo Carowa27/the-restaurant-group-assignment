@@ -2,7 +2,7 @@ require("dotenv").config();
 const mongoose = require("mongoose");
 
 const Booking = require("./models/Booking");
-const { mockBookingsData } = "../src/data/bookings";
+const { mockBookingsData } = "../src/data/mockBookingsData";
 
 const createMockBookingsDB = async () => {
   let connection;
