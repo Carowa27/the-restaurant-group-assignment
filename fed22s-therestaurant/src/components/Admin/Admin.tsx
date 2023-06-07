@@ -2,7 +2,7 @@ import { BookButton, SearchBookingButton } from "../styled/Buttons";
 import { AdminForm } from "../styled/Forms";
 import { H1, H3Bold, H4 } from "../styled/Headings";
 import { AdminSearchBookingInput, DateInput } from "../styled/Inputs";
-import { AvailableTimes } from "../styled/Paragraph";
+import { AvailableTimes } from "../styled/Paragraphs";
 import { AdminWrapper } from "../styled/Wrappers";
 
 export const Admin = () => {
