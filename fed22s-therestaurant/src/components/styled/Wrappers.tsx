@@ -74,7 +74,7 @@ export const OpeningWrapper = styled.div`
   justify-content: center;
   padding: 0;
   margin: 0;
-  height: 75vh;
+  height: 85vh;
 `;
 export const IceCreamWrapper = styled.div`
   display: flex;
