@@ -17,8 +17,10 @@ export const getBookings = async () => {
       "http://localhost:4000/api/v1/bookings/"
     );
 
-    return response.data;
+    console.log(response.data);
+
+    return response;
   } catch (error) {
-    throw new Error("Fail to get data from this  API");
+    throw new Error("Fail to get data from this  API:" + error);
   }
 };
