@@ -1,8 +1,6 @@
 import {
-  LoaderCloud,
   LoaderCloudStartOne,
   LoaderCloudStartTwo,
-  LoaderSun,
   LoaderSunStart,
   LoadingWrapper,
 } from "./styled/Loader";
