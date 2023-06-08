@@ -14,10 +14,11 @@ app.use(express.json());
 
 app.use(
   cors({
-    origin: ["http://localhost:4000/"],
-    methods: ["GET", "PUT", "POST", "DELETE"],
+    methods: ["GET, POST, OPTION"],
   })
 );
+
+//man måste ha option
 
 app.use((req, res, next) => {
   console.log(`Processing ${req.method} request to ${req.path}`);
