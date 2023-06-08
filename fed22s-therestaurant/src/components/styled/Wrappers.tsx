@@ -4,6 +4,7 @@ export const MainWrapper = styled.div`
   display: flex;
   flex-direction: column;
   padding: 0 2rem 1rem 2rem;
+  min-height: 60vh;
 `;
 export const InfoWrapper = styled(MainWrapper)`
   flex-direction: row;
@@ -75,6 +76,9 @@ export const IceCreamWrapper = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+`;
+export const ContactWrapper = styled(IceCreamWrapper)`
+  width: 30%;
 `;
 export const FastInfoWrapper = styled.div`
   display: flex;
