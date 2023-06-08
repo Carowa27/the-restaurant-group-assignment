@@ -13,7 +13,7 @@ export const getBookings = async () => {
       return JSON.parse(dataFromLs);
     }
 
-    const response = await get<IBooking>(
+    const response = await axios.get<IBooking>(
       "http://localhost:4000/api/v1/bookings/"
     );
 
