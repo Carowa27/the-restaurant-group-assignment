@@ -1,9 +1,10 @@
 import styled from "styled-components";
+import errorPage from "../../assets/errorPage.png";
 
 export const MainWrapper = styled.div`
   display: flex;
   flex-direction: column;
-  padding: 0 2rem 1rem 2rem;
+  /* padding: 0 2rem 1rem 2rem; */
   min-height: 60vh;
 `;
 export const InfoWrapper = styled(MainWrapper)`
@@ -87,4 +88,13 @@ export const FastInfoWrapper = styled.div`
 export const FastInfoColumn = styled(FastInfoWrapper)`
   flex-direction: column;
   justify-content: flex-start;
+`;
+export const ErrorWrapper = styled(MainWrapper)`
+  justify-content: center;
+  align-items: center;
+  background-image: url(${errorPage});
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: bottom;
+  padding: 0;
 `;

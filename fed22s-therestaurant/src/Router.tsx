@@ -5,15 +5,18 @@ import { BookingPage } from "./pages/BookingPage";
 import { ContactPage } from "./pages/ContactPage";
 import { LandingPage } from "./pages/LandingPage";
 import { Layout } from "./pages/Layout";
+import { ErrorPage } from "./pages/ErrorPage";
 
 export const Router = createBrowserRouter([
   {
     path: "/",
     element: <Layout></Layout>,
+    errorElement: <ErrorPage></ErrorPage>,
     children: [
       {
         path: "/",
-        element: <LandingPage></LandingPage>,
+        element: <ErrorPage></ErrorPage>,
+        // element: <LandingPage></LandingPage>,
         index: true,
       },
       {
