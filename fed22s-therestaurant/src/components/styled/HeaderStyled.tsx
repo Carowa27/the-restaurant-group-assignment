@@ -3,7 +3,7 @@ import styled from "styled-components";
 export const HeaderStyled = styled.header`
   display: flex;
   flex-direction: column;
-  background: #cfcfcf;
+  background: 0;
   padding: 1%;
   justify-content: center;
 
