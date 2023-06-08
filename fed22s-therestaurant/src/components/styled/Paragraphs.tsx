@@ -7,6 +7,7 @@ export const StyledParagraph = styled.p`
 
 export const OpeningItalic = styled(StyledParagraph)`
   font-style: italic;
+  margin-top: 1rem;
 `;
 
 export const AvailableTimes = styled.p`
