@@ -71,12 +71,16 @@ export const OpeningWrapper = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 1rem 0;
+  justify-content: center;
+  padding: 0;
+  margin: 0;
+  height: 75vh;
 `;
 export const IceCreamWrapper = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+  padding: 4rem 0;
 `;
 export const ContactWrapper = styled(IceCreamWrapper)`
   width: 30%;
@@ -88,6 +92,7 @@ export const FastInfoWrapper = styled.div`
 export const FastInfoColumn = styled(FastInfoWrapper)`
   flex-direction: column;
   justify-content: flex-start;
+  padding: 2rem;
 `;
 export const ErrorWrapper = styled(MainWrapper)`
   justify-content: center;
