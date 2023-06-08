@@ -1,3 +1,5 @@
+import { useEffect } from "react";
+import { Booking } from "../Booking/Booking";
 import { BookButton, SearchBookingButton } from "../styled/Buttons";
 import { AdminForm } from "../styled/Forms";
 import { H1, H3Bold, H4 } from "../styled/Headings";
