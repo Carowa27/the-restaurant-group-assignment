@@ -61,3 +61,26 @@ export const GuestInformationDiv = styled.div`
   flex-direction: column;
   align-items: center;
 `;
+export const LandingWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+`;
+export const OpeningWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 1rem 0;
+`;
+export const IceCreamWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+`;
+export const FastInfoWrapper = styled.div`
+  display: flex;
+  justify-content: space-evenly;
+`;
+export const FastInfoColumn = styled(FastInfoWrapper)`
+  flex-direction: column;
+  justify-content: flex-start;
+`;
