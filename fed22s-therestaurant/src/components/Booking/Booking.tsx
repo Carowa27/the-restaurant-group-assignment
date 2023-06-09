@@ -33,19 +33,31 @@ export const Booking = () => {
       return;
     },
   });
-  //state för att hålla bokningsobjektet
-  const [booking, setBooking] = useState({
-    numberOfGuests: 1,
-    selectedDate: "",
-    selectedTime: "",
-    user: new User("", "", "", ""),
-  });
 
   const [numberOfGuests, setNumberOfGuests] = useState(1);
   const [selectedTime, setSelectedTime] = useState("");
   const [selectedDate, setSelectedDate] = useState("");
 
   const [initialLoad, setInitialLoad] = useState(true);
+  const numberOfGuestsOptions = [
+    { value: 1, label: "1 person" },
+    { value: 2, label: "2 personer" },
+    { value: 3, label: "3 personer" },
+    { value: 4, label: "4 personer" },
+    { value: 5, label: "5 personer" },
+    { value: 6, label: "6 personer" },
+    { value: 7, label: "7 personer" },
+    { value: 8, label: "8 personer" },
+    { value: 9, label: "9 personer" },
+    { value: 10, label: "10 personer" },
+    { value: 11, label: "11 personer" },
+    { value: 12, label: "12 personer" },
+  ];
+  const optionsMap = numberOfGuestsOptions.map((option) => (
+    <option key={option.value} value={option.value}>
+      {option.label}
+    </option>
+  ));
 
   useEffect(() => {
     getBookings();
@@ -100,16 +112,23 @@ export const Booking = () => {
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
 
-    // Skapa en ny bokningsobjekt baserat på användarens input
     const booking = {
-      numberOfGuests,
-      selectedDate,
-      selectedTime,
-      user: userInput,
+      user: {
+        firstname: userInput.firstname,
+        lastname: userInput.lastname,
+        email: userInput.email,
+        phone: userInput.phone,
+      },
+      ordernumber: "3",
+      guests: numberOfGuests.toString(),
+      date: selectedDate,
+      sessionstart: selectedTime,
+      createdAt: new Date().toISOString(),
+      updatedAt: new Date().toISOString(),
+      __v: 0,
     };
 
     try {
-      // Skicka bokningsobjektet till API:et
       const response = await fetch("http://localhost:4000/api/v1/bookings/", {
         method: "POST",
         headers: {
@@ -119,22 +138,14 @@ export const Booking = () => {
       });
 
       if (response.ok) {
-        // Bokningen lyckades, navigera till en bokningsbekräftelsessida
-        //  navigate(`/bookingconfirmed`);
         navigate(`/bookingconfirmed`);
       } else {
-        // Hantera fel vid bokning
         console.error("Något gick fel vid bokningen");
       }
     } catch (error) {
       console.error("Ett fel uppstod", error);
     }
-    // Utför bokningslogiken här, t.ex. skicka bokningen till en API eller spara den lokalt
-
-    // Uppdatera state eller navigera till en bokningsbekräftelsessida
   };
-
-  //test
 
   return (
     <>
@@ -149,18 +160,7 @@ export const Booking = () => {
               value={numberOfGuests}
               onChange={handleNumberOfGuestsChange}
             >
-              <option value={1}>1 person</option>
-              <option value={2}>2 personer</option>
-              <option value={3}>3 personer</option>
-              <option value={4}>4 personer</option>
-              <option value={5}>5 personer</option>
-              <option value={6}>6 personer</option>
-              <option value={7}>7 personer</option>
-              <option value={8}>8 personer</option>
-              <option value={9}>9 personer</option>
-              <option value={10}>10 personer</option>
-              <option value={11}>11 personer</option>
-              <option value={12}>12 personer</option>
+              {optionsMap}
             </select>
           </NumberOfGuestWrapper>
           <DateInputWrapper>
