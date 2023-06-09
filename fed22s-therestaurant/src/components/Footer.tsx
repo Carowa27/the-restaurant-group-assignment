@@ -1,39 +1,56 @@
+import { useState } from "react";
 import { FooterStyled } from "./styled/FooterStyled";
+import { H5 } from "./styled/Headings";
+import { FooterParagraph } from "./styled/Paragraphs";
+import { FooterColumn, FooterRow } from "./styled/Wrappers";
+import { GdprModal } from "./Gdpr/GdprModal";
 
 export const Footer = () => {
+  const [showGdprModal, setShowGdprModal] = useState(false);
+  const handleGdprInfo = () => {
+    setShowGdprModal(true);
+    window.scrollTo({ top: 0, left: 0, behavior: "smooth" });
+  };
   return (
     <>
+      {showGdprModal && (
+        <GdprModal closeModal={() => setShowGdprModal(false)} />
+      )}
       <FooterStyled>
-        <ul>
-          <h3>Om oss</h3>
-          <li>Jobba hos oss</li>
-          <li>Om The Restaurant</li>
-          <li>Kontantfri restaurang</li>
-        </ul>
-        <ul>
-          <h3>Kundservice</h3>
-          <li>Kostinfo / Allergener</li>
-          <li>Ge oss feedback</li>
-          <li>Kontakta oss</li>
-        </ul>
-        <ul>
-          <h3>Policys</h3>
-          <li>Personuppgifter</li>
-          <li>Cookies</li>
-          <li>Gdpr</li>
-        </ul>
-        <ul>
-          <h3>Sociala medier</h3>
-          <li>
-            <i className="fa-brands fa-facebook"></i>
-          </li>
-          <li>
-            <i className="fa-brands fa-instagram"></i>
-          </li>
-          <li>
-            <i className="fa-brands fa-twitter"></i>
-          </li>
-        </ul>
+        <FooterColumn>
+          <H5>Öppettider</H5>
+          <FooterParagraph>mån-tors 10-17</FooterParagraph>
+          <FooterParagraph>fre-sön 11-19</FooterParagraph>
+        </FooterColumn>
+        <FooterColumn>
+          <H5>Om oss</H5>
+          <FooterParagraph>Om Glass i Stora Lass</FooterParagraph>
+          <FooterParagraph>Våra glassar</FooterParagraph>
+          <FooterParagraph>Ord från tidigare gäster</FooterParagraph>
+          <FooterParagraph>Jobba hos oss</FooterParagraph>
+        </FooterColumn>
+        <FooterColumn>
+          <H5>Kundservice</H5>
+          <FooterParagraph onClick={handleGdprInfo}>GDPR</FooterParagraph>
+          <FooterParagraph>Ge oss feedback</FooterParagraph>
+          <FooterParagraph>Kostinfo / Allergener</FooterParagraph>
+          <FooterParagraph>Frågor & Svar</FooterParagraph>
+        </FooterColumn>
+        <FooterColumn>
+          <H5>Sociala medier</H5>
+          <FooterRow>
+            <FooterParagraph>
+              <i className="fa-brands fa-facebook"></i>
+            </FooterParagraph>
+            <FooterParagraph>
+              <i className="fa-brands fa-instagram"></i>
+            </FooterParagraph>
+            <FooterParagraph>
+              <i className="fa-brands fa-twitter"></i>
+            </FooterParagraph>
+          </FooterRow>
+          <FooterParagraph>Kontakta oss</FooterParagraph>
+        </FooterColumn>
       </FooterStyled>
     </>
   );

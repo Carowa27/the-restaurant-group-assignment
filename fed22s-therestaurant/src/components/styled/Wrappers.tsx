@@ -5,7 +5,10 @@ export const MainWrapper = styled.div`
   display: flex;
   flex-direction: column;
   /* padding: 0 2rem 1rem 2rem; */
-  min-height: 60vh;
+  /* min-height: 60vh; */
+`;
+export const PageWrapper = styled(MainWrapper)`
+  margin-bottom: 10rem; /*footer*/
 `;
 export const InfoWrapper = styled(MainWrapper)`
   flex-direction: row;
@@ -98,14 +101,22 @@ export const IceCreamWrapper = styled.div`
 export const ContactWrapper = styled(IceCreamWrapper)`
   width: 30%;
 `;
-export const FastInfoWrapper = styled.div`
+// export const FastInfoWrapper = styled.div`
+//   display: flex;
+//   justify-content: space-evenly;
+// `;
+export const FooterColumn = styled.div`
   display: flex;
-  justify-content: space-evenly;
-`;
-export const FastInfoColumn = styled(FastInfoWrapper)`
   flex-direction: column;
-  justify-content: flex-start;
-  padding: 2rem;
+  /* justify-content: center; */
+  padding-top: 1rem;
+`;
+export const FooterRow = styled(FooterColumn)`
+  flex-direction: row;
+  /* justify-content: space-evenly; */
+  gap: 1rem;
+  padding-top: 0;
+  padding: 0.5rem 0;
 `;
 export const ErrorWrapper = styled(MainWrapper)`
   justify-content: center;
@@ -115,4 +126,8 @@ export const ErrorWrapper = styled(MainWrapper)`
   background-size: cover;
   background-position: bottom;
   padding: 0;
+  height: 100vh;
+  width: 100%;
+  /* top: 0;
+  left: 0; */
 `;

@@ -10,6 +10,14 @@ export const OpeningItalic = styled(StyledParagraph)`
   margin-top: 1rem;
   /* padding-bottom: 5vh; */
 `;
+export const ParagraphModal = styled(StyledParagraph)`
+  margin: 0;
+`;
+export const ModalCross = styled(ParagraphModal)`
+  &:hover {
+    cursor: pointer;
+  }
+`;
 export const JobParagraph = styled(StyledParagraph)`
   padding: 0 0.3rem;
 `;
@@ -20,4 +28,8 @@ export const JobItalic = styled(OpeningItalic)`
 export const AvailableTimes = styled.p`
   font-size: 10px;
   width: 50%;
+`;
+export const FooterParagraph = styled(StyledParagraph)`
+  margin: 0;
+  padding: 0.05rem 0;
 `;

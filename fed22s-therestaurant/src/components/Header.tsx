@@ -1,16 +1,17 @@
 import { Link } from "react-router-dom";
-import { LandingPage } from "../pages/LandingPage";
 import { HeaderStyled } from "./styled/HeaderStyled";
+import { H3Bold } from "./styled/Headings";
 
 export const Header = () => {
   return (
     <>
       <HeaderStyled>
-        <h2>The Restaurant</h2>
         <nav>
           <ul>
             <li>
-              <Link to="/">Hem</Link>
+              <Link to="/">
+                <H3Bold>Glass i Stora Lass</H3Bold>
+              </Link>
             </li>
             <li>
               <Link to="/booking">Bokning</Link>
