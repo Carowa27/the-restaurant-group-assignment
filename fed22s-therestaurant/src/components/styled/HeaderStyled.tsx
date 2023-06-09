@@ -4,7 +4,7 @@ export const HeaderStyled = styled.header`
   display: flex;
   flex-direction: column;
   /* background: 0; */
-  padding: 1%;
+  /* padding: 1%; */
   justify-content: center;
   /* align-self: flex-start; */
   top: 0;
@@ -19,6 +19,9 @@ export const HeaderStyled = styled.header`
     display: flex;
     flex-direction: row;
     justify-content: space-around;
+    align-items: center;
+    padding: 0;
+    margin: 0;
   }
 
   a {
