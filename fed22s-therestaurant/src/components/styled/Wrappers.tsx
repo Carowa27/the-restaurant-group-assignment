@@ -92,6 +92,10 @@ export const OpeningWrapper = styled.div`
   margin: 0;
   height: 85vh;
 `;
+export const ContactHeadWrapper = styled(OpeningWrapper)`
+  height: auto;
+  padding-top: 2rem;
+`;
 export const IceCreamWrapper = styled.div`
   display: flex;
   flex-direction: column;

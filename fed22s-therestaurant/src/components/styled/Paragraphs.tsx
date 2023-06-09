@@ -19,7 +19,7 @@ export const ModalCross = styled(ParagraphModal)`
   }
 `;
 export const JobParagraph = styled(StyledParagraph)`
-  padding: 0 0.3rem;
+  padding: 0 2rem;
 `;
 export const JobItalic = styled(OpeningItalic)`
   margin: 0.3rem 0;
