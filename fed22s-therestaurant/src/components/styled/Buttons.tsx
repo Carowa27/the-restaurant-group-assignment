@@ -67,3 +67,8 @@ export const SubmitBookingButton = styled.button`
     box-shadow: 0 0 5px rgba(0, 0, 0, 0.7);
   }
 `;
+export const CloseModalBtn = styled.button`
+  &:hover {
+    cursor: pointer;
+  }
+`;

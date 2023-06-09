@@ -1,15 +1,17 @@
+import { useState } from "react";
 import { H3Modal, H3Normal, H4 } from "../styled/Headings";
 import { Modal, ModalContent, ModalHead } from "../styled/Modals";
-import { ParagraphModal } from "../styled/Paragraphs";
+import { ModalCross, ParagraphModal } from "../styled/Paragraphs";
+import { CloseModalBtn } from "../styled/Buttons";
 
-export const GdprModal = () => {
+export const GdprModal = ({ closeModal }: any) => {
   return (
     <>
-      <Modal>
-        <ModalContent>
+      <Modal onClick={closeModal}>
+        <ModalContent onClick={(e) => e.stopPropagation()}>
           <ModalHead>
             <H3Modal>GDPR</H3Modal>
-            <ParagraphModal>x</ParagraphModal>
+            <ModalCross onClick={closeModal}>&#10006;</ModalCross>
           </ModalHead>
           <H4>Dataskyddsförklaring</H4>
           <p>
@@ -71,7 +73,7 @@ export const GdprModal = () => {
             eller vår hantering av personlig information, är du välkommen att
             kontakta oss på gdpr@glassisstoralass.se.
           </p>
-          <button /*onClick={}*/>Stäng</button>
+          <CloseModalBtn onClick={closeModal}>Stäng</CloseModalBtn>
         </ModalContent>
       </Modal>
     </>

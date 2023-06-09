@@ -13,6 +13,11 @@ export const OpeningItalic = styled(StyledParagraph)`
 export const ParagraphModal = styled(StyledParagraph)`
   margin: 0;
 `;
+export const ModalCross = styled(ParagraphModal)`
+  &:hover {
+    cursor: pointer;
+  }
+`;
 export const JobParagraph = styled(StyledParagraph)`
   padding: 0 0.3rem;
 `;
