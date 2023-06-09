@@ -21,8 +21,10 @@ export const DateInput = styled.input`
 `;
 
 export const AdminSearchBookingInput = styled.input`
-  width: 50%;
   border: 1px solid black;
-  padding-top: 5px;
+  margin-top: 5px;
+  padding: 5%;
+  border-radius: 20px;
+
   text-align: center;
 `;

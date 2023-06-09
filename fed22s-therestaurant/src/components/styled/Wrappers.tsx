@@ -1,9 +1,10 @@
 import styled from "styled-components";
+import errorPage from "../../assets/errorPage.png";
 
 export const MainWrapper = styled.div`
   display: flex;
   flex-direction: column;
-  padding: 0 2rem 1rem 2rem;
+  /* padding: 0 2rem 1rem 2rem; */
   min-height: 60vh;
 `;
 export const InfoWrapper = styled(MainWrapper)`
@@ -83,12 +84,16 @@ export const OpeningWrapper = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 1rem 0;
+  justify-content: center;
+  padding: 0;
+  margin: 0;
+  height: 85vh;
 `;
 export const IceCreamWrapper = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+  padding: 4rem 0;
 `;
 export const ContactWrapper = styled(IceCreamWrapper)`
   width: 30%;
@@ -100,4 +105,14 @@ export const FastInfoWrapper = styled.div`
 export const FastInfoColumn = styled(FastInfoWrapper)`
   flex-direction: column;
   justify-content: flex-start;
+  padding: 2rem;
+`;
+export const ErrorWrapper = styled(MainWrapper)`
+  justify-content: center;
+  align-items: center;
+  background-image: url(${errorPage});
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: bottom;
+  padding: 0;
 `;

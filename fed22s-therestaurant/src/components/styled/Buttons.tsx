@@ -28,8 +28,8 @@ export const SearchBookingButton = styled.button`
   margin: 15px;
   background-color: black;
   color: white;
-  border-radius: 45%;
   border: none;
+  width: 30%;
   &:hover {
     cursor: pointer;
     transform: scale(1.01);
