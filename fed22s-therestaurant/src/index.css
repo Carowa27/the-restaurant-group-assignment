@@ -75,3 +75,9 @@ body {
   background-repeat: no-repeat;
   background-size: cover;
 }
+#root {
+  position: relative;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}

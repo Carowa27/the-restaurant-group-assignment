@@ -10,6 +10,9 @@ export const OpeningItalic = styled(StyledParagraph)`
   margin-top: 1rem;
   /* padding-bottom: 5vh; */
 `;
+export const ParagraphModal = styled(StyledParagraph)`
+  margin: 0;
+`;
 export const JobParagraph = styled(StyledParagraph)`
   padding: 0 0.3rem;
 `;

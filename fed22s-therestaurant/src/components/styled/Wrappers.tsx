@@ -4,8 +4,9 @@ import errorPage from "../../assets/errorPage.png";
 export const MainWrapper = styled.div`
   display: flex;
   flex-direction: column;
+  margin-bottom: 10rem;
   /* padding: 0 2rem 1rem 2rem; */
-  min-height: 60vh;
+  /* min-height: 60vh; */
 `;
 export const InfoWrapper = styled(MainWrapper)`
   flex-direction: row;
