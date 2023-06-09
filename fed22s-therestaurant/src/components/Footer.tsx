@@ -13,48 +13,47 @@ export const Footer = () => {
   };
   return (
     <>
-      {showGdprModal ? (
+      {showGdprModal && (
         <GdprModal closeModal={() => setShowGdprModal(false)} />
-      ) : (
-        <FooterStyled>
-          <FooterColumn>
-            <H5>Öppettider</H5>
-            <StyledParagraph>mån-tors 10-16</StyledParagraph>
-            <StyledParagraph>fre-sön 11-19</StyledParagraph>
-          </FooterColumn>
-          <ul>
-            <H5>Om oss</H5>
-            <li>Jobba hos oss</li>
-            <li>Om The Restaurant</li>
-            <li>Kontantfri restaurang</li>
-          </ul>
-          <ul>
-            <H5>Kundservice</H5>
-            <li>Ge oss feedback</li>
-            <li onClick={handleGdprInfo}>GDPR</li>
-            <li>Kontakta oss</li>
-          </ul>
-          <FooterColumn>
-            <H5>Snabb val</H5>
-            <StyledParagraph>Våra glassar</StyledParagraph>
-            <StyledParagraph>Kostinfo / Allergener</StyledParagraph>
-            <StyledParagraph>Ord från tidigare gäster</StyledParagraph>
-            <StyledParagraph>Frågor & Svar</StyledParagraph>
-          </FooterColumn>
-          <ul>
-            <H5>Sociala medier</H5>
-            <li>
-              <i className="fa-brands fa-facebook"></i>
-            </li>
-            <li>
-              <i className="fa-brands fa-instagram"></i>
-            </li>
-            <li>
-              <i className="fa-brands fa-twitter"></i>
-            </li>
-          </ul>
-        </FooterStyled>
       )}
+      <FooterStyled>
+        <FooterColumn>
+          <H5>Öppettider</H5>
+          <StyledParagraph>mån-tors 10-16</StyledParagraph>
+          <StyledParagraph>fre-sön 11-19</StyledParagraph>
+        </FooterColumn>
+        <ul>
+          <H5>Om oss</H5>
+          <li>Jobba hos oss</li>
+          <li>Om The Restaurant</li>
+          <li>Kontantfri restaurang</li>
+        </ul>
+        <ul>
+          <H5>Kundservice</H5>
+          <li>Ge oss feedback</li>
+          <li onClick={handleGdprInfo}>GDPR</li>
+          <li>Kontakta oss</li>
+        </ul>
+        <FooterColumn>
+          <H5>Snabb val</H5>
+          <StyledParagraph>Våra glassar</StyledParagraph>
+          <StyledParagraph>Kostinfo / Allergener</StyledParagraph>
+          <StyledParagraph>Ord från tidigare gäster</StyledParagraph>
+          <StyledParagraph>Frågor & Svar</StyledParagraph>
+        </FooterColumn>
+        <ul>
+          <H5>Sociala medier</H5>
+          <li>
+            <i className="fa-brands fa-facebook"></i>
+          </li>
+          <li>
+            <i className="fa-brands fa-instagram"></i>
+          </li>
+          <li>
+            <i className="fa-brands fa-twitter"></i>
+          </li>
+        </ul>
+      </FooterStyled>
     </>
   );
 };
