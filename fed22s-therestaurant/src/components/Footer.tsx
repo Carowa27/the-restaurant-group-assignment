@@ -1,8 +1,8 @@
 import { useState } from "react";
 import { FooterStyled } from "./styled/FooterStyled";
 import { H5 } from "./styled/Headings";
-import { StyledParagraph } from "./styled/Paragraphs";
-import { FooterColumn } from "./styled/Wrappers";
+import { FooterParagraph } from "./styled/Paragraphs";
+import { FooterColumn, FooterRow } from "./styled/Wrappers";
 import { GdprModal } from "./Gdpr/GdprModal";
 
 export const Footer = () => {
@@ -19,40 +19,38 @@ export const Footer = () => {
       <FooterStyled>
         <FooterColumn>
           <H5>Öppettider</H5>
-          <StyledParagraph>mån-tors 10-16</StyledParagraph>
-          <StyledParagraph>fre-sön 11-19</StyledParagraph>
+          <FooterParagraph>mån-tors 10-17</FooterParagraph>
+          <FooterParagraph>fre-sön 11-19</FooterParagraph>
         </FooterColumn>
-        <ul>
-          <H5>Om oss</H5>
-          <li>Jobba hos oss</li>
-          <li>Om The Restaurant</li>
-          <li>Kontantfri restaurang</li>
-        </ul>
-        <ul>
-          <H5>Kundservice</H5>
-          <li>Ge oss feedback</li>
-          <li onClick={handleGdprInfo}>GDPR</li>
-          <li>Kontakta oss</li>
-        </ul>
         <FooterColumn>
-          <H5>Snabb val</H5>
-          <StyledParagraph>Våra glassar</StyledParagraph>
-          <StyledParagraph>Kostinfo / Allergener</StyledParagraph>
-          <StyledParagraph>Ord från tidigare gäster</StyledParagraph>
-          <StyledParagraph>Frågor & Svar</StyledParagraph>
+          <H5>Om oss</H5>
+          <FooterParagraph>Om Glass i Stora Lass</FooterParagraph>
+          <FooterParagraph>Våra glassar</FooterParagraph>
+          <FooterParagraph>Ord från tidigare gäster</FooterParagraph>
+          <FooterParagraph>Jobba hos oss</FooterParagraph>
         </FooterColumn>
-        <ul>
+        <FooterColumn>
+          <H5>Kundservice</H5>
+          <FooterParagraph onClick={handleGdprInfo}>GDPR</FooterParagraph>
+          <FooterParagraph>Ge oss feedback</FooterParagraph>
+          <FooterParagraph>Kostinfo / Allergener</FooterParagraph>
+          <FooterParagraph>Frågor & Svar</FooterParagraph>
+        </FooterColumn>
+        <FooterColumn>
           <H5>Sociala medier</H5>
-          <li>
-            <i className="fa-brands fa-facebook"></i>
-          </li>
-          <li>
-            <i className="fa-brands fa-instagram"></i>
-          </li>
-          <li>
-            <i className="fa-brands fa-twitter"></i>
-          </li>
-        </ul>
+          <FooterRow>
+            <FooterParagraph>
+              <i className="fa-brands fa-facebook"></i>
+            </FooterParagraph>
+            <FooterParagraph>
+              <i className="fa-brands fa-instagram"></i>
+            </FooterParagraph>
+            <FooterParagraph>
+              <i className="fa-brands fa-twitter"></i>
+            </FooterParagraph>
+          </FooterRow>
+          <FooterParagraph>Kontakta oss</FooterParagraph>
+        </FooterColumn>
       </FooterStyled>
     </>
   );

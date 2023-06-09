@@ -98,6 +98,13 @@ export const FooterColumn = styled.div`
   /* justify-content: center; */
   padding-top: 1rem;
 `;
+export const FooterRow = styled(FooterColumn)`
+  flex-direction: row;
+  /* justify-content: space-evenly; */
+  gap: 1rem;
+  padding-top: 0;
+  padding: 0.5rem 0;
+`;
 export const ErrorWrapper = styled(MainWrapper)`
   justify-content: center;
   align-items: center;

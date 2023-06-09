@@ -29,3 +29,7 @@ export const AvailableTimes = styled.p`
   font-size: 10px;
   width: 50%;
 `;
+export const FooterParagraph = styled(StyledParagraph)`
+  margin: 0;
+  padding: 0.05rem 0;
+`;
