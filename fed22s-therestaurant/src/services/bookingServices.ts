@@ -1,11 +1,11 @@
 import axios from "../../node_modules/axios/index";
-import { IBooking } from "../models/IBooking";
+import { IApiResponse, IBooking } from "../models/IBooking";
 
 const get = async <T>(url: string) => {
   return await axios.get<T>(url);
 };
 
-export const getBookings = async () => {
+export async function getBookings() {
   try {
     const dataFromLs = localStorage.getItem("bookings");
 
@@ -13,14 +13,12 @@ export const getBookings = async () => {
       return JSON.parse(dataFromLs);
     }
 
-    const response = await axios.get<IBooking>(
+    const response = await get<IApiResponse>(
       "http://localhost:4000/api/v1/bookings/"
     );
 
-    console.log(response.data);
-
-    return response;
+    return response.data;
   } catch (error) {
     throw new Error("Fail to get data from this  API:" + error);
   }
-};
+}

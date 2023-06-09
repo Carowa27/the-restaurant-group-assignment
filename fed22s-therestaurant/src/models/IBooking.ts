@@ -8,6 +8,6 @@ export interface IBooking {
   id: number;
 }
 
-export interface IApiReponse {
+export interface IApiResponse {
   bookings: IBooking[];
 }

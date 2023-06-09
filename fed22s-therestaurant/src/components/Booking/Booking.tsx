@@ -1,6 +1,7 @@
 import { ChangeEvent, FormEvent, useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { IUsersContext, UsersContext } from "../../contexts/UserContext";
+import { IBooking } from "../../models/IBooking";
 import { User } from "../../models/User";
 import { getBookings } from "../../services/bookingServices";
 import { SubmitBookingButton, TimeBookingButton } from "../styled/Buttons";
@@ -101,8 +102,23 @@ export const Booking = () => {
     setNumberOfGuests(guests);
   };
 
+  const getAvailableDates = async (date: string) => {
+    const data = await getBookings();
+
+    console.log("All", data.data);
+
+    const dateBookings = data.data.filter(
+      (booking: IBooking) => booking.date === date
+    );
+
+    console.log("dateBookings on that date", dateBookings);
+
+    //console.log("dateBookings", dateBookings);
+  };
+
   const handleDateChange = (e: ChangeEvent<HTMLInputElement>) => {
     setSelectedDate(e.target.value);
+    getAvailableDates(e.target.value);
   };
 
   const handleTimeSelection = (time: string) => {
