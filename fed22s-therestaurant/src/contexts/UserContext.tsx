@@ -12,11 +12,4 @@ export const UsersContext = createContext<IUsersContext>({
   add: (text: User) => {
     return;
   },
-
-  //   toggle: (id: number) => {
-  //     return;
-  //   },
-  //   deleteDrink: (id: number) => {
-  //     return;
-  //   },
 });

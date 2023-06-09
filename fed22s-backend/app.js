@@ -18,6 +18,8 @@ app.use(
   })
 );
 
+//man måste ha option
+
 app.use((req, res, next) => {
   console.log(`Processing ${req.method} request to ${req.path}`);
 

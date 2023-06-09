@@ -35,6 +35,19 @@ export const NumberOfGuestWrapper = styled.div`
   padding: 5px;
 `;
 
+export const AmountGuestsNumberWrapper = styled.div`
+  width: 14%;
+  border: 1px solid black;
+  border-radius: 2px;
+  padding: 0.4rem 0;
+  text-align: center;
+  &:hover {
+    transform: scale(1.01);
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.7);
+    cursor: pointer;
+  }
+`;
+
 export const DateInputWrapper = styled.div`
   display: flex;
   flex-direction: column;

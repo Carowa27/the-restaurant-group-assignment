@@ -1,8 +1,7 @@
-import { FormEvent, useContext, useEffect, useState } from "react";
+import { ChangeEvent, FormEvent, useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { IUsersContext, UsersContext } from "../../contexts/UserContext";
 import { User } from "../../models/User";
-import { BookingConfirmedPage } from "../../pages/BookingConfirmedPage";
 import { getBookings } from "../../services/bookingServices";
 import { SubmitBookingButton, TimeBookingButton } from "../styled/Buttons";
 import { BookingForm, GuestInformationForm } from "../styled/Forms";
@@ -16,63 +15,80 @@ import {
   NumberOfGuestWrapper,
   TimeBookingWrapper,
 } from "../styled/Wrappers";
+import { Users } from "./Users";
 
 export const Booking = () => {
+  const navigate = useNavigate();
   const { add } = useContext(UsersContext);
-  const [user, userState] = useState<IUsersContext>({
-    users: [],
 
+  const [availableTimes, setAvailableTimes] = useState([
+    { bookingTime: "18:00", numOfAvailableTables: 0, isAvailable: true },
+    { bookingTime: "21:00", numOfAvailableTables: 0, isAvailable: true },
+  ]);
+
+  const [userInput, setUserInput] = useState(new User("", "", "", ""));
+  const [user, setUser] = useState<IUsersContext>({
+    users: [],
     add: (text: User) => {
       return;
     },
   });
 
-  //state för input
-  const [userInput, setUserInput] = useState(new User("", "", "", ""));
+  const [numberOfGuests, setNumberOfGuests] = useState(1);
+  const [selectedTime, setSelectedTime] = useState("");
+  const [selectedDate, setSelectedDate] = useState("");
+
+  const [initialLoad, setInitialLoad] = useState(true);
+  const numberOfGuestsOptions = [
+    { value: 1, label: "1 person" },
+    { value: 2, label: "2 personer" },
+    { value: 3, label: "3 personer" },
+    { value: 4, label: "4 personer" },
+    { value: 5, label: "5 personer" },
+    { value: 6, label: "6 personer" },
+    { value: 7, label: "7 personer" },
+    { value: 8, label: "8 personer" },
+    { value: 9, label: "9 personer" },
+    { value: 10, label: "10 personer" },
+    { value: 11, label: "11 personer" },
+    { value: 12, label: "12 personer" },
+  ];
+  const optionsMap = numberOfGuestsOptions.map((option) => (
+    <option key={option.value} value={option.value}>
+      {option.label}
+    </option>
+  ));
 
   useEffect(() => {
     getBookings();
-  }, []);
+    if (!initialLoad) return;
+    const storedUsers = localStorage.getItem("users");
+    if (storedUsers) {
+      setUser({ ...user, users: JSON.parse(storedUsers) });
+    }
+    setInitialLoad(false);
+  }, [initialLoad]);
 
-  /*Denna komponent är för alla users, man ska kunna boka, 
-    lägga till antal personer, lägga datum & tid och även 
-    personlig information.
-    */
-
-  /* Todo för denna komponent:
-  1. skapa funktion för att välta antal personer.
-  2. skapa funktion för tidsbokning knapparna.
-  */
-
-  //test
-  const navigate = useNavigate();
-  const handleClick = async (e: FormEvent) => {
-    e.preventDefault();
-    navigate(`/bookingconfirmed`);
-  };
-
-  const handleChange = (
-    e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
-  ) => {
-    if (e.target.firstname === "firstname") {
+  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
+    if (e.target.name === "firstname") {
       setUserInput({
         ...userInput,
         firstname: e.target.value,
       });
     }
-    if (e.target.lastname === "lastname") {
+    if (e.target.name === "lastname") {
       setUserInput({
         ...userInput,
         lastname: e.target.value,
       });
     }
-    if (e.target.email === "email") {
+    if (e.target.name === "email") {
       setUserInput({
         ...userInput,
         email: e.target.value,
       });
     }
-    if (e.target.phone === "phone") {
+    if (e.target.name === "phone") {
       setUserInput({
         ...userInput,
         phone: e.target.value,
@@ -80,38 +96,106 @@ export const Booking = () => {
     }
   };
 
-  const handleSubmit = () => {};
+  const handleNumberOfGuestsChange = (e: ChangeEvent<HTMLSelectElement>) => {
+    const guests = parseInt(e.target.value);
+    setNumberOfGuests(guests);
+  };
+
+  const handleDateChange = (e: ChangeEvent<HTMLInputElement>) => {
+    setSelectedDate(e.target.value);
+  };
+
+  const handleTimeSelection = (time: string) => {
+    setSelectedTime(time);
+  };
+
+  const handleSubmit = async (e: FormEvent) => {
+    e.preventDefault();
+
+    const booking = {
+      user: {
+        firstname: userInput.firstname,
+        lastname: userInput.lastname,
+        email: userInput.email,
+        phone: userInput.phone,
+      },
+      ordernumber: "3",
+      guests: numberOfGuests.toString(),
+      date: selectedDate,
+      sessionstart: selectedTime,
+      createdAt: new Date().toISOString(),
+      updatedAt: new Date().toISOString(),
+      __v: 0,
+    };
+
+    try {
+      const response = await fetch("http://localhost:4000/api/v1/bookings/", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(booking),
+      });
+
+      if (response.ok) {
+        navigate(`/bookingconfirmed`);
+      } else {
+        console.error("Något gick fel vid bokningen");
+      }
+    } catch (error) {
+      console.error("Ett fel uppstod", error);
+    }
+  };
 
   return (
     <>
       <BookingWrapper>
         <H1>Estiatório Tegel</H1>
         <H3Bold>VÄLKOMMEN ATT BOKA BORD</H3Bold>
-
-        <BookingForm>
+        <BookingForm onSubmit={handleSubmit}>
           <NumberOfGuestWrapper>
             <H3Normal>VÄLJ ANTAL PERSONER</H3Normal>
+            <select
+              name="numberOfGuests"
+              value={numberOfGuests}
+              onChange={handleNumberOfGuestsChange}
+            >
+              {optionsMap}
+            </select>
           </NumberOfGuestWrapper>
           <DateInputWrapper>
             <H3Normal>Datum</H3Normal>
-            <DateInput type="date" name="date"></DateInput>
+            <DateInput
+              type="date"
+              name="date"
+              value={selectedDate}
+              onChange={handleDateChange}
+            />
           </DateInputWrapper>
           <TimeBookingWrapper>
-            <TimeBookingButton>18:00</TimeBookingButton>
-            <TimeBookingButton>21:00</TimeBookingButton>
+            {availableTimes.map((time) => (
+              <TimeBookingButton
+                key={time.bookingTime}
+                type="button"
+                onClick={() => handleTimeSelection(time.bookingTime)}
+              >
+                {time.bookingTime}
+              </TimeBookingButton>
+            ))}
           </TimeBookingWrapper>
         </BookingForm>
         <GuestInformationWrapper>
           <GuestInformationForm onSubmit={handleSubmit}>
             <H3Normal>KONTAKTUPPGIFTER</H3Normal>
             <UsersContext.Provider value={user}>
+              <Users />
               <GuestInformationDiv>
                 <label htmlFor="firstname">FÖRNAMN</label>
                 <input
                   type="text"
                   id="firstname"
                   placeholder="FÖRNAMN"
-                  name="name"
+                  name="firstname"
                   required
                   value={userInput.firstname}
                   onChange={handleChange}
@@ -147,10 +231,7 @@ export const Booking = () => {
                   value={userInput.phone}
                   onChange={handleChange}
                 />
-
-                <SubmitBookingButton onClick={handleClick}>
-                  Boka
-                </SubmitBookingButton>
+                <SubmitBookingButton>Boka</SubmitBookingButton>
               </GuestInformationDiv>
             </UsersContext.Provider>
           </GuestInformationForm>
