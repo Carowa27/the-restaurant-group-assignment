@@ -1,4 +1,5 @@
 export interface IBooking {
+  sessiondate: string;
   firstname: string;
   lastname: string;
   sessionstart: string;

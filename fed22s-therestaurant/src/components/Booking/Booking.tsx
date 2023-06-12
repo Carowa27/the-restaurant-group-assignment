@@ -21,14 +21,16 @@ import { Users } from "./Users";
 
 export const Booking = () => {
   const navigate = useNavigate();
-  const { add } = useContext(UsersContext);
 
   const [sittings, setSittings] = useState([
-    { bookingTime: "13:00", takenSeats: 0 },
-    { bookingTime: "15:00", takenSeats: 0 },
+    { bookingTime: "13:00", takenTables: 0 },
+    { bookingTime: "15:00", takenTables: 0 },
   ]);
 
-  const MAX_AMOUNT_PER_SITTING = 90;
+  const MAX_AMOUNT_PER_SITTING = 6; //Max antal gäster per bord
+  const MAX_AMOUNT_TABLES = 15; //Totalt antal tillgängliga bord
+
+  const [numberOfTables, setNumberOfTables] = useState(15);
 
   const [userInput, setUserInput] = useState(new User("", "", "", ""));
   const [user, setUser] = useState<IUsersContext>({
@@ -43,7 +45,6 @@ export const Booking = () => {
   const [selectedDate, setSelectedDate] = useState("");
   const [buttonEnabled, setButtonEnabled] = useState(false);
 
-  const [initialLoad, setInitialLoad] = useState(true);
   const numberOfGuestsOptions = [
     { value: 1, label: "1 person" },
     { value: 2, label: "2 personer" },
@@ -66,7 +67,7 @@ export const Booking = () => {
 
   useEffect(() => {
     setButtonEnabled(!!numberOfGuests && !!selectedDate && !!selectedTime);
-  });
+  }, [numberOfGuests, selectedDate, selectedTime]);
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     if (e.target.name === "firstname") {
@@ -97,7 +98,9 @@ export const Booking = () => {
 
   const handleNumberOfGuestsChange = (e: ChangeEvent<HTMLSelectElement>) => {
     const guests = parseInt(e.target.value);
+    const tables = Math.ceil(guests / MAX_AMOUNT_PER_SITTING);
     setNumberOfGuests(guests);
+    setNumberOfTables(tables);
   };
 
   const setTimes = async (date: string) => {
@@ -109,26 +112,46 @@ export const Booking = () => {
       (booking: IBooking) => booking.date === date
     );
 
-    const getTakenSeats = (sessionStart: string) =>
-      dateBookings
-        .filter((booking: IBooking) => booking.sessionstart === sessionStart)
-        .reduce((acc: number, booking: IBooking) => {
-          console.log("booking", booking);
-          return acc + Number(booking.guests);
-        }, 0);
+    const MAX_AMOUNT_PER_TABLE = 6; // Max antal gäster per bord
+    const MAX_AMOUNT_TABLES = 15; // Totalt antal tillgängliga bord
+
+    const getTakenTables = (sessionStart: string) => {
+      const totalAvailableTables = MAX_AMOUNT_TABLES;
+      const totalTakenTables = getTakenTablesFromBookings(sessionStart); // Hämta antal tagna bord från bokningar
+
+      const remainingTables = totalAvailableTables - totalTakenTables;
+      const requiredTables = Math.ceil(numberOfGuests / MAX_AMOUNT_PER_SITTING);
+
+      return Math.min(remainingTables, requiredTables);
+    };
+
+    const getTakenTablesFromBookings = (sessionStart: string) => {
+      return dateBookings.reduce((acc: number, booking: IBooking) => {
+        if (booking.sessionstart === sessionStart) {
+          const numberOfTables = Math.ceil(
+            booking.guests / MAX_AMOUNT_PER_SITTING
+          );
+          return acc + numberOfTables;
+        }
+        return acc;
+      }, 0);
+    };
 
     const updatedSittings = [
       {
         bookingTime: "13:00",
-        takenSeats: getTakenSeats("13:00"),
+        takenTables: getTakenTables("13:00"),
       },
       {
         bookingTime: "15:00",
-        takenSeats: getTakenSeats("15:00"),
+        takenTables: getTakenTables("15:00"),
       },
     ];
 
     setSittings(updatedSittings);
+
+    setSittings(updatedSittings);
+    console.log(updatedSittings);
   };
 
   const handleDateChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -152,7 +175,7 @@ export const Booking = () => {
         phone: userInput.phone,
       },
       ordernumber: "3",
-      guests: numberOfGuests,
+      guests: numberOfTables,
       date: selectedDate,
       sessionstart: selectedTime,
       createdAt: new Date().toISOString(),
@@ -160,12 +183,6 @@ export const Booking = () => {
       __v: 0,
     };
 
-    // try {
-    //   await createBooking(booking);
-    //   navigate(`/BookingConfirmedPage`);
-    // } catch (error) {
-    //   console.error("Ett fel uppstod", error);
-    // }
     try {
       const response = await fetch("http://localhost:4000/api/v1/bookings/", {
         method: "POST",
@@ -212,7 +229,7 @@ export const Booking = () => {
           </DateInputWrapper>
           <TimeBookingWrapper>
             {sittings.map((time) =>
-              time.takenSeats + numberOfGuests <= MAX_AMOUNT_PER_SITTING &&
+              time.takenTables + numberOfGuests <= MAX_AMOUNT_PER_SITTING &&
               !!selectedDate ? (
                 <TimeBookingButton
                   key={time.bookingTime}
@@ -220,7 +237,7 @@ export const Booking = () => {
                   onClick={() => handleTimeSelection(time.bookingTime)}
                 >
                   <DivWrapper>
-                    {time.takenSeats} / {MAX_AMOUNT_PER_SITTING}
+                    {time.takenTables} / {MAX_AMOUNT_PER_SITTING}
                   </DivWrapper>
                   <DivWrapper> {time.bookingTime}</DivWrapper>
                 </TimeBookingButton>
