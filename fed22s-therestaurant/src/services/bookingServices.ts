@@ -1,8 +1,8 @@
 import { useNavigate } from "react-router-dom";
 import axios from "../../node_modules/axios/index";
-import { IApiResponse, IBooking } from "../models/IBooking";
+import { IApiResponse } from "../models/IBooking";
 
-const navigate = useNavigate();
+// const navigate = useNavigate();
 
 const get = async <T>(url: string) => {
   return await axios.get<T>(url);
@@ -26,24 +26,24 @@ export async function getBookings() {
   }
 }
 
-export async function createBooking(bookingData: any) {
-  try {
-    const response = await axios.post(
-      "http://localhost:4000/api/v1/bookings/",
-      bookingData,
-      {
-        headers: {
-          "Content-Type": "application/json",
-        },
-      }
-    );
+// export async function createBooking(bookingData: any) {
+//   try {
+//     const response = await axios.post(
+//       "http://localhost:4000/api/v1/bookings/",
+//       bookingData,
+//       {
+//         headers: {
+//           "Content-Type": "application/json",
+//         },
+//       }
+//     );
 
-    if (response.status === 200) {
-      navigate(`/bookingconfirmed`);
-    } else {
-      console.error("Något gick fel vid bokningen");
-    }
-  } catch (error) {
-    console.error("Ett fel uppstod", error);
-  }
-}
+//     if (response.status === 200) {
+//       navigate(`/bookingconfirmed`);
+//     } else {
+//       console.error("Något gick fel vid bokningen");
+//     }
+//   } catch (error) {
+//     console.error("Ett fel uppstod", error);
+//   }
+// }

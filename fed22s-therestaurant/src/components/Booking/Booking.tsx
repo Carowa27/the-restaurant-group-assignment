@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { IUsersContext, UsersContext } from "../../contexts/UserContext";
 import { IBooking } from "../../models/IBooking";
 import { User } from "../../models/User";
-import { createBooking, getBookings } from "../../services/bookingServices";
+import { getBookings } from "../../services/bookingServices";
 import { SubmitBookingButton, TimeBookingButton } from "../styled/Buttons";
 import { BookingForm, GuestInformationForm } from "../styled/Forms";
 import { H1, H3Bold, H3Normal } from "../styled/Headings";
@@ -160,115 +160,132 @@ export const Booking = () => {
       __v: 0,
     };
 
+    // try {
+    //   await createBooking(booking);
+    //   navigate(`/BookingConfirmedPage`);
+    // } catch (error) {
+    //   console.error("Ett fel uppstod", error);
+    // }
     try {
-      await createBooking(booking);
-      navigate(`/BookingConfirmedPage`);
+      const response = await fetch("http://localhost:4000/api/v1/bookings/", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(booking),
+      });
+
+      if (response.ok) {
+        navigate(`/bookingconfirmed`);
+      } else {
+        console.error("Något gick fel vid bokningen");
+      }
     } catch (error) {
       console.error("Ett fel uppstod", error);
     }
-
-    return (
-      <>
-        <BookingWrapper>
-          <H1>Estiatório Tegel</H1>
-          <H3Bold>VÄLKOMMEN ATT BOKA BORD</H3Bold>
-          <BookingForm onSubmit={handleSubmit}>
-            <NumberOfGuestWrapper>
-              <H3Normal>VÄLJ ANTAL PERSONER</H3Normal>
-              <select
-                name="numberOfGuests"
-                value={numberOfGuests}
-                onChange={handleNumberOfGuestsChange}
-              >
-                {optionsMap}
-              </select>
-            </NumberOfGuestWrapper>
-            <DateInputWrapper>
-              <H3Normal>Datum</H3Normal>
-              <DateInput
-                type="date"
-                name="date"
-                value={selectedDate}
-                onChange={handleDateChange}
-              />
-            </DateInputWrapper>
-            <TimeBookingWrapper>
-              {sittings.map((time) =>
-                time.takenSeats + numberOfGuests <= MAX_AMOUNT_PER_SITTING &&
-                !!selectedDate ? (
-                  <TimeBookingButton
-                    key={time.bookingTime}
-                    type="button"
-                    onClick={() => handleTimeSelection(time.bookingTime)}
-                  >
-                    <DivWrapper>
-                      {time.takenSeats} / {MAX_AMOUNT_PER_SITTING}
-                    </DivWrapper>
-                    <DivWrapper> {time.bookingTime}</DivWrapper>
-                  </TimeBookingButton>
-                ) : null
-              )}
-            </TimeBookingWrapper>
-          </BookingForm>
-          <GuestInformationWrapper>
-            <GuestInformationForm onSubmit={handleSubmit}>
-              <H3Normal>KONTAKTUPPGIFTER</H3Normal>
-              <UsersContext.Provider value={user}>
-                <Users />
-                <GuestInformationDiv>
-                  <label htmlFor="firstname">FÖRNAMN</label>
-                  <input
-                    type="text"
-                    id="firstname"
-                    placeholder="FÖRNAMN"
-                    name="firstname"
-                    required
-                    value={userInput.firstname}
-                    onChange={handleChange}
-                  />
-                  <label htmlFor="lastname">EFTERNAMN</label>
-                  <input
-                    type="text"
-                    id="lastname"
-                    placeholder="EFTERNAMN"
-                    name="lastname"
-                    required
-                    value={userInput.lastname}
-                    onChange={handleChange}
-                  />
-                  <label htmlFor="epost">EMAIL</label>
-                  <input
-                    type="email"
-                    id="epost"
-                    placeholder="EMAIL"
-                    name="email"
-                    required
-                    value={userInput.email}
-                    onChange={handleChange}
-                  />
-                  <label htmlFor="phone">MOBILTELEFON</label>
-                  <input
-                    type="tel"
-                    id="phone"
-                    placeholder="TEL -xxxxxxxxxx"
-                    name="phone"
-                    pattern="[0-9]{10}"
-                    required
-                    value={userInput.phone}
-                    onChange={handleChange}
-                  />
-                  <SubmitBookingButton
-                    disabled={!buttonEnabled}
-                    onClick={handleSubmit}
-                  >
-                    Boka
-                  </SubmitBookingButton>
-                </GuestInformationDiv>
-              </UsersContext.Provider>
-            </GuestInformationForm>
-          </GuestInformationWrapper>
-        </BookingWrapper>
-      </>
-    );
   };
+
+  return (
+    <>
+      <BookingWrapper>
+        <H1>Estiatório Tegel</H1>
+        <H3Bold>VÄLKOMMEN ATT BOKA BORD</H3Bold>
+        <BookingForm onSubmit={handleSubmit}>
+          <NumberOfGuestWrapper>
+            <H3Normal>VÄLJ ANTAL PERSONER</H3Normal>
+            <select
+              name="numberOfGuests"
+              value={numberOfGuests}
+              onChange={handleNumberOfGuestsChange}
+            >
+              {optionsMap}
+            </select>
+          </NumberOfGuestWrapper>
+          <DateInputWrapper>
+            <H3Normal>Datum</H3Normal>
+            <DateInput
+              type="date"
+              name="date"
+              value={selectedDate}
+              onChange={handleDateChange}
+            />
+          </DateInputWrapper>
+          <TimeBookingWrapper>
+            {sittings.map((time) =>
+              time.takenSeats + numberOfGuests <= MAX_AMOUNT_PER_SITTING &&
+              !!selectedDate ? (
+                <TimeBookingButton
+                  key={time.bookingTime}
+                  type="button"
+                  onClick={() => handleTimeSelection(time.bookingTime)}
+                >
+                  <DivWrapper>
+                    {time.takenSeats} / {MAX_AMOUNT_PER_SITTING}
+                  </DivWrapper>
+                  <DivWrapper> {time.bookingTime}</DivWrapper>
+                </TimeBookingButton>
+              ) : null
+            )}
+          </TimeBookingWrapper>
+        </BookingForm>
+        <GuestInformationWrapper>
+          <GuestInformationForm onSubmit={handleSubmit}>
+            <H3Normal>KONTAKTUPPGIFTER</H3Normal>
+            <UsersContext.Provider value={user}>
+              <Users />
+              <GuestInformationDiv>
+                <label htmlFor="firstname">FÖRNAMN</label>
+                <input
+                  type="text"
+                  id="firstname"
+                  placeholder="FÖRNAMN"
+                  name="firstname"
+                  required
+                  value={userInput.firstname}
+                  onChange={handleChange}
+                />
+                <label htmlFor="lastname">EFTERNAMN</label>
+                <input
+                  type="text"
+                  id="lastname"
+                  placeholder="EFTERNAMN"
+                  name="lastname"
+                  required
+                  value={userInput.lastname}
+                  onChange={handleChange}
+                />
+                <label htmlFor="epost">EMAIL</label>
+                <input
+                  type="email"
+                  id="epost"
+                  placeholder="EMAIL"
+                  name="email"
+                  required
+                  value={userInput.email}
+                  onChange={handleChange}
+                />
+                <label htmlFor="phone">MOBILTELEFON</label>
+                <input
+                  type="tel"
+                  id="phone"
+                  placeholder="TEL -xxxxxxxxxx"
+                  name="phone"
+                  pattern="[0-9]{10}"
+                  required
+                  value={userInput.phone}
+                  onChange={handleChange}
+                />
+                <SubmitBookingButton
+                  disabled={!buttonEnabled}
+                  onClick={handleSubmit}
+                >
+                  Boka
+                </SubmitBookingButton>
+              </GuestInformationDiv>
+            </UsersContext.Provider>
+          </GuestInformationForm>
+        </GuestInformationWrapper>
+      </BookingWrapper>
+    </>
+  );
 };
