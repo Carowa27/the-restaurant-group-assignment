@@ -1,26 +1,24 @@
-import axios from "axios";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
+import { useLoaderData } from "react-router-dom";
 import { IBooking } from "../../models/IBooking";
 import { getBookings } from "../../services/bookingServices";
-import { Booking } from "../Booking/Booking";
-import { BookButton, SearchBookingButton } from "../styled/Buttons";
+import { SearchBookingButton } from "../styled/Buttons";
 import { AdminForm } from "../styled/Forms";
-import { H1, H3Bold, H4 } from "../styled/Headings";
+import { H3Bold } from "../styled/Headings";
 import { AdminSearchBookingInput, DateInput } from "../styled/Inputs";
-import { AvailableTimes } from "../styled/Paragraphs";
-import { AdminWrapper } from "../styled/Wrappers";
+import { BookingInfoUL } from "../styled/UnorderdLists";
+import { AdminWrapper, BookingAdminInfoWrapper } from "../styled/Wrappers";
+import { AdminBookingDetails } from "./AdminBookingDetails";
 
 export const Admin = () => {
   /*Denna komponent ska vi kunna se bokningar och 
   här ska vi också kunna ta oss till AdminBookingDetails.tsx
   */
 
-  const handleClick = async () => {
-    const response = await axios.get<IBooking>(
-      "http://localhost:4000/api/v1/bookings/"
-    );
+  const [show, setShow] = useState(false);
 
-    console.log(response.data);
+  const handleClick = () => {
+    setShow(true);
   };
 
   return (
@@ -42,7 +40,10 @@ export const Admin = () => {
             innebär att samtliga bord bör gå att boka två gånger per kväll.
           </AvailableTimes> */}
         </AdminForm>
-        <button onClick={handleClick}>Hämta alla bokningar</button>
+        <SearchBookingButton onClick={handleClick}>
+          Hämta alla bokningar
+        </SearchBookingButton>
+        {show && <AdminBookingDetails></AdminBookingDetails>}
       </AdminWrapper>
     </>
   );

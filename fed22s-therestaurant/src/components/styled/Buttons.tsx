@@ -29,7 +29,6 @@ export const SearchBookingButton = styled.button`
   background-color: black;
   color: white;
   border: none;
-  width: 30%;
   &:hover {
     cursor: pointer;
     transform: scale(1.01);
@@ -71,4 +70,11 @@ export const CloseModalBtn = styled.button`
   &:hover {
     cursor: pointer;
   }
+`;
+
+export const AdminEditButton = styled.button`
+  border: none;
+  background-color: white;
+  cursor: pointer;
+  font-size: large;
 `;

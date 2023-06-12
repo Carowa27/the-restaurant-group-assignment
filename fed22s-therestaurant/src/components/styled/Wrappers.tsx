@@ -135,3 +135,9 @@ export const ErrorWrapper = styled(MainWrapper)`
   /* top: 0;
   left: 0; */
 `;
+
+export const BookingAdminInfoWrapper = styled.div`
+  display: flex;
+  background-color: white;
+  margin: 5%;
+`;
