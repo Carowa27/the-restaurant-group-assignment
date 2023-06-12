@@ -62,6 +62,9 @@ export const TimeBookingWrapper = styled.div`
   justify-content: space-evenly;
   padding: 1rem 0;
 `;
+export const DivWrapper = styled.div`
+  margin-right: 40px;
+`;
 
 export const GuestInformationWrapper = styled.div`
   width: 100%;

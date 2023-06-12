@@ -11,6 +11,7 @@ import { DateInput } from "../styled/Inputs";
 import {
   BookingWrapper,
   DateInputWrapper,
+  DivWrapper,
   GuestInformationDiv,
   GuestInformationWrapper,
   NumberOfGuestWrapper,
@@ -22,10 +23,12 @@ export const Booking = () => {
   const navigate = useNavigate();
   const { add } = useContext(UsersContext);
 
-  const [availableTimes, setAvailableTimes] = useState([
-    { bookingTime: "18:00", numOfAvailableTables: 0, isAvailable: true },
-    { bookingTime: "21:00", numOfAvailableTables: 0, isAvailable: true },
+  const [sittings, setSittings] = useState([
+    { bookingTime: "13:00", takenSeats: 0 },
+    { bookingTime: "15:00", takenSeats: 0 },
   ]);
+
+  const MAX_AMOUNT_PER_SITTING = 90;
 
   const [userInput, setUserInput] = useState(new User("", "", "", ""));
   const [user, setUser] = useState<IUsersContext>({
@@ -38,6 +41,7 @@ export const Booking = () => {
   const [numberOfGuests, setNumberOfGuests] = useState(1);
   const [selectedTime, setSelectedTime] = useState("");
   const [selectedDate, setSelectedDate] = useState("");
+  const [buttonEnabled, setButtonEnabled] = useState(false);
 
   const [initialLoad, setInitialLoad] = useState(true);
   const numberOfGuestsOptions = [
@@ -61,14 +65,8 @@ export const Booking = () => {
   ));
 
   useEffect(() => {
-    getBookings();
-    if (!initialLoad) return;
-    const storedUsers = localStorage.getItem("users");
-    if (storedUsers) {
-      setUser({ ...user, users: JSON.parse(storedUsers) });
-    }
-    setInitialLoad(false);
-  }, [initialLoad]);
+    setButtonEnabled(!!numberOfGuests && !!selectedDate && !!selectedTime);
+  });
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     if (e.target.name === "firstname") {
@@ -102,7 +100,7 @@ export const Booking = () => {
     setNumberOfGuests(guests);
   };
 
-  const getAvailableDates = async (date: string) => {
+  const setTimes = async (date: string) => {
     const data = await getBookings();
 
     console.log("All", data.data);
@@ -111,14 +109,30 @@ export const Booking = () => {
       (booking: IBooking) => booking.date === date
     );
 
-    console.log("dateBookings on that date", dateBookings);
+    const getTakenSeats = (sessionStart: string) =>
+      dateBookings
+        .filter((booking: IBooking) => booking.sessionstart === sessionStart)
+        .reduce((acc: number, booking: IBooking) => {
+          return acc + Number(booking.guests);
+        }, 0);
 
-    //console.log("dateBookings", dateBookings);
+    const updatedSittings = [
+      {
+        bookingTime: "13:00",
+        takenSeats: getTakenSeats("13:00"),
+      },
+      {
+        bookingTime: "15:00",
+        takenSeats: getTakenSeats("15:00"),
+      },
+    ];
+
+    setSittings(updatedSittings);
   };
 
   const handleDateChange = (e: ChangeEvent<HTMLInputElement>) => {
     setSelectedDate(e.target.value);
-    getAvailableDates(e.target.value);
+    setTimes(e.target.value);
   };
 
   const handleTimeSelection = (time: string) => {
@@ -127,6 +141,7 @@ export const Booking = () => {
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
+    if (!buttonEnabled) return;
 
     const booking = {
       user: {
@@ -136,7 +151,7 @@ export const Booking = () => {
         phone: userInput.phone,
       },
       ordernumber: "3",
-      guests: numberOfGuests.toString(),
+      guests: numberOfGuests,
       date: selectedDate,
       sessionstart: selectedTime,
       createdAt: new Date().toISOString(),
@@ -189,15 +204,21 @@ export const Booking = () => {
             />
           </DateInputWrapper>
           <TimeBookingWrapper>
-            {availableTimes.map((time) => (
-              <TimeBookingButton
-                key={time.bookingTime}
-                type="button"
-                onClick={() => handleTimeSelection(time.bookingTime)}
-              >
-                {time.bookingTime}
-              </TimeBookingButton>
-            ))}
+            {sittings.map((time) =>
+              time.takenSeats + numberOfGuests <= MAX_AMOUNT_PER_SITTING &&
+              !!selectedDate ? (
+                <TimeBookingButton
+                  key={time.bookingTime}
+                  type="button"
+                  onClick={() => handleTimeSelection(time.bookingTime)}
+                >
+                  <DivWrapper>
+                    {time.takenSeats} / {MAX_AMOUNT_PER_SITTING}
+                  </DivWrapper>
+                  <DivWrapper> {time.bookingTime}</DivWrapper>
+                </TimeBookingButton>
+              ) : null
+            )}
           </TimeBookingWrapper>
         </BookingForm>
         <GuestInformationWrapper>
@@ -247,7 +268,9 @@ export const Booking = () => {
                   value={userInput.phone}
                   onChange={handleChange}
                 />
-                <SubmitBookingButton>Boka</SubmitBookingButton>
+                <SubmitBookingButton disabled={!buttonEnabled}>
+                  Boka
+                </SubmitBookingButton>
               </GuestInformationDiv>
             </UsersContext.Provider>
           </GuestInformationForm>

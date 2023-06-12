@@ -1,7 +1,7 @@
 export interface IBooking {
   firstname: string;
   lastname: string;
-  sessionstart: number;
+  sessionstart: string;
   guests: number;
   date: string;
   ordernumber: number;
