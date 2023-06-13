@@ -1,6 +1,6 @@
 exports.mockBookingsData = [
   {
-    ordernumber: 1,
+    id: 1,
     guests: 4,
     date: "2023-07-01",
     sessionstart: 1300,
@@ -12,7 +12,7 @@ exports.mockBookingsData = [
     },
   },
   {
-    ordernumber: 2,
+    id: 2,
     guests: 2,
     date: "2023-07-01",
     sessionstart: 1500,

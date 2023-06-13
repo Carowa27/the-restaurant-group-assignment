@@ -2,10 +2,6 @@ const mongoose = require("mongoose");
 
 const BookingSchema = new mongoose.Schema(
   {
-    ordernumber: {
-      type: String,
-      // required: true
-    },
     guests: {
       type: String,
       // required: true
@@ -41,6 +37,7 @@ const BookingSchema = new mongoose.Schema(
         minLength: 7,
         maxLength: 10,
       },
+      id: { type: String },
     },
   },
   {
