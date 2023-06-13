@@ -102,6 +102,8 @@ export const Booking = () => {
     const tables = Math.ceil(guests / MAX_AMOUNT_PER_SITTING);
     setNumberOfGuests(guests);
     setNumberOfTables(tables);
+
+    setBookedTables(tables);
   };
 
   const setTimes = async (date: string) => {
@@ -134,7 +136,6 @@ export const Booking = () => {
           );
           return acc + numberOfTables;
         }
-        setBookedTables(acc);
         return acc;
       }, 0);
     };
@@ -194,6 +195,7 @@ export const Booking = () => {
   };
 
   console.log(numberOfTables);
+  console.log(bookedTables, "bookedTables");
   console.log(sittings);
 
   return (
