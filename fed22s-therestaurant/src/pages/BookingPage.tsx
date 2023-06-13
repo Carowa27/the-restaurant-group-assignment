@@ -1,31 +1,21 @@
-import { Link, useParams } from "react-router-dom";
-import { ChangeEvent, FormEvent, useContext, useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
+import { useState } from "react";
 import { Booking } from "../components/Booking/Booking";
 
 export const BookingPage = () => {
   const params = useParams();
 
-  // const [selectedButton, setSelectedButton] = useState("");
-
-  //create btn
-  //om tryckt, öppna Booking.tsx och skicka med variabeln create
-  //Booking.tsx öppnas då med form form create
-
-  //update btn
-  // om tryckt, öppnas Booking.tsx och skickar med variabeln update
-  //Booking.tsx öppnas då med form form update
-
-  //ändra om vilken kod som syns utan att ändra hela sidan.
+  // to do fixa till den här komponenten
 
   const [showCreateBooking, setShowCreateBooking] = useState(false);
   const [showUpdateBooking, setShowUpdateBooking] = useState(false);
   const changeToCreate = () => {
     setShowCreateBooking(true);
-    // setSelectedButton("create");
+    setShowUpdateBooking(false);
   };
   const changeToMyBooking = () => {
     setShowUpdateBooking(true);
-    // setSelectedButton("update");
+    setShowCreateBooking(false);
   };
 
   const createMsg = "create";
@@ -36,7 +26,6 @@ export const BookingPage = () => {
       <button onClick={changeToMyBooking}>Ändra bokning</button>
       {showCreateBooking && <Booking msg={createMsg}></Booking>}
       {showUpdateBooking && <Booking msg={updateMsg}></Booking>}
-      {/* <Booking></Booking> */}
     </>
   );
 };

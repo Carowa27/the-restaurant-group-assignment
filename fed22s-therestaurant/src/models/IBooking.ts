@@ -5,10 +5,9 @@ export interface IBooking {
   sessionstart: string;
   guests: number;
   date: string;
-  id: number;
+  id: string;
 }
 
 export interface IApiResponse {
   bookings: IBooking[];
 }
-

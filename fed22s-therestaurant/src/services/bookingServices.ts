@@ -66,6 +66,19 @@ export async function updateBooking(id: any, updatedData: any) {
   }
 }
 
+export const getBookingById = async (id: string) => {
+  //: Promise<IApiResponse>
+  try {
+    let response = await axios.get<IBooking>(
+      `http://localhost:4000/api/v1/bookings/` + id
+    );
+    // return { bookings: response.data[0], error: "" };
+    return response.data;
+  } catch (error) {
+    throw new Error("Fail to get data from this  API:" + error);
+  }
+};
+
 //     const response = await axios.get<IBookingResponse>(
 //       "http://localhost:4000/api/v1/bookings/"
 //     );

@@ -3,7 +3,11 @@ import { useNavigate } from "react-router-dom";
 import { IUsersContext, UsersContext } from "../../contexts/UserContext";
 import { IBooking } from "../../models/IBooking";
 import { User } from "../../models/User";
-import { createBooking, getBookings } from "../../services/bookingServices";
+import {
+  createBooking,
+  getBookingById,
+  getBookings,
+} from "../../services/bookingServices";
 import { SearchBooking } from "../SearchBooking/SearchBooking";
 import { SubmitBookingButton, TimeBookingButton } from "../styled/Buttons";
 import { BookingForm, GuestInformationForm } from "../styled/Forms";
@@ -22,7 +26,9 @@ import { Users } from "./Users";
 
 interface IBookingProps {
   msg: string;
+  // myBookingsSearchBookingInput: string;
 }
+
 export const Booking = (props: IBookingProps) => {
   const navigate = useNavigate();
   console.log(props.msg);
@@ -32,9 +38,8 @@ export const Booking = (props: IBookingProps) => {
     { bookingTime: "15:00", remainingTables: 0 },
   ]);
 
-  const MAX_AMOUNT_PER_SITTING = 6; //Max antal gäster per bord
-  const MAX_AMOUNT_TABLES = 15; //Totalt antal tillgängliga bord
-
+  const MAX_AMOUNT_PER_SITTING = 6;
+  const MAX_AMOUNT_TABLES = 15;
   const [numberOfTables, setNumberOfTables] = useState(15);
 
   const [bookedTables, setBookedTables] = useState(0);
@@ -146,15 +151,13 @@ export const Booking = (props: IBookingProps) => {
       (booking: IBooking) => booking.date === date
     );
 
-    // const MAX_AMOUNT_PER_TABLE = 6; // Max antal gäster per bord
-    const MAX_AMOUNT_TABLES = 15; // Totalt antal tillgängliga bord
+    const MAX_AMOUNT_TABLES = 15;
 
     const getRemainingTables = (sessionStart: string) => {
       const totalAvailableTables = MAX_AMOUNT_TABLES;
-      const totalTakenTables = getTakenTablesFromBookings(sessionStart); // Hämta antal tagna bord från bokningar
+      const totalTakenTables = getTakenTablesFromBookings(sessionStart);
       const remainingTables = totalAvailableTables - totalTakenTables;
       setRemainingTables(remainingTables);
-      // const requiredTables = Math.ceil(numberOfGuests / MAX_AMOUNT_PER_SITTING);
 
       return remainingTables;
     };
@@ -224,12 +227,55 @@ export const Booking = (props: IBookingProps) => {
       console.error("Något gick fel vid bokningen");
     }
   };
-  //updateBooking
-  const getAllBookings = async () => {
-    const data = await getBookings();
-    console.log(data);
-    return data;
+
+  //updateBooking logiken
+
+  const handleSubmitUpdate = (e: ChangeEvent<HTMLInputElement>) => {
+    e.preventDefault();
+
+    console.log(e.target.value);
+    const userGivenId = e.target.value; //props.myBookingsSearchBookingInput;
+    // console.log(userGivenId);
+    const [userBooking, setUserBooking] = useState<IBooking>();
+    const getUserBookingById = async () => {
+      const data = await getBookingById(userGivenId);
+      console.log(data);
+      setUserBooking(data);
+    };
+    getUserBookingById();
+    console.log(userBooking);
   };
+
+  // const foundBooking = bookings.find(
+  //   (booking) => booking._id === searchInput.value
+  // );
+
+  // skapa det uppdaterade objektet & denna ska vara i en funktion när man klickar på uppdatera knappen
+  //man kan även refaktorera detta senare om tid finns då koden är samma så DRY
+  // const updatededBooking = {
+  //   user: {
+  //     firstname: userInput.firstname,
+  //     lastname: userInput.lastname,
+  //     email: userInput.email,
+  //     phone: userInput.phone,
+  //   },
+  //   guests: numberOfGuests,
+  //   date: selectedDate,
+  //   sessionstart: selectedTime,
+  //   createdAt: new Date().toISOString(),
+  //   updatedAt: new Date().toISOString(),
+  //   __v: 0,
+  // };
+
+  // const response = await updateBooking(updatededBooking);
+
+  /*if (response?.status === 201) {
+      // Send mail
+
+      navigate(`/bookingconfirmed`);
+    } else {
+      console.error("Något gick fel vid bokningen");
+    }*/
 
   //html för sökning
   //kolla id.t mot existerande objekt i listan
@@ -247,7 +293,11 @@ export const Booking = (props: IBookingProps) => {
   return (
     <>
       <BookingWrapper>
-        {props.msg === "update" && <SearchBooking></SearchBooking>}
+        {props.msg === "update" && (
+          <SearchBooking
+            handleSubmitUpdate={handleSubmitUpdate}
+          ></SearchBooking>
+        )}
         <H1>Estiatório Tegel</H1>
         <H3Bold>VÄLKOMMEN ATT BOKA BORD</H3Bold>
         <BookingForm onSubmit={handleSubmit}>
@@ -336,12 +386,19 @@ export const Booking = (props: IBookingProps) => {
                   value={userInput.phone}
                   onChange={handleChange}
                 />
-                <SubmitBookingButton
-                  disabled={!buttonEnabled}
-                  onClick={handleSubmit}
-                >
-                  Boka
-                </SubmitBookingButton>
+                {props.msg === "create" && (
+                  <SubmitBookingButton
+                    disabled={!buttonEnabled}
+                    onClick={handleSubmit}
+                  >
+                    Boka
+                  </SubmitBookingButton>
+                )}
+                {props.msg === "update" && (
+                  <SubmitBookingButton disabled={!buttonEnabled}>
+                    Ändra
+                  </SubmitBookingButton>
+                )}
               </GuestInformationDiv>
             </UsersContext.Provider>
           </GuestInformationForm>
