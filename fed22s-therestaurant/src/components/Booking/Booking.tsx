@@ -32,6 +32,7 @@ export const Booking = () => {
 
   const [numberOfTables, setNumberOfTables] = useState(15);
 
+  const [bookedTables, setBookedTables] = useState(0);
   const [userInput, setUserInput] = useState(new User("", "", "", ""));
   const [user, setUser] = useState<IUsersContext>({
     users: [],
@@ -112,7 +113,7 @@ export const Booking = () => {
       (booking: IBooking) => booking.date === date
     );
 
-    const MAX_AMOUNT_PER_TABLE = 6; // Max antal gäster per bord
+    // const MAX_AMOUNT_PER_TABLE = 6; // Max antal gäster per bord
     const MAX_AMOUNT_TABLES = 15; // Totalt antal tillgängliga bord
 
     const getRemainingTables = (sessionStart: string) => {
@@ -133,6 +134,7 @@ export const Booking = () => {
           );
           return acc + numberOfTables;
         }
+        setBookedTables(acc);
         return acc;
       }, 0);
     };
@@ -147,8 +149,6 @@ export const Booking = () => {
         remainingTables: getRemainingTables("15:00"),
       },
     ];
-
-    setSittings(updatedSittings);
 
     setSittings(updatedSittings);
     console.log(updatedSittings);
@@ -174,7 +174,7 @@ export const Booking = () => {
         email: userInput.email,
         phone: userInput.phone,
       },
-      guests: numberOfTables,
+      guests: numberOfGuests,
       date: selectedDate,
       sessionstart: selectedTime,
       createdAt: new Date().toISOString(),
@@ -223,14 +223,14 @@ export const Booking = () => {
           </DateInputWrapper>
           <TimeBookingWrapper>
             {sittings.map((time) =>
-              time.remainingTables >= numberOfTables && !!selectedDate ? (
+              time.remainingTables >= bookedTables && !!selectedDate ? (
                 <TimeBookingButton
                   key={time.bookingTime}
                   type="button"
                   onClick={() => handleTimeSelection(time.bookingTime)}
                 >
                   <DivWrapper>
-                    {time.remainingTables} / {MAX_AMOUNT_PER_SITTING}
+                    {time.remainingTables} / {MAX_AMOUNT_TABLES}
                   </DivWrapper>
                   <DivWrapper> {time.bookingTime}</DivWrapper>
                 </TimeBookingButton>
