@@ -4,6 +4,7 @@ import { IUsersContext, UsersContext } from "../../contexts/UserContext";
 import { IBooking } from "../../models/IBooking";
 import { User } from "../../models/User";
 import { createBooking, getBookings } from "../../services/bookingServices";
+import { SearchBooking } from "../SearchBooking/SearchBooking";
 import { SubmitBookingButton, TimeBookingButton } from "../styled/Buttons";
 import { BookingForm, GuestInformationForm } from "../styled/Forms";
 import { H1, H3Bold, H3Normal } from "../styled/Headings";
@@ -19,8 +20,12 @@ import {
 } from "../styled/Wrappers";
 import { Users } from "./Users";
 
-export const Booking = () => {
+interface IBookingProps {
+  msg: string;
+}
+export const Booking = (props: IBookingProps) => {
   const navigate = useNavigate();
+  console.log(props.msg);
 
   const [sittings, setSittings] = useState([
     { bookingTime: "13:00", remainingTables: 0 },
@@ -216,6 +221,20 @@ export const Booking = () => {
       console.error("Något gick fel vid bokningen");
     }
   };
+  //updateBooking
+  const getAllBookings = async () => {
+    const data = await getBookings();
+    console.log(data);
+    return data;
+  };
+
+  //html för sökning
+  //kolla id.t mot existerande objekt i listan
+  //hämta all data om objektet
+  //visa all data i relevanta placeholders
+
+  // om ändra =>visa ändra knapp ist för boka
+  // om create => gör inte hämtning av alla & visa boka knapp
 
   console.log(numberOfTables);
   console.log(bookedTables, "bookedTables");
@@ -225,6 +244,7 @@ export const Booking = () => {
   return (
     <>
       <BookingWrapper>
+        {props.msg === "update" && <SearchBooking></SearchBooking>}
         <H1>Estiatório Tegel</H1>
         <H3Bold>VÄLKOMMEN ATT BOKA BORD</H3Bold>
         <BookingForm onSubmit={handleSubmit}>
@@ -233,6 +253,7 @@ export const Booking = () => {
             <select
               name="numberOfGuests"
               value={numberOfGuests}
+              // placeholder={currentGuests}
               onChange={handleNumberOfGuestsChange}
             >
               {optionsMap}

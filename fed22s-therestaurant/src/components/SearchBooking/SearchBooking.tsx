@@ -4,7 +4,7 @@ import { H3Bold } from "../styled/Headings";
 import { MyBookingsSearchBookingInput } from "../styled/Inputs";
 import { MyBookingsWrapper } from "../styled/Wrappers";
 
-export const MyBookings = () => {
+export const SearchBooking = () => {
   return (
     <>
       <h1>Här är din bokning </h1>

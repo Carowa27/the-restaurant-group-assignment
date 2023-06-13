@@ -43,3 +43,22 @@ export async function createBooking(bookingData: any) {
     console.error("Ett fel uppstod", error);
   }
 }
+
+//vet inte om denna funkar än
+export async function updateBooking(id: any, updatedData: any) {
+  try {
+    const response = await axios.put(
+      `http://localhost:4000/api/v1/bookings/${id}`,
+      updatedData,
+      {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
+
+    return response;
+  } catch (error) {
+    console.error("Ett fel uppstod", error);
+  }
+}
