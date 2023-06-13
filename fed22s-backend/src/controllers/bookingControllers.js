@@ -44,7 +44,6 @@ exports.getBookingById = async (req, res) => {
 exports.createBooking = async (req, res) => {
   try {
     const {
-      ordernumber,
       guests,
       date,
       sessionstart,
@@ -52,7 +51,6 @@ exports.createBooking = async (req, res) => {
     } = req.body;
 
     const newBooking = await Booking.create({
-      ordernumber,
       guests,
       date,
       sessionstart,
@@ -106,7 +104,6 @@ exports.updateBookingById = async (req, res) => {
   try {
     const bookingId = req.params.bookingId;
     const {
-      ordernumber,
       guests,
       date,
       sessionstart,
@@ -122,7 +119,7 @@ exports.updateBookingById = async (req, res) => {
       throw new NotFoundError("This booking does not exist");
     }
 
-    if (ordernumber) bookingToUpdate.ordernumber = ordernumber;
+    if (id) bookingToUpdate.id = id;
     if (guests) bookingToUpdate.guests = guests;
     if (date) bookingToUpdate.date = date;
     if (sessionstart) bookingToUpdate.sessionstart = sessionstart;

@@ -1,8 +1,10 @@
 import { ChangeEvent, FormEvent, useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { IUsersContext, UsersContext } from "../../contexts/UserContext";
+import { IBooking } from "../../models/IBooking";
 import { User } from "../../models/User";
-import { getBookings } from "../../services/bookingServices";
+import { createBooking, getBookings } from "../../services/bookingServices";
+import { SearchBooking } from "../SearchBooking/SearchBooking";
 import { SubmitBookingButton, TimeBookingButton } from "../styled/Buttons";
 import { BookingForm, GuestInformationForm } from "../styled/Forms";
 import { H1, H3Bold, H3Normal } from "../styled/Headings";
@@ -10,6 +12,7 @@ import { DateInput } from "../styled/Inputs";
 import {
   BookingWrapper,
   DateInputWrapper,
+  DivWrapper,
   GuestInformationDiv,
   GuestInformationWrapper,
   NumberOfGuestWrapper,
@@ -17,15 +20,24 @@ import {
 } from "../styled/Wrappers";
 import { Users } from "./Users";
 
-export const Booking = () => {
+interface IBookingProps {
+  msg: string;
+}
+export const Booking = (props: IBookingProps) => {
   const navigate = useNavigate();
-  const { add } = useContext(UsersContext);
+  console.log(props.msg);
 
-  const [availableTimes, setAvailableTimes] = useState([
-    { bookingTime: "18:00", numOfAvailableTables: 0, isAvailable: true },
-    { bookingTime: "21:00", numOfAvailableTables: 0, isAvailable: true },
+  const [sittings, setSittings] = useState([
+    { bookingTime: "13:00", remainingTables: 0 },
+    { bookingTime: "15:00", remainingTables: 0 },
   ]);
 
+  const MAX_AMOUNT_PER_SITTING = 6; //Max antal gäster per bord
+  const MAX_AMOUNT_TABLES = 15; //Totalt antal tillgängliga bord
+
+  const [numberOfTables, setNumberOfTables] = useState(15);
+
+  const [bookedTables, setBookedTables] = useState(0);
   const [userInput, setUserInput] = useState(new User("", "", "", ""));
   const [user, setUser] = useState<IUsersContext>({
     users: [],
@@ -33,12 +45,13 @@ export const Booking = () => {
       return;
     },
   });
-
+  const [noAvailableTimes, setNoAvailableTimes] = useState(false);
   const [numberOfGuests, setNumberOfGuests] = useState(1);
   const [selectedTime, setSelectedTime] = useState("");
   const [selectedDate, setSelectedDate] = useState("");
+  const [buttonEnabled, setButtonEnabled] = useState(false);
+  const [remainingTables, setRemainingTables] = useState(15);
 
-  const [initialLoad, setInitialLoad] = useState(true);
   const numberOfGuestsOptions = [
     { value: 1, label: "1 person" },
     { value: 2, label: "2 personer" },
@@ -60,14 +73,30 @@ export const Booking = () => {
   ));
 
   useEffect(() => {
-    getBookings();
-    if (!initialLoad) return;
-    const storedUsers = localStorage.getItem("users");
-    if (storedUsers) {
-      setUser({ ...user, users: JSON.parse(storedUsers) });
+    setButtonEnabled(!!numberOfGuests && !!selectedDate && !!selectedTime);
+    if (!!numberOfGuests && !!selectedDate) {
+      console.log(remainingTables, bookedTables);
+
+      const updatedAvailableTables = sittings.map((sitting) => {
+        if (sitting.remainingTables >= bookedTables) {
+          return false;
+        }
+        return true;
+      });
+
+      if (updatedAvailableTables.includes(true)) {
+        setNoAvailableTimes(true);
+      } else {
+        setNoAvailableTimes(false);
+      }
     }
-    setInitialLoad(false);
-  }, [initialLoad]);
+  }, [
+    numberOfGuests,
+    selectedDate,
+    selectedTime,
+    bookedTables,
+    remainingTables,
+  ]);
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     if (e.target.name === "firstname") {
@@ -98,11 +127,65 @@ export const Booking = () => {
 
   const handleNumberOfGuestsChange = (e: ChangeEvent<HTMLSelectElement>) => {
     const guests = parseInt(e.target.value);
+    const tables = Math.ceil(guests / MAX_AMOUNT_PER_SITTING);
     setNumberOfGuests(guests);
+    setNumberOfTables(tables);
+    setBookedTables(tables);
+    setNoAvailableTimes(false);
+  };
+
+  const setTimes = async (date: string) => {
+    const data = await getBookings();
+
+    console.log("All", data.data);
+
+    const dateBookings = data.data.filter(
+      (booking: IBooking) => booking.date === date
+    );
+
+    // const MAX_AMOUNT_PER_TABLE = 6; // Max antal gäster per bord
+    const MAX_AMOUNT_TABLES = 15; // Totalt antal tillgängliga bord
+
+    const getRemainingTables = (sessionStart: string) => {
+      const totalAvailableTables = MAX_AMOUNT_TABLES;
+      const totalTakenTables = getTakenTablesFromBookings(sessionStart); // Hämta antal tagna bord från bokningar
+      const remainingTables = totalAvailableTables - totalTakenTables;
+      setRemainingTables(remainingTables);
+      // const requiredTables = Math.ceil(numberOfGuests / MAX_AMOUNT_PER_SITTING);
+
+      return remainingTables;
+    };
+
+    const getTakenTablesFromBookings = (sessionStart: string) => {
+      return dateBookings.reduce((acc: number, booking: IBooking) => {
+        if (booking.sessionstart === sessionStart) {
+          const numberOfTables = Math.ceil(
+            booking.guests / MAX_AMOUNT_PER_SITTING
+          );
+          return acc + numberOfTables;
+        }
+        return acc;
+      }, 0);
+    };
+
+    const updatedSittings = [
+      {
+        bookingTime: "13:00",
+        remainingTables: getRemainingTables("13:00"),
+      },
+      {
+        bookingTime: "15:00",
+        remainingTables: getRemainingTables("15:00"),
+      },
+    ];
+
+    setSittings(updatedSittings);
+    console.log(updatedSittings);
   };
 
   const handleDateChange = (e: ChangeEvent<HTMLInputElement>) => {
     setSelectedDate(e.target.value);
+    setTimes(e.target.value);
   };
 
   const handleTimeSelection = (time: string) => {
@@ -111,6 +194,7 @@ export const Booking = () => {
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
+    if (!buttonEnabled) return;
 
     const booking = {
       user: {
@@ -119,8 +203,7 @@ export const Booking = () => {
         email: userInput.email,
         phone: userInput.phone,
       },
-      ordernumber: "3",
-      guests: numberOfGuests.toString(),
+      guests: numberOfGuests,
       date: selectedDate,
       sessionstart: selectedTime,
       createdAt: new Date().toISOString(),
@@ -128,28 +211,40 @@ export const Booking = () => {
       __v: 0,
     };
 
-    try {
-      const response = await fetch("http://localhost:4000/api/v1/bookings/", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(booking),
-      });
+    const response = await createBooking(booking);
 
-      if (response.ok) {
-        navigate(`/bookingconfirmed`);
-      } else {
-        console.error("Något gick fel vid bokningen");
-      }
-    } catch (error) {
-      console.error("Ett fel uppstod", error);
+    if (response?.status === 201) {
+      // Send mail
+
+      navigate(`/bookingconfirmed`);
+    } else {
+      console.error("Något gick fel vid bokningen");
     }
   };
+  //updateBooking
+  const getAllBookings = async () => {
+    const data = await getBookings();
+    console.log(data);
+    return data;
+  };
+
+  //html för sökning
+  //kolla id.t mot existerande objekt i listan
+  //hämta all data om objektet
+  //visa all data i relevanta placeholders
+
+  // om ändra =>visa ändra knapp ist för boka
+  // om create => gör inte hämtning av alla & visa boka knapp
+
+  console.log(numberOfTables);
+  console.log(bookedTables, "bookedTables");
+  console.log(sittings);
+  console.log(noAvailableTimes);
 
   return (
     <>
       <BookingWrapper>
+        {props.msg === "update" && <SearchBooking></SearchBooking>}
         <H1>Estiatório Tegel</H1>
         <H3Bold>VÄLKOMMEN ATT BOKA BORD</H3Bold>
         <BookingForm onSubmit={handleSubmit}>
@@ -158,6 +253,7 @@ export const Booking = () => {
             <select
               name="numberOfGuests"
               value={numberOfGuests}
+              // placeholder={currentGuests}
               onChange={handleNumberOfGuestsChange}
             >
               {optionsMap}
@@ -173,16 +269,22 @@ export const Booking = () => {
             />
           </DateInputWrapper>
           <TimeBookingWrapper>
-            {availableTimes.map((time) => (
-              <TimeBookingButton
-                key={time.bookingTime}
-                type="button"
-                onClick={() => handleTimeSelection(time.bookingTime)}
-              >
-                {time.bookingTime}
-              </TimeBookingButton>
-            ))}
+            {sittings.map((time) =>
+              time.remainingTables >= bookedTables && !!selectedDate ? (
+                <TimeBookingButton
+                  key={time.bookingTime}
+                  type="button"
+                  onClick={() => handleTimeSelection(time.bookingTime)}
+                >
+                  <DivWrapper>
+                    {time.remainingTables} / {MAX_AMOUNT_TABLES}
+                  </DivWrapper>
+                  <DivWrapper> {time.bookingTime}</DivWrapper>
+                </TimeBookingButton>
+              ) : null
+            )}
           </TimeBookingWrapper>
+          {noAvailableTimes && <p>Tyvärr finns det inga lediga tider!</p>}
         </BookingForm>
         <GuestInformationWrapper>
           <GuestInformationForm onSubmit={handleSubmit}>
@@ -231,7 +333,12 @@ export const Booking = () => {
                   value={userInput.phone}
                   onChange={handleChange}
                 />
-                <SubmitBookingButton>Boka</SubmitBookingButton>
+                <SubmitBookingButton
+                  disabled={!buttonEnabled}
+                  onClick={handleSubmit}
+                >
+                  Boka
+                </SubmitBookingButton>
               </GuestInformationDiv>
             </UsersContext.Provider>
           </GuestInformationForm>

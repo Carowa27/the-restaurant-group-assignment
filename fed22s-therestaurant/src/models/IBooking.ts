@@ -1,13 +1,14 @@
 export interface IBooking {
+  sessiondate: string;
   firstname: string;
   lastname: string;
-  sessionstart: number;
+  sessionstart: string;
   guests: number;
   date: string;
-  ordernumber: number;
-  _id: number;
+  id: number;
 }
 
-// export interface IApiReponse {
-//   bookings: IBooking[];
-// }
+export interface IApiResponse {
+  bookings: IBooking[];
+}
+
