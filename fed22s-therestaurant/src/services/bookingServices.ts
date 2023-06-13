@@ -7,21 +7,17 @@ import IBookingResponse from "../utils/IBookingResponse";
 
 // const navigate = useNavigate();
 
+const get = async <T>(url: string) => {
+  return await axios.get<T>(url);
+};
 
-// const get = async <T>(url: string) => {
-//   return await axios.get<T>(url);
-// };
+export const getBookings = async () => {
+  try {
+    const dataFromLs = localStorage.getItem("bookings");
 
-
-// export const getBookings = async () => {
-//   try {
-//     const dataFromLs = localStorage.getItem("bookings");
-
-
-//     if (dataFromLs) {
-//       return JSON.parse(dataFromLs);
-//     }
-
+    if (dataFromLs) {
+      return JSON.parse(dataFromLs);
+    }
 
     const response = await get<IApiResponse>(
       "http://localhost:4000/api/v1/bookings/"
@@ -31,7 +27,7 @@ import IBookingResponse from "../utils/IBookingResponse";
   } catch (error) {
     throw new Error("Fail to get data from this  API:" + error);
   }
-}
+};
 
 export async function createBooking(bookingData: any) {
   try {
@@ -68,8 +64,9 @@ export async function updateBooking(id: any, updatedData: any) {
   } catch (error) {
     console.error("Ett fel uppstod", error);
   }
-  
- //     const response = await axios.get<IBookingResponse>(
+}
+
+//     const response = await axios.get<IBookingResponse>(
 //       "http://localhost:4000/api/v1/bookings/"
 //     );
 
@@ -81,12 +78,10 @@ export async function updateBooking(id: any, updatedData: any) {
 //   }
 // };
 
-export async function getBookings(): Promise<IBooking[]> {
-  let response = await axios.get<IBookingResponse>(
-    "http://localhost:4000/api/v1/bookings/"
-  );
-  return response.data.data;
+// export async function getBookings(): Promise<IBooking[]> {
+//   let response = await axios.get<IBookingResponse>(
+//     "http://localhost:4000/api/v1/bookings/"
+//   );
+//   return response.data.data;
 
-
-}
-
+// }
