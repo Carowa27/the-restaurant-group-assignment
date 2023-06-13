@@ -20,6 +20,13 @@ export const AdminWrapper = styled.div`
   padding: 5px;
 `;
 
+export const MyBookingsWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 5px;
+`;
+
 export const BookingWrapper = styled.div`
   /* background-color: #859685; */
   display: flex;

@@ -6,6 +6,7 @@ import { ContactPage } from "./pages/ContactPage";
 import { LandingPage } from "./pages/LandingPage";
 import { Layout } from "./pages/Layout";
 import { ErrorPage } from "./pages/ErrorPage";
+import { MyBookings } from "./components/MyBookings/MyBookings";
 
 export const Router = createBrowserRouter([
   {
@@ -33,6 +34,10 @@ export const Router = createBrowserRouter([
       {
         path: "/bookingconfirmed",
         element: <BookingConfirmedPage></BookingConfirmedPage>,
+      },
+      {
+        path: "/myBookings",
+        element: <MyBookings></MyBookings>,
       },
     ],
   },

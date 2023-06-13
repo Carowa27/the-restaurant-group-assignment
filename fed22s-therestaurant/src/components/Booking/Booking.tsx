@@ -40,11 +40,12 @@ export const Booking = () => {
       return;
     },
   });
-
+  const [noAvailableTimes, setNoAvailableTimes] = useState(false);
   const [numberOfGuests, setNumberOfGuests] = useState(1);
   const [selectedTime, setSelectedTime] = useState("");
   const [selectedDate, setSelectedDate] = useState("");
   const [buttonEnabled, setButtonEnabled] = useState(false);
+  const [remainingTables, setRemainingTables] = useState(15);
 
   const numberOfGuestsOptions = [
     { value: 1, label: "1 person" },
@@ -68,7 +69,29 @@ export const Booking = () => {
 
   useEffect(() => {
     setButtonEnabled(!!numberOfGuests && !!selectedDate && !!selectedTime);
-  }, [numberOfGuests, selectedDate, selectedTime]);
+    if (!!numberOfGuests && !!selectedDate) {
+      console.log(remainingTables, bookedTables);
+
+      const updatedAvailableTables = sittings.map((sitting) => {
+        if (sitting.remainingTables >= bookedTables) {
+          return false;
+        }
+        return true;
+      });
+
+      if (updatedAvailableTables.includes(true)) {
+        setNoAvailableTimes(true);
+      } else {
+        setNoAvailableTimes(false);
+      }
+    }
+  }, [
+    numberOfGuests,
+    selectedDate,
+    selectedTime,
+    bookedTables,
+    remainingTables,
+  ]);
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     if (e.target.name === "firstname") {
@@ -102,8 +125,8 @@ export const Booking = () => {
     const tables = Math.ceil(guests / MAX_AMOUNT_PER_SITTING);
     setNumberOfGuests(guests);
     setNumberOfTables(tables);
-
     setBookedTables(tables);
+    setNoAvailableTimes(false);
   };
 
   const setTimes = async (date: string) => {
@@ -121,8 +144,8 @@ export const Booking = () => {
     const getRemainingTables = (sessionStart: string) => {
       const totalAvailableTables = MAX_AMOUNT_TABLES;
       const totalTakenTables = getTakenTablesFromBookings(sessionStart); // Hämta antal tagna bord från bokningar
-
       const remainingTables = totalAvailableTables - totalTakenTables;
+      setRemainingTables(remainingTables);
       // const requiredTables = Math.ceil(numberOfGuests / MAX_AMOUNT_PER_SITTING);
 
       return remainingTables;
@@ -197,6 +220,7 @@ export const Booking = () => {
   console.log(numberOfTables);
   console.log(bookedTables, "bookedTables");
   console.log(sittings);
+  console.log(noAvailableTimes);
 
   return (
     <>
@@ -239,6 +263,7 @@ export const Booking = () => {
               ) : null
             )}
           </TimeBookingWrapper>
+          {noAvailableTimes && <p>Tyvärr finns det inga lediga tider!</p>}
         </BookingForm>
         <GuestInformationWrapper>
           <GuestInformationForm onSubmit={handleSubmit}>
