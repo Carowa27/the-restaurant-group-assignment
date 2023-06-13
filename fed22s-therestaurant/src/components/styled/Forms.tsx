@@ -11,6 +11,7 @@ export const StyledForm = styled.form`
 export const AdminForm = styled.form`
   display: flex;
   flex-direction: column;
+  background-color: white;
   align-items: center;
   padding: 5%;
   margin: 2%;
@@ -28,6 +29,7 @@ export const MyBookingsForm = styled.form`
 
 export const BookingForm = styled.form`
   box-shadow: 0 0 5px rgba(0, 0, 0, 0.4);
+  background-color: white;
   display: flex;
   flex-direction: column;
   width: 50%;
@@ -48,6 +50,7 @@ export const BookingForm = styled.form`
 export const GuestInformationForm = styled.form`
   margin-bottom: 1rem;
   box-shadow: 0 0 5px rgba(0, 0, 0, 0.4);
+  background-color: white;
   width: 50%;
   display: flex;
   flex-direction: column;
