@@ -5,7 +5,6 @@ export interface IBooking {
   sessionstart: string;
   guests: number;
   date: string;
-  ordernumber: number;
   id: number;
 }
 

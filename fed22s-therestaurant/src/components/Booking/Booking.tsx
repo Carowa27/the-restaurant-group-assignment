@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { IUsersContext, UsersContext } from "../../contexts/UserContext";
 import { IBooking } from "../../models/IBooking";
 import { User } from "../../models/User";
-import { getBookings } from "../../services/bookingServices";
+import { createBooking, getBookings } from "../../services/bookingServices";
 import { SubmitBookingButton, TimeBookingButton } from "../styled/Buttons";
 import { BookingForm, GuestInformationForm } from "../styled/Forms";
 import { H1, H3Bold, H3Normal } from "../styled/Headings";
@@ -23,8 +23,8 @@ export const Booking = () => {
   const navigate = useNavigate();
 
   const [sittings, setSittings] = useState([
-    { bookingTime: "13:00", takenTables: 0 },
-    { bookingTime: "15:00", takenTables: 0 },
+    { bookingTime: "13:00", remainingTables: 0 },
+    { bookingTime: "15:00", remainingTables: 0 },
   ]);
 
   const MAX_AMOUNT_PER_SITTING = 6; //Max antal gäster per bord
@@ -115,14 +115,14 @@ export const Booking = () => {
     const MAX_AMOUNT_PER_TABLE = 6; // Max antal gäster per bord
     const MAX_AMOUNT_TABLES = 15; // Totalt antal tillgängliga bord
 
-    const getTakenTables = (sessionStart: string) => {
+    const getRemainingTables = (sessionStart: string) => {
       const totalAvailableTables = MAX_AMOUNT_TABLES;
       const totalTakenTables = getTakenTablesFromBookings(sessionStart); // Hämta antal tagna bord från bokningar
 
       const remainingTables = totalAvailableTables - totalTakenTables;
-      const requiredTables = Math.ceil(numberOfGuests / MAX_AMOUNT_PER_SITTING);
+      // const requiredTables = Math.ceil(numberOfGuests / MAX_AMOUNT_PER_SITTING);
 
-      return Math.min(remainingTables, requiredTables);
+      return remainingTables;
     };
 
     const getTakenTablesFromBookings = (sessionStart: string) => {
@@ -140,11 +140,11 @@ export const Booking = () => {
     const updatedSittings = [
       {
         bookingTime: "13:00",
-        takenTables: getTakenTables("13:00"),
+        remainingTables: getRemainingTables("13:00"),
       },
       {
         bookingTime: "15:00",
-        takenTables: getTakenTables("15:00"),
+        remainingTables: getRemainingTables("15:00"),
       },
     ];
 
@@ -174,7 +174,6 @@ export const Booking = () => {
         email: userInput.email,
         phone: userInput.phone,
       },
-      ordernumber: "3",
       guests: numberOfTables,
       date: selectedDate,
       sessionstart: selectedTime,
@@ -183,24 +182,19 @@ export const Booking = () => {
       __v: 0,
     };
 
-    try {
-      const response = await fetch("http://localhost:4000/api/v1/bookings/", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(booking),
-      });
+    const response = await createBooking(booking);
 
-      if (response.ok) {
-        navigate(`/bookingconfirmed`);
-      } else {
-        console.error("Något gick fel vid bokningen");
-      }
-    } catch (error) {
-      console.error("Ett fel uppstod", error);
+    if (response?.status === 201) {
+      // Send mail
+
+      navigate(`/bookingconfirmed`);
+    } else {
+      console.error("Något gick fel vid bokningen");
     }
   };
+
+  console.log(numberOfTables);
+  console.log(sittings);
 
   return (
     <>
@@ -229,15 +223,14 @@ export const Booking = () => {
           </DateInputWrapper>
           <TimeBookingWrapper>
             {sittings.map((time) =>
-              time.takenTables + numberOfGuests <= MAX_AMOUNT_PER_SITTING &&
-              !!selectedDate ? (
+              time.remainingTables >= numberOfTables && !!selectedDate ? (
                 <TimeBookingButton
                   key={time.bookingTime}
                   type="button"
                   onClick={() => handleTimeSelection(time.bookingTime)}
                 >
                   <DivWrapper>
-                    {time.takenTables} / {MAX_AMOUNT_PER_SITTING}
+                    {time.remainingTables} / {MAX_AMOUNT_PER_SITTING}
                   </DivWrapper>
                   <DivWrapper> {time.bookingTime}</DivWrapper>
                 </TimeBookingButton>
