@@ -19,6 +19,7 @@ import {
   TimeBookingWrapper,
 } from "../styled/Wrappers";
 import { Users } from "./Users";
+import { AvailableTimes } from "../styled/Paragraphs";
 
 interface IBookingProps {
   msg: string;
@@ -84,7 +85,11 @@ export const Booking = (props: IBookingProps) => {
         return true;
       });
 
-      if (updatedAvailableTables.includes(true)) {
+      if (
+        /*updatedAvailableTables.includes(true)*/ updatedAvailableTables[0] ===
+          true &&
+        updatedAvailableTables[1] === true
+      ) {
         setNoAvailableTimes(true);
       } else {
         setNoAvailableTimes(false);
