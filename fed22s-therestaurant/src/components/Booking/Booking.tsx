@@ -1,4 +1,4 @@
-import { ChangeEvent, FormEvent, useContext, useEffect, useState } from "react";
+import { ChangeEvent, FormEvent, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { IUsersContext, UsersContext } from "../../contexts/UserContext";
 import { IBooking } from "../../models/IBooking";
@@ -19,7 +19,6 @@ import {
   TimeBookingWrapper,
 } from "../styled/Wrappers";
 import { Users } from "./Users";
-import { AvailableTimes } from "../styled/Paragraphs";
 
 interface IBookingProps {
   msg: string;
@@ -86,8 +85,7 @@ export const Booking = (props: IBookingProps) => {
       });
 
       if (
-        /*updatedAvailableTables.includes(true)*/ updatedAvailableTables[0] ===
-          true &&
+        updatedAvailableTables[0] === true &&
         updatedAvailableTables[1] === true
       ) {
         setNoAvailableTimes(true);
