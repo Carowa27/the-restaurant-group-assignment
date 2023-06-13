@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "d1082eeb-f341-447a-9ec2-0b85b82bb797",
+		"_postman_id": "0e4d1de6-d040-4a14-abb9-d138f5e08071",
 		"name": "The Resturant",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
@@ -62,7 +62,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"user\": {\r\n        \"firstname\": \"Test\",\r\n        \"lastname\": \"test\",\r\n        \"email\": \"Anna.Hansson@hotmail.com\",\r\n        \"phone\": \"0760824679\"\r\n    },\r\n    \"ordernumber\": \"10\",\r\n    \"guests\": \"6\",\r\n    \"date\": \"2023-07-01\",\r\n    \"sessionstart\": \"13:00\"\r\n}",
+					"raw": "{\r\n    \"user\": {\r\n        \"firstname\": \"Test\",\r\n        \"lastname\": \"test\",\r\n        \"email\": \"Anna.Hansson@hotmail.com\",\r\n        \"phone\": \"0760824679\"\r\n    },\r\n    \"guests\": \"6\",\r\n    \"date\": \"2023-07-01\",\r\n    \"sessionstart\": \"13:00\"\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -96,7 +96,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"user\": {\r\n        \"firstname\": \"Hanna\",\r\n        \"lastname\": \"Hansson\",\r\n        \"email\": \"Hanna.Hansson@hotmail.com\",\r\n        \"phone\": \"0760824679\"\r\n    },\r\n    \"ordernumber\": \"5\",\r\n    \"guests\": \"6\",\r\n    \"date\": \"2023-07-01\",\r\n    \"sessionstart\": \"13:00\"\r\n}",
+					"raw": "{\r\n    \"user\": {\r\n        \"firstname\": \"Hanna\",\r\n        \"lastname\": \"Hansson\",\r\n        \"email\": \"Hanna.Hansson@hotmail.com\",\r\n        \"phone\": \"0760824679\"\r\n    },\r\n    \"guests\": \"6\",\r\n    \"date\": \"2023-07-01\",\r\n    \"sessionstart\": \"13:00\"\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
