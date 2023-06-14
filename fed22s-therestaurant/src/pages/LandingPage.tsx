@@ -6,7 +6,6 @@ import {
   InfoWrapper,
   LandingWrapper,
   OpeningWrapper,
-  PageWrapper,
 } from "../components/styled/Wrappers";
 
 export const LandingPage = () => {
