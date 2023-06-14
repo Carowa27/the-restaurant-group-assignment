@@ -5,7 +5,6 @@ import { IBooking } from "../../models/IBooking";
 import { User } from "../../models/User";
 import {
   createBooking,
-  deleteBooking,
   getBookingById,
   getBookings,
   updateBooking,
@@ -22,7 +21,6 @@ import {
   DivWrapper,
   GuestInformationDiv,
   GuestInformationWrapper,
-  MyEearlyBookingWrapper,
   NumberOfGuestWrapper,
   TimeBookingWrapper,
 } from "../styled/Wrappers";
@@ -265,17 +263,6 @@ export const Booking = (props: IBookingProps) => {
       // Send mail
 
       navigate(`/bookingconfirmed/update/${userBooking?._id}`);
-    } else {
-      console.error("Något gick fel vid bokningen");
-    }
-  };
-
-  //delete logic
-  const handleDelete = async () => {
-    const response = await deleteBooking(userBooking?._id);
-    if (response?.status === 204) {
-      // Send mail
-      navigate(`/bookingdeleted`);
     } else {
       console.error("Något gick fel vid bokningen");
     }

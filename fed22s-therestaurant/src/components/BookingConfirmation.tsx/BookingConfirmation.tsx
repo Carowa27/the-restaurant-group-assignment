@@ -1,11 +1,26 @@
 import { MyEearlyBookingWrapper } from "../styled/Wrappers";
 import { IBooking } from "../../models/IBooking";
+import { deleteBooking } from "../../services/bookingServices";
+import { useNavigate } from "react-router-dom";
 
 interface IBookingConfirmationProps {
   userBooking: IBooking;
 }
 
 export const BookingConfirmation = (props: IBookingConfirmationProps) => {
+  const navigate = useNavigate();
+
+  //delete logic
+  const handleDelete = async () => {
+    const response = await deleteBooking(props.userBooking._id);
+    if (response?.status === 204) {
+      // Send mail
+      navigate(`/bookingdeleted`);
+    } else {
+      console.error("Något gick fel vid bokningen");
+    }
+  };
+
   return (
     <MyEearlyBookingWrapper>
       <p>Orderid: {props.userBooking?._id}</p>
@@ -16,6 +31,7 @@ export const BookingConfirmation = (props: IBookingConfirmationProps) => {
       <p>Datum: {props.userBooking?.date}</p>
       <p>Sittning: {props.userBooking?.sessionstart}</p>
       <p>Antal gäster: {props.userBooking?.guests}</p>
+      <button onClick={handleDelete}>ta bort bokning</button>
     </MyEearlyBookingWrapper>
   );
 };

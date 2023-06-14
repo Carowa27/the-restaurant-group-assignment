@@ -6,7 +6,6 @@ import PlaceholderCruwa3 from "../assets/PlaceholderCruwa3.png";
 
 export const Icecream = () => {
   const x = Math.floor(Math.random() * 3 + 1);
-  console.log(x);
   let imgsrc = "";
   let imgalt = "";
   if (x === 1) {
