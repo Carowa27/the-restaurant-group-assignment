@@ -5,7 +5,7 @@ export const MainWrapper = styled.div`
   display: flex;
   flex-direction: column;
   /* padding: 0 2rem 1rem 2rem; */
-  /* min-height: 60vh; */
+  min-height: 84vh;
 `;
 export const PageWrapper = styled(MainWrapper)`
   margin-bottom: 10rem; /*footer*/
