@@ -6,7 +6,7 @@ export const FooterStyled = styled.footer`
   background: #97d480;
   padding-bottom: 1%;
   justify-content: space-around;
-  /* height: 10rem; */
+  height: 10vh;
   width: 100%;
   ul {
     list-style: none;
