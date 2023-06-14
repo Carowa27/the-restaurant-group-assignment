@@ -5,7 +5,7 @@ export interface IBooking {
     email: string;
     phone: string;
   };
-  _id: string | undefined;
+  _id?: string;
   sessionstart: string;
   guests: number;
   date: string;
