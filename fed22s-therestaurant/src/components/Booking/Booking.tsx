@@ -235,12 +235,12 @@ export const Booking = (props: IBookingProps) => {
 
   //updateBooking logiken
   const [userBooking, setUserBooking] = useState<IBooking>();
-
+  let userGivenId = "";
   const handleSearchBooking = async (e: ChangeEvent<HTMLInputElement>) => {
     e.preventDefault();
 
     console.log(e.target.value);
-    const userGivenId = e.target.value; //props.myBookingsSearchBookingInput;
+    userGivenId = e.target.value; //props.myBookingsSearchBookingInput;
     console.log(userGivenId);
     const getUserBookingById = async () => {
       const data = await getBookingById(userGivenId);
@@ -252,6 +252,9 @@ export const Booking = (props: IBookingProps) => {
   };
 
   const handleSubmitChangeBooking = async (e: FormEvent) => {
+    e.preventDefault();
+    if (!buttonEnabled) return;
+
     const updatededBooking = {
       user: {
         firstname: userInput.firstname,
@@ -259,31 +262,37 @@ export const Booking = (props: IBookingProps) => {
         email: userInput.email,
         phone: userInput.phone,
       },
-      _id: userBooking?._id,
-      sessionstart: selectedTime,
       guests: numberOfGuests,
       date: selectedDate,
+      sessionstart: selectedTime,
+      updatedAt: new Date().toISOString(),
     };
+    // const updatededBooking = {
+    //   user: {
+    //     firstname: userInput.firstname,
+    //     lastname: userInput.lastname,
+    //     email: userInput.email,
+    //     phone: userInput.phone,
+    //   },
+    //   _id: userBooking?._id,
+    //   sessionstart: selectedTime,
+    //   guests: numberOfGuests,
+    //   date: selectedDate,
+    // };
 
-    const response: IAPIUpdateResponse | undefined = await updateBooking(
-      userBooking?._id,
-      updatededBooking
-    );
-    if (response?.status === 201) {
+    const response = await updateBooking(userBooking?._id, updatededBooking);
+    if (response?.status === 204) {
+      // Send mail
+      navigate(`/bookingconfirmed`);
     } else {
       console.error("Något gick fel vid bokningen");
-      navigate(`/bookingconfirmed`);
     }
   };
-
-  // Send mail
 
   console.log(numberOfTables);
   console.log(bookedTables, "bookedTables");
   console.log(sittings);
   console.log(noAvailableTimes);
-
-  console.log(numberOfGuests, selectedDate);
 
   return (
     <>
@@ -395,19 +404,12 @@ export const Booking = (props: IBookingProps) => {
                       value={userInput.phone}
                       onChange={handleChange}
                     />
-                    {props.msg === "create" && (
-                      <SubmitBookingButton
-                        disabled={!buttonEnabled}
-                        onClick={handleSubmit}
-                      >
-                        Boka
-                      </SubmitBookingButton>
-                    )}
-                    {props.msg === "update" && (
-                      <SubmitBookingButton disabled={!buttonEnabled}>
-                        Ändra
-                      </SubmitBookingButton>
-                    )}
+                    <SubmitBookingButton
+                      disabled={!buttonEnabled}
+                      onClick={handleSubmitChangeBooking}
+                    >
+                      Ändra
+                    </SubmitBookingButton>
                   </GuestInformationDiv>
                 </UsersContext.Provider>
               </GuestInformationForm>

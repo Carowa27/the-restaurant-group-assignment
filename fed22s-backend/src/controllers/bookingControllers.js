@@ -119,7 +119,7 @@ exports.updateBookingById = async (req, res) => {
       throw new NotFoundError("This booking does not exist");
     }
 
-    if (id) bookingToUpdate.id = id;
+    // if (id) bookingToUpdate.id = id;
     if (guests) bookingToUpdate.guests = guests;
     if (date) bookingToUpdate.date = date;
     if (sessionstart) bookingToUpdate.sessionstart = sessionstart;
@@ -129,9 +129,10 @@ exports.updateBookingById = async (req, res) => {
     if (email) bookingToUpdate.user.email = email;
     if (phone) bookingToUpdate.user.phone = phone;
 
-    const updatedBooking = await bookingToUpdate.save();
+    /*const updatedBooking =*/ await bookingToUpdate.save();
 
-    return res.json(updatedBooking);
+    // return res.json(updatedBooking);
+    return res.sendStatus(204);
   } catch (error) {
     console.log(error);
 

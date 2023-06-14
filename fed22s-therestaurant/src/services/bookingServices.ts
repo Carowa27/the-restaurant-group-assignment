@@ -76,14 +76,13 @@ export async function createBooking(bookingData: any) {
 //   }
 // };
 
-//NU SKA DETTA FUNGERA FÖRFAN!!!!!! :D :D :D :D :D :D :D :D :D hehehe maisah was here
 export const updateBooking = async (
   id: string | undefined,
-  updatedData: IBooking
+  updatedData: any
 ) => {
   try {
     const response = await axios.put<IBooking>(
-      `http://localhost:4000/api/v1/booking/` + id,
+      `http://localhost:4000/api/v1/bookings/` + id,
       updatedData
     );
     console.log(response.status);
