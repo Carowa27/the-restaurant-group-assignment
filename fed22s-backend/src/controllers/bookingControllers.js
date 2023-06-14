@@ -99,7 +99,6 @@ exports.deleteBookingById = async (req, res) => {
 };
 
 //  fungerar ✓
-
 exports.updateBookingById = async (req, res) => {
   try {
     const bookingId = req.params.bookingId;

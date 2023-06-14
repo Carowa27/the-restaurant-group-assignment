@@ -14,7 +14,3 @@ export interface IBooking {
 export interface IApiResponse {
   bookings: IBooking[];
 }
-
-export interface IAPIUpdateResponse {
-  status: number | undefined;
-}

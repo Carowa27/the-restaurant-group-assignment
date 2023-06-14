@@ -59,23 +59,6 @@ export async function createBooking(bookingData: any) {
   }
 }
 
-//vet inte om denna funkar än
-// export const updateBooking = async (
-//   id: string | undefined,
-//   updatedData: IBooking
-// ) => {
-//   try {
-//     const response = await axios.put<IBooking>(
-//       `http://localhost:4000/api/v1/booking/` + id,
-//       updatedData
-//     );
-//     console.log(response.status);
-//     return response;
-//   } catch (error) {
-//     console.error("Ett fel uppstod", error);
-//   }
-// };
-
 export const updateBooking = async (
   id: string | undefined,
   updatedData: any

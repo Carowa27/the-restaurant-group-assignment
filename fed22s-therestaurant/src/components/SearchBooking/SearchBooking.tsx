@@ -26,7 +26,6 @@ export const SearchBooking = ({ handleSearchBooking }: searchBookingProps) => {
         <MyBookingsForm>
           <H3Bold>Hämta din bokning du ska ändra</H3Bold>
           <MyBookingsSearchBookingInput
-            //denna input ska ge userGivenId till Bookings
             type="text"
             name="id"
             placeholder="00000"
