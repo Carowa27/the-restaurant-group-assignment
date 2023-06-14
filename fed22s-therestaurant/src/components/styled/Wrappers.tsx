@@ -38,6 +38,14 @@ export const BookingWrapper = styled.div`
   padding: 5px;
 `;
 
+export const MyEearlyBookingWrapper = styled.div`
+  /* background-color: #859685; */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 5px;
+`;
+
 export const NumberOfGuestWrapper = styled.div`
   display: flex;
   flex-direction: column;
