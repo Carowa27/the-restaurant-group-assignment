@@ -36,7 +36,7 @@ exports.getBookingById = async (req, res) => {
   } catch (error) {
     console.log(error);
 
-    return res.sendStatus(500).json({ message: "Internal error" });
+    return res.status(500).json({ message: "Internal error" });
   }
 };
 

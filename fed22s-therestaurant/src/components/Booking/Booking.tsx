@@ -10,6 +10,7 @@ import {
   getBookings,
   updateBooking,
 } from "../../services/bookingServices";
+import { BookingConfirmation } from "../BookingConfirmation.tsx/BookingConfirmation";
 import { SearchBooking } from "../SearchBooking/SearchBooking";
 import { SubmitBookingButton, TimeBookingButton } from "../styled/Buttons";
 import { BookingForm, GuestInformationForm } from "../styled/Forms";
@@ -33,7 +34,6 @@ interface IBookingProps {
 
 export const Booking = (props: IBookingProps) => {
   const navigate = useNavigate();
-  console.log(props.msg);
 
   const [sittings, setSittings] = useState([
     { bookingTime: "13:00", remainingTables: 0 },
@@ -52,6 +52,7 @@ export const Booking = (props: IBookingProps) => {
       return;
     },
   });
+
   const [noAvailableTimes, setNoAvailableTimes] = useState(false);
   const [numberOfGuests, setNumberOfGuests] = useState(1);
   const [selectedTime, setSelectedTime] = useState("");
@@ -82,8 +83,6 @@ export const Booking = (props: IBookingProps) => {
   useEffect(() => {
     setButtonEnabled(!!numberOfGuests && !!selectedDate && !!selectedTime);
     if (!!numberOfGuests && !!selectedDate) {
-      console.log(remainingTables, bookedTables);
-
       const updatedAvailableTables = sittings.map((sitting) => {
         if (sitting.remainingTables >= bookedTables) {
           return false;
@@ -147,8 +146,6 @@ export const Booking = (props: IBookingProps) => {
   const setTimes = async (date: string) => {
     const data = await getBookings();
 
-    console.log("All", data.data);
-
     const dateBookings = data.data.filter(
       (booking: IBooking) => booking.date === date
     );
@@ -188,7 +185,6 @@ export const Booking = (props: IBookingProps) => {
     ];
 
     setSittings(updatedSittings);
-    console.log(updatedSittings);
   };
 
   const handleDateChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -223,8 +219,7 @@ export const Booking = (props: IBookingProps) => {
 
     if (response?.status === 201) {
       // Send mail
-
-      navigate(`/bookingconfirmed`);
+      navigate(`/bookingconfirmed/confirm/${response.data?._id}`);
     } else {
       console.error("Något gick fel vid bokningen");
     }
@@ -236,16 +231,16 @@ export const Booking = (props: IBookingProps) => {
   const handleSearchBooking = async (e: ChangeEvent<HTMLInputElement>) => {
     e.preventDefault();
 
-    console.log(e.target.value);
     userGivenId = e.target.value;
-    console.log(userGivenId);
     const getUserBookingById = async () => {
-      const data = await getBookingById(userGivenId);
-      console.log(data);
-      setUserBooking(data);
+      try {
+        const data = await getBookingById(userGivenId);
+        setUserBooking(data);
+      } catch (error) {
+        console.error(`${error}: Något gick fel vid sökningen`);
+      }
     };
     getUserBookingById();
-    console.log(userBooking);
   };
 
   const handleSubmitChangeBooking = async (e: FormEvent) => {
@@ -268,7 +263,8 @@ export const Booking = (props: IBookingProps) => {
     const response = await updateBooking(userBooking?._id, updatededBooking);
     if (response?.status === 204) {
       // Send mail
-      navigate(`/bookingupdated`);
+
+      navigate(`/bookingconfirmed/update/${userBooking?._id}`);
     } else {
       console.error("Något gick fel vid bokningen");
     }
@@ -285,11 +281,6 @@ export const Booking = (props: IBookingProps) => {
     }
   };
 
-  console.log(numberOfTables);
-  console.log(bookedTables, "bookedTables");
-  console.log(sittings);
-  console.log(noAvailableTimes);
-
   return (
     <>
       <BookingWrapper>
@@ -303,18 +294,9 @@ export const Booking = (props: IBookingProps) => {
               ></SearchBooking>
             )}
             {userBooking != null && (
-              <MyEearlyBookingWrapper>
-                <H3Bold>HÄMTAD BOKNING</H3Bold>
-                <p>Orderid: {userBooking?._id}</p>
-                <p>Förnamn: {userBooking?.user.firstname}</p>
-                <p>Efternamn: {userBooking?.user.lastname}</p>
-                <p>Email: {userBooking?.user.email}</p>
-                <p>Telefonnummer: {userBooking?.user.phone}</p>
-                <p>Datum: {userBooking?.date}</p>
-                <p>Sittning: {userBooking?.sessionstart}</p>
-                <p>Antal gäster: {userBooking?.guests}</p>
-                <button onClick={handleDelete}>ta bort bokning</button>
-              </MyEearlyBookingWrapper>
+              <BookingConfirmation
+                userBooking={userBooking}
+              ></BookingConfirmation>
             )}
             {userBooking != null && (
               <>
