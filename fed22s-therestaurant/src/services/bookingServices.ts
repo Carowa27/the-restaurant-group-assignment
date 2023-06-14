@@ -25,7 +25,19 @@ export const getBookings = async () => {
 
     return response.data;
   } catch (error) {
-    throw new Error("Fail to get data from this  API:" + error);
+    console.error("Ett fel uppstod", error);
+  }
+};
+
+export const getBookingById = async (id: string) => {
+  try {
+    let response = await axios.get<IBooking>(
+      `http://localhost:4000/api/v1/bookings/` + id
+    );
+
+    return response.data;
+  } catch (error) {
+    console.error("Ett fel uppstod", error);
   }
 };
 
@@ -48,11 +60,44 @@ export async function createBooking(bookingData: any) {
 }
 
 //vet inte om denna funkar än
-export async function updateBooking(id: any, updatedData: any) {
+// export const updateBooking = async (
+//   id: string | undefined,
+//   updatedData: IBooking
+// ) => {
+//   try {
+//     const response = await axios.put<IBooking>(
+//       `http://localhost:4000/api/v1/booking/` + id,
+//       updatedData
+//     );
+//     console.log(response.status);
+//     return response;
+//   } catch (error) {
+//     console.error("Ett fel uppstod", error);
+//   }
+// };
+
+//NU SKA DETTA FUNGERA FÖRFAN!!!!!! :D :D :D :D :D :D :D :D :D hehehe maisah was here
+export const updateBooking = async (
+  id: string | undefined,
+  updatedData: IBooking
+) => {
   try {
-    const response = await axios.put(
-      `http://localhost:4000/api/v1/bookings/${id}`,
-      updatedData,
+    const response = await axios.put<IBooking>(
+      `http://localhost:4000/api/v1/booking/` + id,
+      updatedData
+    );
+    console.log(response.status);
+    return response;
+  } catch (error) {
+    console.error("Ett fel uppstod", error);
+  }
+};
+
+//vet inte om denna funkar än
+export async function deleteBooking(id: any) {
+  try {
+    const response = await axios.delete(
+      `http://localhost:4000/api/v1/bookings/` + id,
       {
         headers: {
           "Content-Type": "application/json",
@@ -65,19 +110,6 @@ export async function updateBooking(id: any, updatedData: any) {
     console.error("Ett fel uppstod", error);
   }
 }
-
-export const getBookingById = async (id: string) => {
-  //: Promise<IApiResponse>
-  try {
-    let response = await axios.get<IBooking>(
-      `http://localhost:4000/api/v1/bookings/` + id
-    );
-    // return { bookings: response.data[0], error: "" };
-    return response.data;
-  } catch (error) {
-    throw new Error("Fail to get data from this  API:" + error);
-  }
-};
 
 //     const response = await axios.get<IBookingResponse>(
 //       "http://localhost:4000/api/v1/bookings/"

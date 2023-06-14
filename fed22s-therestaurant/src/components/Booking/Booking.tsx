@@ -1,12 +1,13 @@
 import { ChangeEvent, FormEvent, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { IUsersContext, UsersContext } from "../../contexts/UserContext";
-import { IBooking } from "../../models/IBooking";
+import { IAPIUpdateResponse, IBooking } from "../../models/IBooking";
 import { User } from "../../models/User";
 import {
   createBooking,
   getBookingById,
   getBookings,
+  updateBooking,
 } from "../../services/bookingServices";
 import { SearchBooking } from "../SearchBooking/SearchBooking";
 import { SubmitBookingButton, TimeBookingButton } from "../styled/Buttons";
@@ -19,6 +20,7 @@ import {
   DivWrapper,
   GuestInformationDiv,
   GuestInformationWrapper,
+  MyEearlyBookingWrapper,
   NumberOfGuestWrapper,
   TimeBookingWrapper,
 } from "../styled/Wrappers";
@@ -28,6 +30,9 @@ interface IBookingProps {
   msg: string;
   // myBookingsSearchBookingInput: string;
 }
+// interface ApiResponse {
+//   status: number;
+// }
 
 export const Booking = (props: IBookingProps) => {
   const navigate = useNavigate();
@@ -229,14 +234,14 @@ export const Booking = (props: IBookingProps) => {
   };
 
   //updateBooking logiken
+  const [userBooking, setUserBooking] = useState<IBooking>();
 
-  const handleSubmitUpdate = (e: ChangeEvent<HTMLInputElement>) => {
+  const handleSearchBooking = async (e: ChangeEvent<HTMLInputElement>) => {
     e.preventDefault();
 
     console.log(e.target.value);
     const userGivenId = e.target.value; //props.myBookingsSearchBookingInput;
-    // console.log(userGivenId);
-    const [userBooking, setUserBooking] = useState<IBooking>();
+    console.log(userGivenId);
     const getUserBookingById = async () => {
       const data = await getBookingById(userGivenId);
       console.log(data);
@@ -246,163 +251,272 @@ export const Booking = (props: IBookingProps) => {
     console.log(userBooking);
   };
 
-  // const foundBooking = bookings.find(
-  //   (booking) => booking._id === searchInput.value
-  // );
+  const handleSubmitChangeBooking = async (e: FormEvent) => {
+    const updatededBooking = {
+      user: {
+        firstname: userInput.firstname,
+        lastname: userInput.lastname,
+        email: userInput.email,
+        phone: userInput.phone,
+      },
+      _id: userBooking?._id,
+      sessionstart: selectedTime,
+      guests: numberOfGuests,
+      date: selectedDate,
+    };
 
-  // skapa det uppdaterade objektet & denna ska vara i en funktion när man klickar på uppdatera knappen
-  //man kan även refaktorera detta senare om tid finns då koden är samma så DRY
-  // const updatededBooking = {
-  //   user: {
-  //     firstname: userInput.firstname,
-  //     lastname: userInput.lastname,
-  //     email: userInput.email,
-  //     phone: userInput.phone,
-  //   },
-  //   guests: numberOfGuests,
-  //   date: selectedDate,
-  //   sessionstart: selectedTime,
-  //   createdAt: new Date().toISOString(),
-  //   updatedAt: new Date().toISOString(),
-  //   __v: 0,
-  // };
-
-  // const response = await updateBooking(updatededBooking);
-
-  /*if (response?.status === 201) {
-      // Send mail
-
-      navigate(`/bookingconfirmed`);
+    const response: IAPIUpdateResponse | undefined = await updateBooking(
+      userBooking?._id,
+      updatededBooking
+    );
+    if (response?.status === 201) {
     } else {
       console.error("Något gick fel vid bokningen");
-    }*/
+      navigate(`/bookingconfirmed`);
+    }
+  };
 
-  //html för sökning
-  //kolla id.t mot existerande objekt i listan
-  //hämta all data om objektet
-  //visa all data i relevanta placeholders
-
-  // om ändra =>visa ändra knapp ist för boka
-  // om create => gör inte hämtning av alla & visa boka knapp
+  // Send mail
 
   console.log(numberOfTables);
   console.log(bookedTables, "bookedTables");
   console.log(sittings);
   console.log(noAvailableTimes);
 
+  console.log(numberOfGuests, selectedDate);
+
   return (
     <>
       <BookingWrapper>
         {props.msg === "update" && (
           <SearchBooking
-            handleSubmitUpdate={handleSubmitUpdate}
+            handleSearchBooking={handleSearchBooking}
           ></SearchBooking>
         )}
-        <H1>Estiatório Tegel</H1>
-        <H3Bold>VÄLKOMMEN ATT BOKA BORD</H3Bold>
-        <BookingForm onSubmit={handleSubmit}>
-          <NumberOfGuestWrapper>
-            <H3Normal>VÄLJ ANTAL PERSONER</H3Normal>
-            <select
-              name="numberOfGuests"
-              value={numberOfGuests}
-              // placeholder={currentGuests}
-              onChange={handleNumberOfGuestsChange}
-            >
-              {optionsMap}
-            </select>
-          </NumberOfGuestWrapper>
-          <DateInputWrapper>
-            <H3Normal>Datum</H3Normal>
-            <DateInput
-              type="date"
-              name="date"
-              value={selectedDate}
-              onChange={handleDateChange}
-            />
-          </DateInputWrapper>
-          <TimeBookingWrapper>
-            {sittings.map((time) =>
-              time.remainingTables >= bookedTables && !!selectedDate ? (
-                <TimeBookingButton
-                  key={time.bookingTime}
-                  type="button"
-                  onClick={() => handleTimeSelection(time.bookingTime)}
+        {props.msg === "update" && userBooking === null ? (
+          <></>
+        ) : (
+          <>
+            <MyEearlyBookingWrapper>
+              <H3Bold>HÄMTAD BOKNING</H3Bold>
+              <p>Orderid: {userBooking?._id}</p>
+              <p>Förnamn: {userBooking?.user.firstname}</p>
+              <p>Efternamn: {userBooking?.user.lastname}</p>
+              <p>Email: {userBooking?.user.email}</p>
+              <p>Telefonnummer: {userBooking?.user.phone}</p>
+              <p>Datum: {userBooking?.date}</p>
+              <p>Sittning: {userBooking?.sessionstart}</p>
+              <p>Antal gäster: {userBooking?.guests}</p>
+            </MyEearlyBookingWrapper>
+
+            <H3Bold>ÄNDRA BOKNING</H3Bold>
+            <BookingForm onSubmit={handleSubmit}>
+              <NumberOfGuestWrapper>
+                <H3Normal>ANTAL GÄSTER I BOKNING</H3Normal>
+                <select
+                  name="numberOfGuests"
+                  value={numberOfGuests}
+                  onChange={handleNumberOfGuestsChange}
                 >
-                  <DivWrapper>
-                    {time.remainingTables} / {MAX_AMOUNT_TABLES}
-                  </DivWrapper>
-                  <DivWrapper> {time.bookingTime}</DivWrapper>
-                </TimeBookingButton>
-              ) : null
-            )}
-          </TimeBookingWrapper>
-          {noAvailableTimes && <p>Tyvärr finns det inga lediga tider!</p>}
-        </BookingForm>
-        <GuestInformationWrapper>
-          <GuestInformationForm onSubmit={handleSubmit}>
-            <H3Normal>KONTAKTUPPGIFTER</H3Normal>
-            <UsersContext.Provider value={user}>
-              <Users />
-              <GuestInformationDiv>
-                <label htmlFor="firstname">FÖRNAMN</label>
-                <input
-                  type="text"
-                  id="firstname"
-                  placeholder="FÖRNAMN"
-                  name="firstname"
-                  required
-                  value={userInput.firstname}
-                  onChange={handleChange}
+                  {optionsMap}
+                </select>
+              </NumberOfGuestWrapper>
+              <DateInputWrapper>
+                <H3Normal>Datum</H3Normal>
+                <DateInput
+                  type="date"
+                  name="date"
+                  value={selectedDate}
+                  onChange={handleDateChange}
                 />
-                <label htmlFor="lastname">EFTERNAMN</label>
-                <input
-                  type="text"
-                  id="lastname"
-                  placeholder="EFTERNAMN"
-                  name="lastname"
-                  required
-                  value={userInput.lastname}
-                  onChange={handleChange}
-                />
-                <label htmlFor="epost">EMAIL</label>
-                <input
-                  type="email"
-                  id="epost"
-                  placeholder="EMAIL"
-                  name="email"
-                  required
-                  value={userInput.email}
-                  onChange={handleChange}
-                />
-                <label htmlFor="phone">MOBILTELEFON</label>
-                <input
-                  type="tel"
-                  id="phone"
-                  placeholder="TEL -xxxxxxxxxx"
-                  name="phone"
-                  pattern="[0-9]{10}"
-                  required
-                  value={userInput.phone}
-                  onChange={handleChange}
-                />
-                {props.msg === "create" && (
-                  <SubmitBookingButton
-                    disabled={!buttonEnabled}
-                    onClick={handleSubmit}
-                  >
-                    Boka
-                  </SubmitBookingButton>
+              </DateInputWrapper>
+              <TimeBookingWrapper>
+                {sittings.map((time) =>
+                  time.remainingTables >= bookedTables && !!selectedDate ? (
+                    <TimeBookingButton
+                      key={time.bookingTime}
+                      type="button"
+                      onClick={() => handleTimeSelection(time.bookingTime)}
+                    >
+                      <DivWrapper>
+                        {time.remainingTables} / {MAX_AMOUNT_TABLES}
+                      </DivWrapper>
+                      <DivWrapper> {time.bookingTime}</DivWrapper>
+                    </TimeBookingButton>
+                  ) : null
                 )}
-                {props.msg === "update" && (
-                  <SubmitBookingButton disabled={!buttonEnabled}>
-                    Ändra
-                  </SubmitBookingButton>
+              </TimeBookingWrapper>
+              {noAvailableTimes && <p>Tyvärr finns det inga lediga tider!</p>}
+            </BookingForm>
+            <GuestInformationWrapper>
+              <GuestInformationForm onSubmit={handleSubmit}>
+                <H3Normal>KONTAKTUPPGIFTER</H3Normal>
+                <UsersContext.Provider value={user}>
+                  <Users />
+                  <GuestInformationDiv>
+                    <label htmlFor="firstname">FÖRNAMN</label>
+                    <input
+                      type="text"
+                      id="firstname"
+                      placeholder="FÖRNAMN"
+                      name="firstname"
+                      required
+                      value={userInput.firstname}
+                      onChange={handleChange}
+                    />
+                    <label htmlFor="lastname">EFTERNAMN</label>
+                    <input
+                      type="text"
+                      id="lastname"
+                      placeholder="EFTERNAMN"
+                      name="lastname"
+                      required
+                      value={userInput.lastname}
+                      onChange={handleChange}
+                    />
+                    <label htmlFor="epost">EMAIL</label>
+                    <input
+                      type="email"
+                      id="epost"
+                      placeholder="EMAIL"
+                      name="email"
+                      required
+                      value={userInput.email}
+                      onChange={handleChange}
+                    />
+                    <label htmlFor="phone">MOBILTELEFON</label>
+                    <input
+                      type="tel"
+                      id="phone"
+                      placeholder="TEL -xxxxxxxxxx"
+                      name="phone"
+                      pattern="[0-9]{10}"
+                      required
+                      value={userInput.phone}
+                      onChange={handleChange}
+                    />
+                    {props.msg === "create" && (
+                      <SubmitBookingButton
+                        disabled={!buttonEnabled}
+                        onClick={handleSubmit}
+                      >
+                        Boka
+                      </SubmitBookingButton>
+                    )}
+                    {props.msg === "update" && (
+                      <SubmitBookingButton disabled={!buttonEnabled}>
+                        Ändra
+                      </SubmitBookingButton>
+                    )}
+                  </GuestInformationDiv>
+                </UsersContext.Provider>
+              </GuestInformationForm>
+            </GuestInformationWrapper>
+          </>
+        )}
+        {/* create */}
+        {props.msg === "create" ? (
+          <>
+            <H3Bold>VÄLKOMMEN ATT BOKA BORD</H3Bold>
+            <BookingForm onSubmit={handleSubmit}>
+              <NumberOfGuestWrapper>
+                <H3Normal>VÄLJ ANTAL PERSONER</H3Normal>
+                <select
+                  name="numberOfGuests"
+                  value={numberOfGuests}
+                  onChange={handleNumberOfGuestsChange}
+                >
+                  {optionsMap}
+                </select>
+              </NumberOfGuestWrapper>
+              <DateInputWrapper>
+                <H3Normal>Datum</H3Normal>
+                <DateInput
+                  type="date"
+                  name="date"
+                  value={selectedDate}
+                  onChange={handleDateChange}
+                />
+              </DateInputWrapper>
+              <TimeBookingWrapper>
+                {sittings.map((time) =>
+                  time.remainingTables >= bookedTables && !!selectedDate ? (
+                    <TimeBookingButton
+                      key={time.bookingTime}
+                      type="button"
+                      onClick={() => handleTimeSelection(time.bookingTime)}
+                    >
+                      <DivWrapper>
+                        {time.remainingTables} / {MAX_AMOUNT_TABLES}
+                      </DivWrapper>
+                      <DivWrapper> {time.bookingTime}</DivWrapper>
+                    </TimeBookingButton>
+                  ) : null
                 )}
-              </GuestInformationDiv>
-            </UsersContext.Provider>
-          </GuestInformationForm>
-        </GuestInformationWrapper>
+              </TimeBookingWrapper>
+              {noAvailableTimes && <p>Tyvärr finns det inga lediga tider!</p>}
+            </BookingForm>
+            <GuestInformationWrapper>
+              <GuestInformationForm onSubmit={handleSubmit}>
+                <H3Normal>KONTAKTUPPGIFTER</H3Normal>
+                <UsersContext.Provider value={user}>
+                  <Users />
+                  <GuestInformationDiv>
+                    <label htmlFor="firstname">FÖRNAMN</label>
+                    <input
+                      type="text"
+                      id="firstname"
+                      placeholder="FÖRNAMN"
+                      name="firstname"
+                      required
+                      value={userInput.firstname}
+                      onChange={handleChange}
+                    />
+                    <label htmlFor="lastname">EFTERNAMN</label>
+                    <input
+                      type="text"
+                      id="lastname"
+                      placeholder="EFTERNAMN"
+                      name="lastname"
+                      required
+                      value={userInput.lastname}
+                      onChange={handleChange}
+                    />
+                    <label htmlFor="epost">EMAIL</label>
+                    <input
+                      type="email"
+                      id="epost"
+                      placeholder="EMAIL"
+                      name="email"
+                      required
+                      value={userInput.email}
+                      onChange={handleChange}
+                    />
+                    <label htmlFor="phone">MOBILTELEFON</label>
+                    <input
+                      type="tel"
+                      id="phone"
+                      placeholder="TEL -xxxxxxxxxx"
+                      name="phone"
+                      pattern="[0-9]{10}"
+                      required
+                      value={userInput.phone}
+                      onChange={handleChange}
+                    />
+                    <SubmitBookingButton
+                      disabled={!buttonEnabled}
+                      onClick={handleSubmit}
+                    >
+                      Boka
+                    </SubmitBookingButton>
+                  </GuestInformationDiv>
+                </UsersContext.Provider>
+              </GuestInformationForm>
+            </GuestInformationWrapper>
+          </>
+        ) : (
+          <></>
+        )}
       </BookingWrapper>
     </>
   );

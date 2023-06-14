@@ -6,13 +6,18 @@ import { MyBookingsSearchBookingInput } from "../styled/Inputs";
 import { MyBookingsWrapper } from "../styled/Wrappers";
 
 interface searchBookingProps {
-  handleSubmitUpdate: (e: ChangeEvent<HTMLInputElement>) => void;
+  handleSearchBooking: (e: ChangeEvent<HTMLInputElement>) => void;
 }
 
-export const SearchBooking = ({ handleSubmitUpdate }: searchBookingProps) => {
+export const SearchBooking = ({ handleSearchBooking }: searchBookingProps) => {
   const [bookingId, setBookingId] = useState("");
   const handleIdChange = (e: ChangeEvent<HTMLInputElement>) => {
     setBookingId(e.target.value);
+  };
+
+  const handleClick = (e: FormEvent) => {
+    e.preventDefault();
+    console.log("klicket funkade !");
   };
   return (
     <>
@@ -27,9 +32,11 @@ export const SearchBooking = ({ handleSubmitUpdate }: searchBookingProps) => {
             placeholder="00000"
             value={bookingId}
             onChange={handleIdChange}
-            onBlur={handleSubmitUpdate}
+            onBlur={handleSearchBooking}
           ></MyBookingsSearchBookingInput>
-          <SearchBookingButton>Sök</SearchBookingButton>
+          <SearchBookingButton type="submit" onClick={handleClick}>
+            Sök
+          </SearchBookingButton>
         </MyBookingsForm>
       </MyBookingsWrapper>
     </>
