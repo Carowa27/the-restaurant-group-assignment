@@ -5,6 +5,7 @@ import { IBooking } from "../../models/IBooking";
 import { User } from "../../models/User";
 import {
   createBooking,
+  deleteBooking,
   getBookingById,
   getBookings,
   updateBooking,
@@ -267,7 +268,18 @@ export const Booking = (props: IBookingProps) => {
     const response = await updateBooking(userBooking?._id, updatededBooking);
     if (response?.status === 204) {
       // Send mail
-      navigate(`/bookingconfirmed`);
+      navigate(`/bookingupdated`);
+    } else {
+      console.error("Något gick fel vid bokningen");
+    }
+  };
+
+  //delete logic
+  const handleDelete = async () => {
+    const response = await deleteBooking(userBooking?._id);
+    if (response?.status === 204) {
+      // Send mail
+      navigate(`/bookingdeleted`);
     } else {
       console.error("Något gick fel vid bokningen");
     }
@@ -285,9 +297,11 @@ export const Booking = (props: IBookingProps) => {
           <></>
         ) : (
           <>
-            <SearchBooking
-              handleSearchBooking={handleSearchBooking}
-            ></SearchBooking>
+            {props.msg === "update" && (
+              <SearchBooking
+                handleSearchBooking={handleSearchBooking}
+              ></SearchBooking>
+            )}
             {userBooking != null && (
               <MyEearlyBookingWrapper>
                 <H3Bold>HÄMTAD BOKNING</H3Bold>
@@ -299,6 +313,7 @@ export const Booking = (props: IBookingProps) => {
                 <p>Datum: {userBooking?.date}</p>
                 <p>Sittning: {userBooking?.sessionstart}</p>
                 <p>Antal gäster: {userBooking?.guests}</p>
+                <button onClick={handleDelete}>ta bort bokning</button>
               </MyEearlyBookingWrapper>
             )}
             {userBooking != null && (
@@ -306,7 +321,7 @@ export const Booking = (props: IBookingProps) => {
                 <H3Bold>ÄNDRA BOKNING</H3Bold>
                 <BookingForm onSubmit={handleSubmit}>
                   <NumberOfGuestWrapper>
-                    <H3Normal>ANTAL GÄSTER I BOKNING</H3Normal>
+                    <H3Normal>VÄLJ ANTAL PERSONER</H3Normal>
                     <select
                       name="numberOfGuests"
                       value={numberOfGuests}
