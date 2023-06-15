@@ -30,7 +30,7 @@ export const SearchBooking = ({
         <MyBookingsForm
           onSubmit={(e) => {
             e.preventDefault();
-            handleSearchBooking(bookingId);
+            handleSearchBooking(bookingId.trim());
           }}
         >
           <H3Bold>Hämta din bokning du ska ändra</H3Bold>
