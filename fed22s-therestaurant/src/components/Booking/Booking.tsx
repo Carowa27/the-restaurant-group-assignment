@@ -515,6 +515,7 @@ export const Booking = (props: IBookingProps) => {
                       type="checkbox"
                       checked={gdpr}
                       onChange={handleGdpr}
+                      required
                     />
                     <SubmitBookingButton
                       disabled={!buttonEnabled}
