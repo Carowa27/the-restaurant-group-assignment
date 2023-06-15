@@ -226,7 +226,7 @@ export const Booking = (props: IBookingProps) => {
 
     if (response?.status === 201) {
       // Send mail
-      navigate(`/bookingconfirmed/confirm/${response.data?._id}`);
+      navigate(`/bookinginfo/confirm/${response.data?._id}`);
     } else {
       console.error("Något gick fel vid bokningen");
     }
