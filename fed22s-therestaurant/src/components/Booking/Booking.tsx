@@ -1,6 +1,5 @@
 import { ChangeEvent, FormEvent, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { IUsersContext, UsersContext } from "../../contexts/UserContext";
 import { IBooking } from "../../models/IBooking";
 import { User } from "../../models/User";
 import {
@@ -9,12 +8,12 @@ import {
   getBookings,
   updateBooking,
 } from "../../services/bookingServices";
-import { BookingConfirmation } from "../BookingConfirmation.tsx/BookingConfirmation";
-import { SearchBooking } from "../SearchBooking/SearchBooking";
+import { BookingConfirmation } from "./BookingConfirmation";
+import { SearchBooking } from "./SearchBooking";
 import { SubmitBookingButton, TimeBookingButton } from "../styled/Buttons";
 import { BookingForm, GuestInformationForm } from "../styled/Forms";
 import { H3Bold, H3Normal } from "../styled/Headings";
-import { CreateBookingInput, DateInput } from "../styled/Inputs";
+import { DateInput } from "../styled/Inputs";
 import {
   BookingWrapper,
   DateInputWrapper,
@@ -24,8 +23,7 @@ import {
   NumberOfGuestWrapper,
   TimeBookingWrapper,
 } from "../styled/Wrappers";
-import { Users } from "./Users";
-import { Loading } from "../Loading";
+import { Loading } from "../Loader/Loading";
 
 interface IBookingProps {
   msg: string;
@@ -39,20 +37,8 @@ export const Booking = (props: IBookingProps) => {
     { bookingTime: "15:00", remainingTables: 0 },
   ]);
 
-  const MAX_AMOUNT_PER_SITTING = 6;
-  const MAX_AMOUNT_TABLES = 15;
-  const [numberOfTables, setNumberOfTables] = useState(15);
-
   const [bookedTables, setBookedTables] = useState(0);
   const [userInput, setUserInput] = useState(new User("", "", "", ""));
-  const [user, setUser] = useState<IUsersContext>({
-    users: [],
-    add: (text: User) => {
-      return;
-    },
-  });
-
-  //state
   const [noAvailableTimes, setNoAvailableTimes] = useState(false);
   const [numberOfGuests, setNumberOfGuests] = useState(1);
   const [selectedTime, setSelectedTime] = useState("");
@@ -62,8 +48,10 @@ export const Booking = (props: IBookingProps) => {
   const [showError, setShowError] = useState(false);
   const [gdpr, setGdpr] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-
   const [showGuestInformation, setShowGuestInformation] = useState(false);
+
+  const MAX_AMOUNT_PER_SITTING = 6;
+  const MAX_AMOUNT_TABLES = 15;
 
   const numberOfGuestsOptions = [
     { value: 1, label: "1 person" },
@@ -79,6 +67,7 @@ export const Booking = (props: IBookingProps) => {
     { value: 11, label: "11 personer" },
     { value: 12, label: "12 personer" },
   ];
+
   const optionsMap = numberOfGuestsOptions.map((option) => (
     <option key={option.value} value={option.value}>
       {option.label}
@@ -143,7 +132,6 @@ export const Booking = (props: IBookingProps) => {
     const guests = parseInt(e.target.value);
     const tables = Math.ceil(guests / MAX_AMOUNT_PER_SITTING);
     setNumberOfGuests(guests);
-    setNumberOfTables(tables);
     setBookedTables(tables);
     setNoAvailableTimes(false);
   };
@@ -154,12 +142,9 @@ export const Booking = (props: IBookingProps) => {
       (booking: IBooking) => booking.date === date
     );
 
-    const MAX_AMOUNT_TABLES = 15;
-
     const getRemainingTables = (sessionStart: string) => {
-      const totalAvailableTables = MAX_AMOUNT_TABLES;
       const totalTakenTables = getTakenTablesFromBookings(sessionStart);
-      const remainingTables = totalAvailableTables - totalTakenTables;
+      const remainingTables = MAX_AMOUNT_TABLES - totalTakenTables;
       setRemainingTables(remainingTables);
       return remainingTables;
     };
@@ -231,7 +216,6 @@ export const Booking = (props: IBookingProps) => {
     }
   };
 
-  //updateBooking logiken
   const [userBooking, setUserBooking] = useState<IBooking>();
   let userGivenId = "";
   const handleSearchBooking = async (id: string) => {
@@ -294,8 +278,7 @@ export const Booking = (props: IBookingProps) => {
       }
     }, 1000);
   };
-  console.log(userBooking);
-  console.log(showError, "showError");
+
   return (
     <>
       <BookingWrapper>
@@ -346,9 +329,9 @@ export const Booking = (props: IBookingProps) => {
                           type="button"
                           onClick={() => handleTimeSelection(time.bookingTime)}
                         >
-                          <DivWrapper>
-                            {time.remainingTables} / {MAX_AMOUNT_TABLES}
-                          </DivWrapper>
+                          {/* <DivWrapper>
+                            {time.remainingTables} / {MAX_AMOUNT_TABLES}/
+                          </DivWrapper> */}
                           <DivWrapper> {time.bookingTime}</DivWrapper>
                         </TimeBookingButton>
                       ) : null
@@ -365,71 +348,64 @@ export const Booking = (props: IBookingProps) => {
                       onSubmit={(e) => startLoadingScr(e)} /*{handleSubmit}*/
                     >
                       <H3Normal>KONTAKTUPPGIFTER</H3Normal>
-                      <UsersContext.Provider value={user}>
-                        <Users />
-                        <GuestInformationDiv>
-                          <label htmlFor="firstname">FÖRNAMN</label>
-                          <input
-                            type="text"
-                            id="firstname"
-                            placeholder="FÖRNAMN"
-                            name="firstname"
-                            required
-                            value={userInput.firstname}
-                            onChange={handleChange}
-                          />
-                          <label htmlFor="lastname">EFTERNAMN</label>
-                          <input
-                            type="text"
-                            id="lastname"
-                            placeholder="EFTERNAMN"
-                            name="lastname"
-                            required
-                            value={userInput.lastname}
-                            onChange={handleChange}
-                          />
-                          <label htmlFor="epost">EMAIL</label>
-                          <input
-                            type="email"
-                            id="epost"
-                            placeholder="EMAIL"
-                            name="email"
-                            required
-                            value={userInput.email}
-                            onChange={handleChange}
-                          />
-                          <label htmlFor="phone">MOBILTELEFON</label>
-                          <input
-                            type="tel"
-                            id="phone"
-                            placeholder="TEL -xxxxxxxxxx"
-                            name="phone"
-                            pattern="[0-9]{10}"
-                            required
-                            value={userInput.phone}
-                            onChange={handleChange}
-                          />
 
-                          <label htmlFor="gdpr">
-                            Jag har läst och accepterar GDPR
-                          </label>
-                          <input
-                            id="gdpr"
-                            type="checkbox"
-                            checked={gdpr}
-                            onChange={handleGdpr}
-                            required
-                          />
-                          <SubmitBookingButton
-                            disabled={!buttonEnabled}
-                            // onClick={(e) => {
-                            //   startLoadingScr(e);
-                            // }}
-                          >
-                            Ändra
-                          </SubmitBookingButton>
-                        </GuestInformationDiv>
-                      </UsersContext.Provider>
+                      <GuestInformationDiv>
+                        <label htmlFor="firstname">FÖRNAMN</label>
+                        <input
+                          type="text"
+                          id="firstname"
+                          placeholder="FÖRNAMN"
+                          name="firstname"
+                          required
+                          value={userInput.firstname}
+                          onChange={handleChange}
+                        />
+                        <label htmlFor="lastname">EFTERNAMN</label>
+                        <input
+                          type="text"
+                          id="lastname"
+                          placeholder="EFTERNAMN"
+                          name="lastname"
+                          required
+                          value={userInput.lastname}
+                          onChange={handleChange}
+                        />
+                        <label htmlFor="epost">EMAIL</label>
+                        <input
+                          type="email"
+                          id="epost"
+                          placeholder="EMAIL"
+                          name="email"
+                          required
+                          value={userInput.email}
+                          onChange={handleChange}
+                        />
+                        <label htmlFor="phone">MOBILTELEFON</label>
+                        <input
+                          type="tel"
+                          id="phone"
+                          placeholder="TEL -xxxxxxxxxx"
+                          name="phone"
+                          pattern="[0-9]{10}"
+                          required
+                          value={userInput.phone}
+                          onChange={handleChange}
+                        />
+
+                        <label htmlFor="gdpr">
+                          Jag har läst och accepterar GDPR
+                        </label>
+                        <input
+                          id="gdpr"
+                          type="checkbox"
+                          checked={gdpr}
+                          onChange={handleGdpr}
+                          required
+                        />
+                        <SubmitBookingButton disabled={!buttonEnabled}>
+                          Ändra
+                        </SubmitBookingButton>
+                      </GuestInformationDiv>
                     </GuestInformationForm>
                   </GuestInformationWrapper>
                 )}
@@ -437,7 +413,7 @@ export const Booking = (props: IBookingProps) => {
             )}
           </>
         )}
-        {/* create */}
+
         {props.msg === "createPage" ? (
           <>
             <H3Bold>VÄLKOMMEN ATT BOKA BORD</H3Bold>
@@ -469,9 +445,9 @@ export const Booking = (props: IBookingProps) => {
                       type="button"
                       onClick={() => handleTimeSelection(time.bookingTime)}
                     >
-                      <DivWrapper>
+                      {/* <DivWrapper>
                         {time.remainingTables} / {MAX_AMOUNT_TABLES}
-                      </DivWrapper>
+                      </DivWrapper> */}
                       <DivWrapper> {time.bookingTime}</DivWrapper>
                     </TimeBookingButton>
                   ) : null
@@ -484,70 +460,68 @@ export const Booking = (props: IBookingProps) => {
               <GuestInformationWrapper>
                 <GuestInformationForm onSubmit={handleSubmit}>
                   <H3Normal>KONTAKTUPPGIFTER</H3Normal>
-                  <UsersContext.Provider value={user}>
-                    <Users />
-                    <GuestInformationDiv>
-                      <label htmlFor="firstname">FÖRNAMN</label>
-                      <input
-                        type="text"
-                        id="firstname"
-                        placeholder="FÖRNAMN"
-                        name="firstname"
-                        required
-                        value={userInput.firstname}
-                        onChange={handleChange}
-                      />
-                      <label htmlFor="lastname">EFTERNAMN</label>
-                      <input
-                        type="text"
-                        id="lastname"
-                        placeholder="EFTERNAMN"
-                        name="lastname"
-                        required
-                        value={userInput.lastname}
-                        onChange={handleChange}
-                      />
-                      <label htmlFor="epost">EMAIL</label>
-                      <input
-                        type="email"
-                        id="epost"
-                        placeholder="EMAIL"
-                        name="email"
-                        required
-                        value={userInput.email}
-                        onChange={handleChange}
-                      />
-                      <label htmlFor="phone">MOBILTELEFON</label>
-                      <input
-                        type="tel"
-                        id="phone"
-                        placeholder="TEL -xxxxxxxxxx"
-                        name="phone"
-                        pattern="[0-9]{10}"
-                        required
-                        value={userInput.phone}
-                        onChange={handleChange}
-                      />
-                      <label htmlFor="gdpr">
-                        Jag har läst och accepterar GDPR
-                      </label>
-                      <input
-                        id="gdpr"
-                        type="checkbox"
-                        checked={gdpr}
-                        onChange={handleGdpr}
-                        required
-                      />
-                      <SubmitBookingButton
-                        disabled={!buttonEnabled}
-                        onClick={(e) => {
-                          startLoadingScr(e);
-                        }}
-                      >
-                        Boka
-                      </SubmitBookingButton>
-                    </GuestInformationDiv>
-                  </UsersContext.Provider>
+
+                  <GuestInformationDiv>
+                    <label htmlFor="firstname">FÖRNAMN</label>
+                    <input
+                      type="text"
+                      id="firstname"
+                      placeholder="FÖRNAMN"
+                      name="firstname"
+                      required
+                      value={userInput.firstname}
+                      onChange={handleChange}
+                    />
+                    <label htmlFor="lastname">EFTERNAMN</label>
+                    <input
+                      type="text"
+                      id="lastname"
+                      placeholder="EFTERNAMN"
+                      name="lastname"
+                      required
+                      value={userInput.lastname}
+                      onChange={handleChange}
+                    />
+                    <label htmlFor="epost">EMAIL</label>
+                    <input
+                      type="email"
+                      id="epost"
+                      placeholder="EMAIL"
+                      name="email"
+                      required
+                      value={userInput.email}
+                      onChange={handleChange}
+                    />
+                    <label htmlFor="phone">MOBILTELEFON</label>
+                    <input
+                      type="tel"
+                      id="phone"
+                      placeholder="TEL -xxxxxxxxxx"
+                      name="phone"
+                      pattern="[0-9]{10}"
+                      required
+                      value={userInput.phone}
+                      onChange={handleChange}
+                    />
+                    <label htmlFor="gdpr">
+                      Jag har läst och accepterar GDPR
+                    </label>
+                    <input
+                      id="gdpr"
+                      type="checkbox"
+                      checked={gdpr}
+                      onChange={handleGdpr}
+                      required
+                    />
+                    <SubmitBookingButton
+                      disabled={!buttonEnabled}
+                      onClick={(e) => {
+                        startLoadingScr(e);
+                      }}
+                    >
+                      Boka
+                    </SubmitBookingButton>
+                  </GuestInformationDiv>
                 </GuestInformationForm>
               </GuestInformationWrapper>
             )}

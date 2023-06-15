@@ -1,9 +1,9 @@
 import { useState } from "react";
-import { FooterStyled } from "./styled/FooterStyled";
-import { H5 } from "./styled/Headings";
-import { FooterParagraph } from "./styled/Paragraphs";
-import { FooterColumn, FooterRow } from "./styled/Wrappers";
-import { GdprModal } from "./Gdpr/GdprModal";
+import { FooterStyled } from "../styled/FooterStyled";
+import { H5 } from "../styled/Headings";
+import { FooterParagraph } from "../styled/Paragraphs";
+import { FooterColumn, FooterRow } from "../styled/Wrappers";
+import { GdprModal } from "../Gdpr/GdprModal";
 
 export const Footer = () => {
   const [showGdprModal, setShowGdprModal] = useState(false);

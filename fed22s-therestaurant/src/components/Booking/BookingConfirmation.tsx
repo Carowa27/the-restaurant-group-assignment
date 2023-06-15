@@ -2,8 +2,9 @@ import { MyEearlyBookingWrapper } from "../styled/Wrappers";
 import { IBooking } from "../../models/IBooking";
 import { deleteBooking } from "../../services/bookingServices";
 import { useNavigate } from "react-router-dom";
-import { DeleteWarningModal } from "../DeleteWarningModal";
+import { DeleteWarningModal } from "./DeleteWarningModal";
 import { useState } from "react";
+import { CreateAndUpdateBookingButton } from "../styled/Buttons";
 
 interface IBookingConfirmationProps {
   userBooking: IBooking;
@@ -23,18 +24,36 @@ export const BookingConfirmation = (props: IBookingConfirmationProps) => {
   return (
     <>
       <MyEearlyBookingWrapper>
-        <p>Orderid: {props.userBooking?._id}</p>
-        <p>Förnamn: {props.userBooking?.user.firstname}</p>
-        <p>Efternamn: {props.userBooking?.user.lastname}</p>
-        <p>Email: {props.userBooking?.user.email}</p>
-        <p>Telefonnummer: {props.userBooking?.user.phone}</p>
-        <p>Datum: {props.userBooking?.date}</p>
-        <p>Sittning: {props.userBooking?.sessionstart}</p>
-        <p>Antal gäster: {props.userBooking?.guests}</p>
+        <p>
+          <b> Orderid:</b> {props.userBooking?._id}
+        </p>
+        <p>
+          <b>Förnamn:</b> {props.userBooking?.user.firstname}
+        </p>
+        <p>
+          <b>Efternamn:</b> {props.userBooking?.user.lastname}
+        </p>
+        <p>
+          <b>Email:</b> {props.userBooking?.user.email}
+        </p>
+        <p>
+          <b>Telefonnummer:</b> {props.userBooking?.user.phone}
+        </p>
+        <p>
+          <b>Datum:</b> {props.userBooking?.date}
+        </p>
+        <p>
+          <b>Sittning:</b> {props.userBooking?.sessionstart}
+        </p>
+        <p>
+          <b>Antal gäster:</b> {props.userBooking?.guests}
+        </p>
         {props.msg === "updatePage" && (
-          <button onClick={handleGdprInfo /*handleDelete*/}>
+          <CreateAndUpdateBookingButton
+            onClick={handleGdprInfo /*handleDelete*/}
+          >
             Ta bort bokning
-          </button>
+          </CreateAndUpdateBookingButton>
         )}
       </MyEearlyBookingWrapper>
 

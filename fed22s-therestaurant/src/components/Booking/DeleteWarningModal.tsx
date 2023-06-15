@@ -1,19 +1,19 @@
 import { useNavigate } from "react-router-dom";
-import { IBooking } from "../models/IBooking";
-import { deleteBooking } from "../services/bookingServices";
+import { IBooking } from "../../models/IBooking";
+import { deleteBooking } from "../../services/bookingServices";
 import {
   Modal,
   ModalContentWarning,
   ModalFoot,
   ModalHead,
   ModalLoader,
-} from "./styled/Modals";
-import { H3Modal } from "./styled/Headings";
-import { ModalCross } from "./styled/Paragraphs";
-import { CloseModalBtn } from "./styled/Buttons";
+} from "../styled/Modals";
+import { H3Modal } from "../styled/Headings";
+import { ModalCross } from "../styled/Paragraphs";
+import { CloseModalBtn } from "../styled/Buttons";
 import { useState } from "react";
-import { Loading } from "./Loading";
-import { LoaderSun } from "./styled/Loader";
+import { Loading } from "../Loader/Loading";
+import { LoaderSun } from "../styled/Loader";
 import SunLoader from "../assets/SunLoader.png";
 
 interface DeleteWarningModalProps {
@@ -27,7 +27,6 @@ export const DeleteWarningModal = (props: DeleteWarningModalProps) => {
   const handleDelete = async () => {
     const response = await deleteBooking(props.booking._id);
     if (response?.status === 204) {
-      // Send mail
       navigate(`/bookingdeleted`);
     } else {
       console.error("Något gick fel vid bokningen");

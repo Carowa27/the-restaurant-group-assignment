@@ -7,6 +7,16 @@ export const MainWrapper = styled.div`
   /* padding: 0 2rem 1rem 2rem; */
   min-height: 84vh;
 `;
+export const BookingPageWrapper = styled(MainWrapper)`
+  align-items: center;
+  min-height: 70vh;
+`;
+export const ButtonWrapper = styled(MainWrapper)`
+  flex-direction: row;
+  justify-content: space-evenly;
+  /* align-items: center; */
+  min-height: fit-content;
+`;
 export const PageWrapper = styled(MainWrapper)`
   margin-bottom: 10vh; //10rem; /*footer*/
 `;
@@ -51,11 +61,13 @@ export const BookingWrapper = styled.div`
 `;
 
 export const MyEearlyBookingWrapper = styled.div`
-  /* background-color: #859685; */
+  background-color: #ffffff;
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 5px;
+  padding: 1rem;
+  margin: 1rem;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.4);
 `;
 
 export const NumberOfGuestWrapper = styled.div`

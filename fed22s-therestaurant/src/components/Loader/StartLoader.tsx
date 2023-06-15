@@ -3,9 +3,9 @@ import {
   LoaderCloudStartTwo,
   LoaderSunStart,
   LoadingWrapper,
-} from "./styled/Loader";
-import SunLoader from "../assets/SunLoader.png";
-import CloudLoader from "../assets/CloudLoader.png";
+} from "../styled/Loader";
+import SunLoader from "../../assets/SunLoader.png";
+import CloudLoader from "../../assets/CloudLoader.png";
 
 export const StartLoader = () => {
   return (

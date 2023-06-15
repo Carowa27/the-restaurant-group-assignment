@@ -1,4 +1,4 @@
-import { IBooking } from "../models/IBooking";
+import { IBooking } from "./IBooking";
 
 interface IBookingResponse {
   data: IBooking[];

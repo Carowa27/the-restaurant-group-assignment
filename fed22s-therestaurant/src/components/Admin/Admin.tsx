@@ -13,7 +13,7 @@ import { BookingInfoUL, StyledLi } from "../styled/UnorderdLists";
 import { AdminWrapper, BookingDetailWrapper } from "../styled/Wrappers";
 import { AdminBookingById } from "./AdminBookingById";
 import { AdminBookingDetails } from "./AdminBookingDetails";
-import { Loading } from "../Loading";
+import { Loading } from "../Loader/Loading";
 import { TableData, TableHeader, TableRow } from "../styled/TableStyled";
 
 export const Admin = () => {

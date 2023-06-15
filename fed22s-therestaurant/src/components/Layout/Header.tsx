@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
-import { HeaderStyled } from "./styled/HeaderStyled";
-import { H3Bold, NavLi } from "./styled/Headings";
-import logo from "../assets/glasslogo2.png";
+import { HeaderStyled } from "../styled/HeaderStyled";
+import { H3Bold, NavLi } from "../styled/Headings";
+import logo from "../../assets/glasslogo2.png";
 
 export const Header = () => {
   return (
