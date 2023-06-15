@@ -57,6 +57,7 @@ export const Booking = (props: IBookingProps) => {
   const [selectedDate, setSelectedDate] = useState("");
   const [buttonEnabled, setButtonEnabled] = useState(false);
   const [remainingTables, setRemainingTables] = useState(15);
+  const [showError, setShowError] = useState(false);
 
   const numberOfGuestsOptions = [
     { value: 1, label: "1 person" },
@@ -229,12 +230,24 @@ export const Booking = (props: IBookingProps) => {
   const handleSearchBooking = async (id: string) => {
     // e.preventDefault();
 
+    // if (userGivenId === "") {
+    //   setMessage("Tyvärr finns inte den bokningen");
+    // } else {
+    //   setMessage("");
+    //   handleSearchBooking(userGivenId);
+    // }
+
     userGivenId = id;
 
     const getUserBookingById = async () => {
       try {
         const data = await getBookingById(userGivenId);
         setUserBooking(data);
+        if (data === undefined) {
+          setShowError(true);
+        } else {
+          setShowError(false);
+        }
       } catch (error) {
         console.error(`${error}: Något gick fel vid sökningen`);
       }
@@ -269,6 +282,7 @@ export const Booking = (props: IBookingProps) => {
     }
   };
   console.log(userBooking);
+  console.log(showError, "showError");
   return (
     <>
       <BookingWrapper>
@@ -279,6 +293,9 @@ export const Booking = (props: IBookingProps) => {
             {props.msg === "update" && (
               <SearchBooking
                 handleSearchBooking={handleSearchBooking}
+
+                errorMsg={showError}
+
               ></SearchBooking>
             )}
             {userBooking != null && (

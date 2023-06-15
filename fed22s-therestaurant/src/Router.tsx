@@ -6,6 +6,7 @@ import { ContactPage } from "./pages/ContactPage";
 import { LandingPage } from "./pages/LandingPage";
 import { Layout } from "./pages/Layout";
 import { ErrorPage } from "./pages/ErrorPage";
+import { AdminBookingById } from "./components/Admin/AdminBookingById";
 import { BookingDeleted } from "./pages/BookingDeleted";
 
 export const Router = createBrowserRouter([
