@@ -1,4 +1,4 @@
-import { ChangeEvent, FormEvent, useState } from "react";
+import { ChangeEvent, FormEvent, useEffect, useState } from "react";
 import { SearchBookingButton } from "../styled/Buttons";
 import { MyBookingsForm } from "../styled/Forms";
 import { H3Bold } from "../styled/Headings";
@@ -7,20 +7,22 @@ import { MyBookingsWrapper } from "../styled/Wrappers";
 
 interface searchBookingProps {
   handleSearchBooking: (id: string) => void;
+  errorMsg: boolean;
 }
 
-export const SearchBooking = ({ handleSearchBooking }: searchBookingProps) => {
+export const SearchBooking = ({
+  handleSearchBooking,
+  errorMsg,
+}: searchBookingProps) => {
   const [bookingId, setBookingId] = useState("");
-  console.log("klicket funkade!");
-
+  const [showError, setShowError] = useState(false);
   const handleIdChange = (e: ChangeEvent<HTMLInputElement>) => {
     setBookingId(e.target.value);
   };
+  useEffect(() => {
+    setShowError(errorMsg);
+  }, [errorMsg]);
 
-  // const handleClick = (e: FormEvent) => {
-  //   e.preventDefault();
-  //   console.log("klicket funkade!");
-  // };
   return (
     <>
       <h1>Här är din bokning </h1>
@@ -42,6 +44,12 @@ export const SearchBooking = ({ handleSearchBooking }: searchBookingProps) => {
 
           <SearchBookingButton type="submit">Sök</SearchBookingButton>
         </MyBookingsForm>
+        {showError && (
+          <p>
+            Tyvärr finns ingen bokning med detta ordernummer, testa med ett
+            annat!
+          </p>
+        )}
       </MyBookingsWrapper>
     </>
   );
