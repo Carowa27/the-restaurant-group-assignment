@@ -6,7 +6,8 @@ import { AdminForm } from "../styled/Forms";
 import { H3Bold } from "../styled/Headings";
 import { AdminSearchBookingInput } from "../styled/Inputs";
 import { BookingInfoUL } from "../styled/UnorderdLists";
-import { AdminWrapper } from "../styled/Wrappers";
+import { AdminWrapper, BookingDetailWrapper } from "../styled/Wrappers";
+import { AdminBookingById } from "./AdminBookingById";
 import { AdminBookingDetails } from "./AdminBookingDetails";
 
 export const Admin = () => {
@@ -47,7 +48,7 @@ export const Admin = () => {
 
   const html = bookings.map((b, index) => {
     return (
-      <div key={index}>
+      <BookingDetailWrapper key={index}>
         <BookingInfoUL>
           <li>Datum: {b.date}</li>
           <li>Tid: {b.sessionstart}</li>
@@ -62,7 +63,7 @@ export const Admin = () => {
             <i className="fa-regular fa-trash-can"></i>
           </AdminEditButton>
         </span>
-      </div>
+      </BookingDetailWrapper>
     );
   });
 
@@ -79,9 +80,8 @@ export const Admin = () => {
             placeholder="00000"
             onChange={filterById}
           ></AdminSearchBookingInput>
-          {/* {search && <div>{html}</div>} */}
-          <div>{html}</div>
           <SearchBookingButton onClick={handleSearch}>Sök</SearchBookingButton>
+          <div>{html}</div>
         </AdminForm>
         <SearchBookingButton onClick={handleClick}>
           Hämta alla bokningar
