@@ -43,9 +43,11 @@ export const Admin = () => {
     setBookings(data.filter((d) => d._id.toString() === e.target.value));
   };
 
+  console.log(bookings);
+
   const html = bookings.map((b, index) => {
     return (
-      <>
+      <div key={index}>
         <BookingInfoUL>
           <li>Datum: {b.date}</li>
           <li>Tid: {b.sessionstart}</li>
@@ -60,9 +62,11 @@ export const Admin = () => {
             <i className="fa-regular fa-trash-can"></i>
           </AdminEditButton>
         </span>
-      </>
+      </div>
     );
   });
+
+  console.log(bookings);
 
   return (
     <>

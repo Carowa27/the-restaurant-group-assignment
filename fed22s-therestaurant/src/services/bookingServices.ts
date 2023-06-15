@@ -32,7 +32,7 @@ export const getBookings = async () => {
       "http://localhost:4000/api/v1/bookings/"
     );
 
-    return response.data;
+    return response.data.data;
   } catch (error) {
     console.error("Ett fel uppstod", error);
   }

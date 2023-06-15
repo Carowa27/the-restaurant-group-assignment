@@ -5,12 +5,12 @@ export interface IBooking {
     email: string;
     phone: string;
   };
-  _id?: string;
+  _id: string;
   sessionstart: string;
   guests: number;
   date: string;
 }
 
 export interface IApiResponse {
-  bookings: IBooking[];
+  data: IBooking[];
 }
