@@ -11,7 +11,7 @@ export const H2 = styled.h2`
 `;
 
 export const H3Bold = styled.h3`
-  font-size: 20px;
+  font-size: 18pt;
   font-weight: 600;
   font-family: "Bebas Neue";
 `;

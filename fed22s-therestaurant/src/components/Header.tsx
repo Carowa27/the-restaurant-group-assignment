@@ -19,9 +19,6 @@ export const Header = () => {
             <NavLi>
               <Link to="/contact">Kontakt</Link>
             </NavLi>
-            <NavLi>
-              <Link to="/admin">Admin</Link>
-            </NavLi>
           </ul>
         </nav>
       </HeaderStyled>

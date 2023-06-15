@@ -14,7 +14,7 @@ import { SearchBooking } from "../SearchBooking/SearchBooking";
 import { SubmitBookingButton, TimeBookingButton } from "../styled/Buttons";
 import { BookingForm, GuestInformationForm } from "../styled/Forms";
 import { H3Bold, H3Normal } from "../styled/Headings";
-import { DateInput } from "../styled/Inputs";
+import { CreateBookingInput, DateInput } from "../styled/Inputs";
 import {
   BookingWrapper,
   DateInputWrapper,
@@ -368,7 +368,7 @@ export const Booking = (props: IBookingProps) => {
                       <Users />
                       <GuestInformationDiv>
                         <label htmlFor="firstname">Förnamn</label>
-                        <input
+                        <CreateBookingInput
                           type="text"
                           id="firstname"
                           placeholder="FÖRNAMN"
@@ -378,7 +378,7 @@ export const Booking = (props: IBookingProps) => {
                           onChange={handleChange}
                         />
                         <label htmlFor="lastname">Efternamn</label>
-                        <input
+                        <CreateBookingInput
                           type="text"
                           id="lastname"
                           placeholder="EFTERNAMN"
@@ -388,7 +388,7 @@ export const Booking = (props: IBookingProps) => {
                           onChange={handleChange}
                         />
                         <label htmlFor="epost">Email</label>
-                        <input
+                        <CreateBookingInput
                           type="email"
                           id="epost"
                           placeholder="EMAIL"
@@ -398,7 +398,7 @@ export const Booking = (props: IBookingProps) => {
                           onChange={handleChange}
                         />
                         <label htmlFor="phone">Mobiltelefon</label>
-                        <input
+                        <CreateBookingInput
                           type="tel"
                           id="phone"
                           placeholder="TEL -xxxxxxxxxx"
@@ -412,7 +412,7 @@ export const Booking = (props: IBookingProps) => {
                         <label htmlFor="gdpr">
                           Jag har läst och accepterar GDPR
                         </label>
-                        <input
+                        <CreateBookingInput
                           id="gdpr"
                           type="checkbox"
                           checked={gdpr}
@@ -483,41 +483,41 @@ export const Booking = (props: IBookingProps) => {
                 <UsersContext.Provider value={user}>
                   <Users />
                   <GuestInformationDiv>
-                    <label htmlFor="firstname">FÖRNAMN</label>
-                    <input
+                    <label htmlFor="firstname">Förnamn</label>
+                    <CreateBookingInput
                       type="text"
                       id="firstname"
-                      placeholder="FÖRNAMN"
+                      placeholder="Sebastian"
                       name="firstname"
                       required
                       value={userInput.firstname}
                       onChange={handleChange}
                     />
-                    <label htmlFor="lastname">EFTERNAMN</label>
-                    <input
+                    <label htmlFor="lastname">Efternamn</label>
+                    <CreateBookingInput
                       type="text"
                       id="lastname"
-                      placeholder="EFTERNAMN"
+                      placeholder="Tegel"
                       name="lastname"
                       required
                       value={userInput.lastname}
                       onChange={handleChange}
                     />
-                    <label htmlFor="epost">EMAIL</label>
-                    <input
+                    <label htmlFor="epost">Email</label>
+                    <CreateBookingInput
                       type="email"
                       id="epost"
-                      placeholder="EMAIL"
+                      placeholder="sebastian@mail.com"
                       name="email"
                       required
                       value={userInput.email}
                       onChange={handleChange}
                     />
-                    <label htmlFor="phone">MOBILTELEFON</label>
-                    <input
+                    <label htmlFor="phone">Mobiltelefon</label>
+                    <CreateBookingInput
                       type="tel"
                       id="phone"
-                      placeholder="TEL -xxxxxxxxxx"
+                      placeholder="XXX-XXX XX XX"
                       name="phone"
                       pattern="[0-9]{10}"
                       required

@@ -1,6 +1,10 @@
 import { ChangeEvent, useEffect, useState } from "react";
 import { IBooking } from "../../models/IBooking";
-import { getBookings } from "../../services/bookingServices";
+import {
+  deleteBooking,
+  getBookings,
+  updateBooking,
+} from "../../services/bookingServices";
 import { AdminEditButton, SearchBookingButton } from "../styled/Buttons";
 import { AdminForm } from "../styled/Forms";
 import { H3Bold } from "../styled/Headings";
@@ -10,6 +14,7 @@ import { AdminWrapper, BookingDetailWrapper } from "../styled/Wrappers";
 import { AdminBookingById } from "./AdminBookingById";
 import { AdminBookingDetails } from "./AdminBookingDetails";
 import { Loading } from "../Loading";
+import { TableData, TableHeader, TableRow } from "../styled/TableStyled";
 
 export const Admin = () => {
   /*Denna komponent ska vi kunna se bokningar och 
@@ -21,14 +26,9 @@ export const Admin = () => {
   const [isLoading, setIsLoading] = useState(false);
 
   const [show, setShow] = useState(false);
-  const [search, setSearch] = useState(false);
 
   const handleClick = () => {
     setShow(true);
-  };
-
-  const handleSearch = () => {
-    setSearch(true);
   };
 
   useEffect(() => {
@@ -52,55 +52,17 @@ export const Admin = () => {
       if (msg === "getAll") {
         handleClick();
       }
-      if (msg === "getOne") {
-        handleSearch();
-      }
     }, 1000);
   };
   const filterById = (e: ChangeEvent<HTMLInputElement>) => {
     console.log(e.target.value);
 
-    setBookings(data.filter((d) => d._id.toString() === e.target.value));
-  };
-
-  console.log(bookings);
-
-  const html = bookings.map((b, index) => {
-    return (
-      <BookingDetailWrapper key={index}>
-        <BookingInfoUL>
-          <StyledLi>
-            <strong>Datum:</strong> {b.date}
-          </StyledLi>
-          <StyledLi>
-            <strong>Tid:</strong> {b.sessionstart}
-          </StyledLi>
-          <StyledLi>
-            <strong>Antal gäster:</strong> {b.guests}
-          </StyledLi>
-          <StyledLi>
-            <strong>Bokningsnummer:</strong> {b._id}
-          </StyledLi>
-        </BookingInfoUL>
-        <span>
-          <AdminEditButton
-            onClick={() => {
-              startLoadingScr("update");
-            }}
-          >
-            <i className="fa-regular fa-pen-to-square"></i>
-          </AdminEditButton>
-          <AdminEditButton
-            onClick={() => {
-              startLoadingScr("delete");
-            }}
-          >
-            <i className="fa-regular fa-trash-can"></i>
-          </AdminEditButton>
-        </span>
-      </BookingDetailWrapper>
+    setBookings(
+      data.filter(
+        (d) => d._id.toString() === e.target.value || d.date === e.target.value
+      )
     );
-  });
+  };
 
   console.log(bookings);
 
@@ -108,21 +70,54 @@ export const Admin = () => {
     <>
       <AdminWrapper>
         <AdminForm>
-          <H3Bold>Sök bokningsnummer</H3Bold>
+          <H3Bold>Sök efter bokningsnummer eller datum</H3Bold>
           <AdminSearchBookingInput
             type="text"
             name="id"
             placeholder="00000"
             onChange={filterById}
           ></AdminSearchBookingInput>
-          <SearchBookingButton
-            onClick={() => {
-              startLoadingScr("update");
-            }}
-          >
-            Sök
-          </SearchBookingButton>
-          <div>{html}</div>
+          <BookingDetailWrapper>
+            <table>
+              <thead>
+                <TableRow>
+                  <TableHeader>Datum</TableHeader>
+                  <TableHeader>Tid</TableHeader>
+                  <TableHeader>Gäster</TableHeader>
+                  <TableHeader>Bokningsnummer</TableHeader>
+                </TableRow>
+              </thead>
+              <tbody>
+                {bookings.map((b) => (
+                  <TableRow>
+                    <TableData>{b.date}</TableData>
+                    <TableData>{b.sessionstart}</TableData>
+                    <TableData>{b.guests}</TableData>
+                    <TableData>{b._id}</TableData>
+                    <TableData>
+                      <span>
+                        <AdminEditButton
+                          onClick={() => {
+                            startLoadingScr("update");
+                          }}
+                        >
+                          <i className="fa-regular fa-pen-to-square"></i>
+                        </AdminEditButton>
+                        <AdminEditButton
+                          onClick={() => {
+                            startLoadingScr("delete");
+                            deleteBooking(b._id);
+                          }}
+                        >
+                          <i className="fa-regular fa-trash-can"></i>
+                        </AdminEditButton>
+                      </span>
+                    </TableData>
+                  </TableRow>
+                ))}
+              </tbody>
+            </table>
+          </BookingDetailWrapper>
         </AdminForm>
         <SearchBookingButton
           onClick={() => {
