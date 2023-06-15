@@ -25,6 +25,8 @@ import {
   TimeBookingWrapper,
 } from "../styled/Wrappers";
 import { Users } from "./Users";
+import { Modal } from "../styled/Modals";
+import { Loading } from "../Loading";
 
 interface IBookingProps {
   msg: string;
@@ -59,6 +61,7 @@ export const Booking = (props: IBookingProps) => {
   const [remainingTables, setRemainingTables] = useState(15);
   const [showError, setShowError] = useState(false);
   const [gdpr, setGdpr] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   const numberOfGuestsOptions = [
     { value: 1, label: "1 person" },
@@ -283,6 +286,19 @@ export const Booking = (props: IBookingProps) => {
       console.error("Något gick fel vid bokningen");
     }
   };
+
+  const startLoadingScr = (e: FormEvent) => {
+    setIsLoading(true);
+    setTimeout(() => {
+      setIsLoading(false);
+      if (props.msg === "update") {
+        handleSubmitChangeBooking(e);
+      }
+      if (props.msg === "create") {
+        handleSubmit(e);
+      }
+    }, 1000);
+  };
   console.log(userBooking);
   console.log(showError, "showError");
   return (
@@ -407,7 +423,9 @@ export const Booking = (props: IBookingProps) => {
                         />
                         <SubmitBookingButton
                           disabled={!buttonEnabled}
-                          onClick={handleSubmitChangeBooking}
+                          onClick={(e) => {
+                            startLoadingScr(e);
+                          }}
                         >
                           Ändra
                         </SubmitBookingButton>
@@ -519,7 +537,9 @@ export const Booking = (props: IBookingProps) => {
                     />
                     <SubmitBookingButton
                       disabled={!buttonEnabled}
-                      onClick={handleSubmit}
+                      onClick={(e) => {
+                        startLoadingScr(e);
+                      }}
                     >
                       Boka
                     </SubmitBookingButton>
@@ -532,6 +552,11 @@ export const Booking = (props: IBookingProps) => {
           <></>
         )}
       </BookingWrapper>
+      {isLoading && (
+        <Modal>
+          <Loading></Loading>
+        </Modal>
+      )}
     </>
   );
 };

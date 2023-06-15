@@ -9,6 +9,7 @@ import { BookingInfoUL } from "../styled/UnorderdLists";
 import { AdminWrapper, BookingDetailWrapper } from "../styled/Wrappers";
 import { AdminBookingById } from "./AdminBookingById";
 import { AdminBookingDetails } from "./AdminBookingDetails";
+import { Loading } from "../Loading";
 
 export const Admin = () => {
   /*Denna komponent ska vi kunna se bokningar och 
@@ -17,6 +18,7 @@ export const Admin = () => {
 
   const [data, setData] = useState<IBooking[]>([]);
   const [bookings, setBookings] = useState(data);
+  const [isLoading, setIsLoading] = useState(false);
 
   const [show, setShow] = useState(false);
   const [search, setSearch] = useState(false);
@@ -37,7 +39,24 @@ export const Admin = () => {
     };
     getData();
   }, []);
-
+  const startLoadingScr = (msg: string) => {
+    setIsLoading(true);
+    setTimeout(() => {
+      setIsLoading(false);
+      if (msg === "delete") {
+        //delete function
+      }
+      if (msg === "update") {
+        //update function
+      }
+      if (msg === "getAll") {
+        handleClick();
+      }
+      if (msg === "getOne") {
+        handleSearch();
+      }
+    }, 1000);
+  };
   const filterById = (e: ChangeEvent<HTMLInputElement>) => {
     console.log(e.target.value);
 
@@ -56,10 +75,18 @@ export const Admin = () => {
           <li>Bokningsnummer: {b._id}</li>
         </BookingInfoUL>
         <span>
-          <AdminEditButton>
+          <AdminEditButton
+            onClick={() => {
+              startLoadingScr("update");
+            }}
+          >
             <i className="fa-regular fa-pen-to-square"></i>
           </AdminEditButton>
-          <AdminEditButton>
+          <AdminEditButton
+            onClick={() => {
+              startLoadingScr("delete");
+            }}
+          >
             <i className="fa-regular fa-trash-can"></i>
           </AdminEditButton>
         </span>
@@ -80,14 +107,25 @@ export const Admin = () => {
             placeholder="00000"
             onChange={filterById}
           ></AdminSearchBookingInput>
-          <SearchBookingButton onClick={handleSearch}>Sök</SearchBookingButton>
+          <SearchBookingButton
+            onClick={() => {
+              startLoadingScr("update");
+            }}
+          >
+            Sök
+          </SearchBookingButton>
           <div>{html}</div>
         </AdminForm>
-        <SearchBookingButton onClick={handleClick}>
+        <SearchBookingButton
+          onClick={() => {
+            startLoadingScr("getAll");
+          }}
+        >
           Hämta alla bokningar
         </SearchBookingButton>
         {show && <AdminBookingDetails></AdminBookingDetails>}
       </AdminWrapper>
+      {isLoading && <Loading></Loading>}
     </>
   );
 };
