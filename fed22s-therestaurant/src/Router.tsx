@@ -33,7 +33,7 @@ export const Router = createBrowserRouter([
         element: <Admin></Admin>,
       },
       {
-        path: "/bookingconfirmed/:bookingType/:id",
+        path: "/bookinginfo/:bookingType/:id",
         element: <BookingConfirmedPage></BookingConfirmedPage>,
       },
       {

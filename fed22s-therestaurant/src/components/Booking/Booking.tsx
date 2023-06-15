@@ -233,7 +233,7 @@ export const Booking = (props: IBookingProps) => {
 
     if (response?.status === 201) {
       // Send mail
-      navigate(`/bookingconfirmed/confirm/${response.data?._id}`);
+      navigate(`/bookinginfo/confirm/${response.data?._id}`);
     } else {
       console.error("Något gick fel vid bokningen");
     }
@@ -427,8 +427,8 @@ export const Booking = (props: IBookingProps) => {
                           <SubmitBookingButton
                             disabled={!buttonEnabled}
                             onClick={(e) => {
-                            startLoadingScr(e);
-                          }}
+                              startLoadingScr(e);
+                            }}
                           >
                             Ändra
                           </SubmitBookingButton>
@@ -437,7 +437,6 @@ export const Booking = (props: IBookingProps) => {
                     </GuestInformationForm>
                   </GuestInformationWrapper>
                 )}
-
               </>
             )}
           </>
@@ -545,8 +544,8 @@ export const Booking = (props: IBookingProps) => {
                       <SubmitBookingButton
                         disabled={!buttonEnabled}
                         onClick={(e) => {
-                        startLoadingScr(e);
-                      }}
+                          startLoadingScr(e);
+                        }}
                       >
                         Boka
                       </SubmitBookingButton>
@@ -555,7 +554,6 @@ export const Booking = (props: IBookingProps) => {
                 </GuestInformationForm>
               </GuestInformationWrapper>
             )}
-
           </>
         ) : (
           <></>
