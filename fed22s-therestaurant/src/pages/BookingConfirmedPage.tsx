@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
-import { BookingConfirmation } from "../components/BookingConfirmation.tsx/BookingConfirmation";
+import { BookingConfirmation } from "../components/Booking/BookingConfirmation";
 import { BookingForm } from "../components/styled/Forms";
 import { BookingWrapper } from "../components/styled/Wrappers";
 import { IBooking } from "../models/IBooking";
@@ -46,6 +46,3 @@ export const BookingConfirmedPage = () => {
     </>
   );
 };
-function fect(arg0: () => void) {
-  throw new Error("Function not implemented.");
-}

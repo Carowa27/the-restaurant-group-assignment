@@ -5,7 +5,7 @@ import { H3Bold } from "../styled/Headings";
 import { MyBookingsSearchBookingInput } from "../styled/Inputs";
 import { MyBookingsWrapper } from "../styled/Wrappers";
 import { ModalLoader } from "../styled/Modals";
-import { Loading } from "../Loading";
+import { Loading } from "../Loader/Loading";
 
 interface searchBookingProps {
   handleSearchBooking: (id: string) => void;
@@ -29,7 +29,7 @@ export const SearchBooking = ({
     setIsLoading(true);
     setTimeout(() => {
       setIsLoading(false);
-            handleSearchBooking(bookingId.trim());
+      handleSearchBooking(bookingId.trim());
     }, 1000);
   };
   return (
@@ -39,9 +39,7 @@ export const SearchBooking = ({
         <MyBookingsForm
           onSubmit={(e) => {
             e.preventDefault();
-
             startLoadingScr();
-
           }}
         >
           <H3Bold>Hämta din bokning du ska ändra</H3Bold>

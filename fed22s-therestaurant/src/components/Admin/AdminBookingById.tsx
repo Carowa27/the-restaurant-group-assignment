@@ -6,7 +6,7 @@ import { AdminEditButton, SearchBookingButton } from "../styled/Buttons";
 import { AdminForm } from "../styled/Forms";
 import { H3Bold } from "../styled/Headings";
 import { AdminSearchBookingInput } from "../styled/Inputs";
-import { BookingInfoUL } from "../styled/UnorderdLists";
+import { BookingInfoUL } from "../styled/Lists";
 import { BookingDetailWrapper } from "../styled/Wrappers";
 
 export const AdminBookingById = () => {

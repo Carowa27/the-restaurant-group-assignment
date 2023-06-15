@@ -4,7 +4,7 @@ import { BookingConfirmedPage } from "./pages/BookingConfirmedPage";
 import { BookingPage } from "./pages/BookingPage";
 import { ContactPage } from "./pages/ContactPage";
 import { LandingPage } from "./pages/LandingPage";
-import { Layout } from "./pages/Layout";
+import { Layout } from "./components/Layout/Layout";
 import { ErrorPage } from "./pages/ErrorPage";
 import { AdminBookingById } from "./components/Admin/AdminBookingById";
 import { BookingDeleted } from "./pages/BookingDeleted";
