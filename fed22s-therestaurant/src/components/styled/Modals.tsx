@@ -7,7 +7,7 @@ export const Modal = styled.div`
   right: 0;
   bottom: 0;
   display: flex;
-  /* align-items: center; */
+
   justify-content: center;
   height: 100%;
   width: 100%;
@@ -19,22 +19,20 @@ export const ModalHead = styled.div`
   justify-content: space-between;
 `;
 export const ModalContent = styled.div`
-  /* position: relative; */
   height: 70vh;
   width: 80vw;
   background-color: aliceblue;
   padding: 2rem;
   margin: 5%;
   border-radius: 5px;
-  /* margin-top: 20vh; */
+
   overflow-y: scroll;
   box-sizing: content-box;
 `;
 export const ModalFoot = styled(ModalHead)`
   justify-content: space-evenly;
 `;
-// export const ModalWarning = styled(Modal)`
-// `;
+
 export const ModalContentWarning = styled(ModalContent)`
   width: fit-content;
   height: fit-content;

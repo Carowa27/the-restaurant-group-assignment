@@ -4,12 +4,18 @@ import errorPage from "../../assets/errorPage.png";
 export const MainWrapper = styled.div`
   display: flex;
   flex-direction: column;
-  /* padding: 0 2rem 1rem 2rem; */
   min-height: 84vh;
 `;
-export const PageWrapper = styled(MainWrapper)`
-  margin-bottom: 10vh; //10rem; /*footer*/
+export const BookingPageWrapper = styled(MainWrapper)`
+  align-items: center;
+  min-height: 70vh;
 `;
+export const ButtonWrapper = styled(MainWrapper)`
+  flex-direction: row;
+  justify-content: space-evenly;
+  min-height: fit-content;
+`;
+
 export const InfoWrapper = styled(MainWrapper)`
   flex-direction: row;
   justify-content: space-evenly;
@@ -43,7 +49,6 @@ export const MyBookingsWrapper = styled.div`
 `;
 
 export const BookingWrapper = styled.div`
-  /* background-color: #859685; */
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -51,11 +56,13 @@ export const BookingWrapper = styled.div`
 `;
 
 export const MyEearlyBookingWrapper = styled.div`
-  /* background-color: #859685; */
+  background-color: #ffffff;
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 5px;
+  padding: 1rem;
+  margin: 1rem;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.4);
 `;
 
 export const NumberOfGuestWrapper = styled.div`
@@ -63,19 +70,6 @@ export const NumberOfGuestWrapper = styled.div`
   flex-direction: column;
   align-items: center;
   padding: 5px;
-`;
-
-export const AmountGuestsNumberWrapper = styled.div`
-  width: 14%;
-  border: 1px solid black;
-  border-radius: 2px;
-  padding: 0.4rem 0;
-  text-align: center;
-  &:hover {
-    transform: scale(1.01);
-    box-shadow: 0 0 5px rgba(0, 0, 0, 0.7);
-    cursor: pointer;
-  }
 `;
 
 export const DateInputWrapper = styled.div`
@@ -118,14 +112,17 @@ export const OpeningWrapper = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  padding: 0;
+  padding: 0 3rem;
   margin: 0;
-  min-height: 85vh;
-  height: 90vh;
+  min-height: 60vh;
+  height: fit-content;
 `;
 export const ContactHeadWrapper = styled(OpeningWrapper)`
   height: auto;
+  min-height: fit-content;
   padding-top: 2rem;
+  align-items: top;
+  padding: 0;
 `;
 export const IceCreamWrapper = styled.div`
   display: flex;
@@ -135,20 +132,16 @@ export const IceCreamWrapper = styled.div`
 `;
 export const ContactWrapper = styled(IceCreamWrapper)`
   width: 30%;
+  padding: 1rem;
 `;
-// export const FastInfoWrapper = styled.div`
-//   display: flex;
-//   justify-content: space-evenly;
-// `;
+
 export const FooterColumn = styled.div`
   display: flex;
   flex-direction: column;
-  /* justify-content: center; */
   padding-top: 1rem;
 `;
 export const FooterRow = styled(FooterColumn)`
   flex-direction: row;
-  /* justify-content: space-evenly; */
   gap: 1rem;
   padding-top: 0;
   padding: 0.5rem 0;
@@ -163,8 +156,6 @@ export const ErrorWrapper = styled(MainWrapper)`
   padding: 0;
   height: 100vh;
   width: 100%;
-  /* top: 0;
-  left: 0; */
 `;
 
 export const BookingAdminInfoWrapper = styled.div`

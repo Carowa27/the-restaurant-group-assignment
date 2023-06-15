@@ -9,8 +9,6 @@ export const LoadingWrapper = styled.div`
 `;
 export const LoadingWrapperSun = styled(LoadingWrapper)`
   background-color: transparent;
-  /* width: 100vw;
-  height: 100vh; */
 `;
 export const LoaderSun = styled.img`
   width: 60%;
@@ -24,24 +22,6 @@ export const LoaderSun = styled.img`
   }
 
   animation: spinner 4.5s linear infinite;
-`;
-export const LoaderCloud = styled.img`
-  top: 50%;
-  width: 15%;
-  position: absolute;
-  @keyframes run {
-    0% {
-      left: 50%;
-    }
-    50% {
-      left: 60%;
-    }
-    100% {
-      left: 50%;
-    }
-  }
-
-  animation: run 8s linear infinite;
 `;
 
 export const LoaderSunStart = styled.img`

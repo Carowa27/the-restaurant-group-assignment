@@ -1,9 +1,9 @@
 import { Outlet } from "react-router-dom";
-import { Footer } from "../components/Footer";
-import { Header } from "../components/Header";
-import { MainWrapper } from "../components/styled/Wrappers";
+import { Footer } from "./Footer";
+import { Header } from "./Header";
+import { MainWrapper } from "../styled/Wrappers";
 import { useEffect, useState } from "react";
-import { StartLoader } from "../components/StartLoader";
+import { StartLoader } from "../Loader/StartLoader";
 
 export const Layout = () => {
   const [isLoading, setIsLoading] = useState(false);

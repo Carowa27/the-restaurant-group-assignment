@@ -3,8 +3,8 @@ import { IBooking } from "../../models/IBooking";
 import { getBookings } from "../../services/bookingServices";
 import { AdminEditButton } from "../styled/Buttons";
 import { AdminForm } from "../styled/Forms";
-import { BookingInfoUL } from "../styled/UnorderdLists";
-import { Loading } from "../Loading";
+import { BookingInfoUL } from "../styled/Lists";
+import { Loading } from "../Loader/Loading";
 
 export const AdminBookingDetails = () => {
   const [bookings, setBookings] = useState<IBooking[]>([]);

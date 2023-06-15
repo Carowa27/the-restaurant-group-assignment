@@ -11,3 +11,9 @@ export const StyledLi = styled.li`
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen,
     Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
 `;
+
+export const NavLi = styled.li`
+  font-family: "Bebas Neue";
+  font-size: 18pt;
+  padding: 6%;
+`;

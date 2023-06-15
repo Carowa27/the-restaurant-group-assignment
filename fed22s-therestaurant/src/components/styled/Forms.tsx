@@ -1,13 +1,5 @@
 import styled from "styled-components";
 
-export const StyledForm = styled.form`
-  display: flex;
-  flex-direction: column;
-  max-width: 20rem;
-  gap: 0.5rem;
-  padding: 1rem 2rem;
-`;
-
 export const AdminForm = styled.form`
   display: flex;
   flex-direction: column;
@@ -43,7 +35,7 @@ export const BookingForm = styled.form`
     width: 60%;
   }
   @media screen and (min-width: 1000px) {
-    width: 45%;
+    width: 100%;
   }
 `;
 
@@ -87,5 +79,12 @@ export const GuestInformationForm = styled.form`
   }
   select {
     width: 50%;
+  }
+
+  @media screen and (min-width: 768px) {
+    width: 60%;
+  }
+  @media screen and (min-width: 1000px) {
+    width: 100%;
   }
 `;
