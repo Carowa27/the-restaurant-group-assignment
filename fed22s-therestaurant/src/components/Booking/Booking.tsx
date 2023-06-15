@@ -58,6 +58,7 @@ export const Booking = (props: IBookingProps) => {
   const [buttonEnabled, setButtonEnabled] = useState(false);
   const [remainingTables, setRemainingTables] = useState(15);
   const [showError, setShowError] = useState(false);
+  const [gdpr, setGdpr] = useState(false);
 
   const numberOfGuestsOptions = [
     { value: 1, label: "1 person" },
@@ -131,6 +132,12 @@ export const Booking = (props: IBookingProps) => {
         phone: e.target.value,
       });
     }
+    // if (e.target.name === "gdpr") {
+    //   setUserInput({
+    //     ...userInput,
+    //     gdpr: e.target.value,
+    //   });
+    // }
   };
 
   const handleNumberOfGuestsChange = (e: ChangeEvent<HTMLSelectElement>) => {
@@ -195,6 +202,10 @@ export const Booking = (props: IBookingProps) => {
     setSelectedTime(time);
   };
 
+  const handleGdpr = (e: ChangeEvent<HTMLInputElement>) => {
+    setGdpr(e.target.checked);
+  };
+
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
     if (!buttonEnabled) return;
@@ -228,15 +239,6 @@ export const Booking = (props: IBookingProps) => {
   const [userBooking, setUserBooking] = useState<IBooking>();
   let userGivenId = "";
   const handleSearchBooking = async (id: string) => {
-    // e.preventDefault();
-
-    // if (userGivenId === "") {
-    //   setMessage("Tyvärr finns inte den bokningen");
-    // } else {
-    //   setMessage("");
-    //   handleSearchBooking(userGivenId);
-    // }
-
     userGivenId = id;
 
     const getUserBookingById = async () => {
@@ -293,9 +295,7 @@ export const Booking = (props: IBookingProps) => {
             {props.msg === "update" && (
               <SearchBooking
                 handleSearchBooking={handleSearchBooking}
-
                 errorMsg={showError}
-
               ></SearchBooking>
             )}
             {userBooking != null && (
@@ -393,6 +393,17 @@ export const Booking = (props: IBookingProps) => {
                           required
                           value={userInput.phone}
                           onChange={handleChange}
+                        />
+
+                        <label htmlFor="gdpr">
+                          Jag har läst och accepterar GDPR
+                        </label>
+                        <input
+                          id="gdpr"
+                          type="checkbox"
+                          checked={gdpr}
+                          onChange={handleGdpr}
+                          required
                         />
                         <SubmitBookingButton
                           disabled={!buttonEnabled}
@@ -496,6 +507,15 @@ export const Booking = (props: IBookingProps) => {
                       required
                       value={userInput.phone}
                       onChange={handleChange}
+                    />
+                    <label htmlFor="gdpr">
+                      Jag har läst och accepterar GDPR
+                    </label>
+                    <input
+                      type="checkbox"
+                      checked={gdpr}
+                      onChange={handleGdpr}
+                      required
                     />
                     <SubmitBookingButton
                       disabled={!buttonEnabled}
