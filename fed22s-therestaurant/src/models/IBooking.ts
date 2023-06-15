@@ -12,5 +12,5 @@ export interface IBooking {
 }
 
 export interface IApiResponse {
-  bookings: IBooking[];
+  data: IBooking[];
 }
