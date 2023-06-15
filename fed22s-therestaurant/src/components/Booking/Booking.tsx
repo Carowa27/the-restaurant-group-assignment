@@ -105,13 +105,6 @@ export const Booking = (props: IBookingProps) => {
         setNoAvailableTimes(false);
       }
     }
-
-    // maisah är här
-    // if (selectedTime) {
-    //   setShowGuestInformation(true);
-    // } else {
-    //   setShowGuestInformation(false);
-    // }
   }, [
     numberOfGuests,
     selectedDate,
@@ -290,6 +283,7 @@ export const Booking = (props: IBookingProps) => {
 
   const startLoadingScr = (e: FormEvent) => {
     setIsLoading(true);
+    window.scrollTo({ top: 0, left: 0, behavior: "smooth" });
     setTimeout(() => {
       setIsLoading(false);
       if (props.msg === "update") {
@@ -427,8 +421,8 @@ export const Booking = (props: IBookingProps) => {
                           <SubmitBookingButton
                             disabled={!buttonEnabled}
                             onClick={(e) => {
-                            startLoadingScr(e);
-                          }}
+                              startLoadingScr(e);
+                            }}
                           >
                             Ändra
                           </SubmitBookingButton>
@@ -437,7 +431,6 @@ export const Booking = (props: IBookingProps) => {
                     </GuestInformationForm>
                   </GuestInformationWrapper>
                 )}
-
               </>
             )}
           </>
@@ -537,6 +530,7 @@ export const Booking = (props: IBookingProps) => {
                         Jag har läst och accepterar GDPR
                       </label>
                       <input
+                        id="gdpr"
                         type="checkbox"
                         checked={gdpr}
                         onChange={handleGdpr}
@@ -545,8 +539,8 @@ export const Booking = (props: IBookingProps) => {
                       <SubmitBookingButton
                         disabled={!buttonEnabled}
                         onClick={(e) => {
-                        startLoadingScr(e);
-                      }}
+                          startLoadingScr(e);
+                        }}
                       >
                         Boka
                       </SubmitBookingButton>
@@ -555,17 +549,12 @@ export const Booking = (props: IBookingProps) => {
                 </GuestInformationForm>
               </GuestInformationWrapper>
             )}
-
           </>
         ) : (
           <></>
         )}
       </BookingWrapper>
-      {isLoading && (
-        <Modal>
-          <Loading></Loading>
-        </Modal>
-      )}
+      {isLoading && <Loading></Loading>}
     </>
   );
 };
