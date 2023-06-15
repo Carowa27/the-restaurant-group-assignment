@@ -33,7 +33,7 @@ export const BookingConfirmation = (props: IBookingConfirmationProps) => {
         <p>Antal gäster: {props.userBooking?.guests}</p>
         {props.msg === "update" && (
           <button onClick={handleGdprInfo /*handleDelete*/}>
-            ta bort bokning
+            Ta bort bokning
           </button>
         )}
       </MyEearlyBookingWrapper>

@@ -7,8 +7,13 @@ export const LoadingWrapper = styled.div`
   height: 100vh;
   background-color: #bae5ff;
 `;
+export const LoadingWrapperSun = styled(LoadingWrapper)`
+  background-color: transparent;
+  /* width: 100vw;
+  height: 100vh; */
+`;
 export const LoaderSun = styled.img`
-  width: 20%;
+  width: 60%;
   @keyframes spinner {
     from {
       transform: rotate(0deg);

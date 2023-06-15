@@ -4,6 +4,8 @@ import { MyBookingsForm } from "../styled/Forms";
 import { H3Bold } from "../styled/Headings";
 import { MyBookingsSearchBookingInput } from "../styled/Inputs";
 import { MyBookingsWrapper } from "../styled/Wrappers";
+import { ModalLoader } from "../styled/Modals";
+import { Loading } from "../Loading";
 
 interface searchBookingProps {
   handleSearchBooking: (id: string) => void;
@@ -16,13 +18,20 @@ export const SearchBooking = ({
 }: searchBookingProps) => {
   const [bookingId, setBookingId] = useState("");
   const [showError, setShowError] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   const handleIdChange = (e: ChangeEvent<HTMLInputElement>) => {
     setBookingId(e.target.value);
   };
   useEffect(() => {
     setShowError(errorMsg);
   }, [errorMsg]);
-
+  const startLoadingScr = () => {
+    setIsLoading(true);
+    setTimeout(() => {
+      setIsLoading(false);
+            handleSearchBooking(bookingId.trim());
+    }, 1000);
+  };
   return (
     <>
       <h1>Här är din bokning </h1>
@@ -30,7 +39,9 @@ export const SearchBooking = ({
         <MyBookingsForm
           onSubmit={(e) => {
             e.preventDefault();
-            handleSearchBooking(bookingId.trim());
+
+            startLoadingScr();
+
           }}
         >
           <H3Bold>Hämta din bokning du ska ändra</H3Bold>
@@ -51,6 +62,8 @@ export const SearchBooking = ({
           </p>
         )}
       </MyBookingsWrapper>
+
+      {isLoading && <Loading></Loading>}
     </>
   );
 };
