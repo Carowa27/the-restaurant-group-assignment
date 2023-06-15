@@ -51,8 +51,9 @@ export const getBookingById = async (id: string) => {
     );
 
     return response.data;
-  } catch (error) {
+  } catch (error: any) {
     console.error("Ett fel uppstod", error);
+    // return error.response.status;
   }
 };
 
