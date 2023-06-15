@@ -37,7 +37,10 @@ export const BookingConfirmedPage = () => {
           )}
         </BookingForm>
         {userBooking != null && (
-          <BookingConfirmation userBooking={userBooking}></BookingConfirmation>
+          <BookingConfirmation
+            userBooking={userBooking}
+            msg={bookingType as string}
+          ></BookingConfirmation>
         )}
       </BookingWrapper>
     </>

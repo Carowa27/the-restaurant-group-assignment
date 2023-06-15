@@ -31,7 +31,7 @@ export const BookingConfirmation = (props: IBookingConfirmationProps) => {
         <p>Datum: {props.userBooking?.date}</p>
         <p>Sittning: {props.userBooking?.sessionstart}</p>
         <p>Antal gäster: {props.userBooking?.guests}</p>
-        {props.msg === "update" && (
+        {props.msg === "updatePage" && (
           <button onClick={handleGdprInfo /*handleDelete*/}>
             Ta bort bokning
           </button>
