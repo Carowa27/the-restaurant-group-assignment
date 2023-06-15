@@ -279,12 +279,12 @@ export const Booking = (props: IBookingProps) => {
             {props.msg === "update" && (
               <SearchBooking
                 handleSearchBooking={handleSearchBooking}
-                // onSubmit={() => handleSearchBooking(id)}
               ></SearchBooking>
             )}
             {userBooking != null && (
               <BookingConfirmation
                 userBooking={userBooking}
+                msg={props.msg}
               ></BookingConfirmation>
             )}
             {userBooking != null && (
