@@ -3,16 +3,27 @@ import styled from "styled-components";
 export const HeaderStyled = styled.header`
   display: flex;
   flex-direction: column;
-  height: 5vh;
   /* background: 0; */
-  /* padding: 1%; */
+  padding: 1%;
   justify-content: center;
   /* align-self: flex-start; */
-  top: 0;
 
   h2 {
     display: flex;
     justify-content: center;
+  }
+
+  #logo {
+    border-radius: 50%;
+    width: 150px;
+    margin: 1%;
+  }
+
+  nav {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
   }
 
   ul {
