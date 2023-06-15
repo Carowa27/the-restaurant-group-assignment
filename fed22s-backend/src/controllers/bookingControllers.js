@@ -36,7 +36,7 @@ exports.getBookingById = async (req, res) => {
   } catch (error) {
     console.log(error);
 
-    return res.sendStatus(500).json({ message: "Internal error" });
+    return res.status(500).json({ message: "Internal error" });
   }
 };
 
@@ -44,7 +44,6 @@ exports.getBookingById = async (req, res) => {
 exports.createBooking = async (req, res) => {
   try {
     const {
-      ordernumber,
       guests,
       date,
       sessionstart,
@@ -52,7 +51,6 @@ exports.createBooking = async (req, res) => {
     } = req.body;
 
     const newBooking = await Booking.create({
-      ordernumber,
       guests,
       date,
       sessionstart,
@@ -101,12 +99,10 @@ exports.deleteBookingById = async (req, res) => {
 };
 
 //  fungerar ✓
-
 exports.updateBookingById = async (req, res) => {
   try {
     const bookingId = req.params.bookingId;
     const {
-      ordernumber,
       guests,
       date,
       sessionstart,
@@ -122,7 +118,7 @@ exports.updateBookingById = async (req, res) => {
       throw new NotFoundError("This booking does not exist");
     }
 
-    if (ordernumber) bookingToUpdate.ordernumber = ordernumber;
+    // if (id) bookingToUpdate.id = id;
     if (guests) bookingToUpdate.guests = guests;
     if (date) bookingToUpdate.date = date;
     if (sessionstart) bookingToUpdate.sessionstart = sessionstart;
@@ -132,9 +128,10 @@ exports.updateBookingById = async (req, res) => {
     if (email) bookingToUpdate.user.email = email;
     if (phone) bookingToUpdate.user.phone = phone;
 
-    const updatedBooking = await bookingToUpdate.save();
+    /*const updatedBooking =*/ await bookingToUpdate.save();
 
-    return res.json(updatedBooking);
+    // return res.json(updatedBooking);
+    return res.sendStatus(204);
   } catch (error) {
     console.log(error);
 

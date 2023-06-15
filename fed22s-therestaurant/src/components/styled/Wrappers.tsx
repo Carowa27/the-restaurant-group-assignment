@@ -5,15 +5,17 @@ export const MainWrapper = styled.div`
   display: flex;
   flex-direction: column;
   /* padding: 0 2rem 1rem 2rem; */
-  /* min-height: 60vh; */
+  min-height: 84vh;
 `;
 export const PageWrapper = styled(MainWrapper)`
-  margin-bottom: 10rem; /*footer*/
+  margin-bottom: 10vh; //10rem; /*footer*/
 `;
 export const InfoWrapper = styled(MainWrapper)`
   flex-direction: row;
   justify-content: space-evenly;
   gap: 3rem;
+  padding: 0;
+  min-height: 80vh;
 `;
 
 export const AdminWrapper = styled.div`
@@ -23,7 +25,22 @@ export const AdminWrapper = styled.div`
   padding: 5px;
 `;
 
+export const MyBookingsWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 5px;
+`;
+
 export const BookingWrapper = styled.div`
+  /* background-color: #859685; */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 5px;
+`;
+
+export const MyEearlyBookingWrapper = styled.div`
   /* background-color: #859685; */
   display: flex;
   flex-direction: column;
@@ -65,6 +82,9 @@ export const TimeBookingWrapper = styled.div`
   justify-content: space-evenly;
   padding: 1rem 0;
 `;
+export const DivWrapper = styled.div`
+  margin-right: 40px;
+`;
 
 export const GuestInformationWrapper = styled.div`
   width: 100%;
@@ -90,7 +110,8 @@ export const OpeningWrapper = styled.div`
   justify-content: center;
   padding: 0;
   margin: 0;
-  height: 85vh;
+  min-height: 85vh;
+  height: 90vh;
 `;
 export const ContactHeadWrapper = styled(OpeningWrapper)`
   height: auto;

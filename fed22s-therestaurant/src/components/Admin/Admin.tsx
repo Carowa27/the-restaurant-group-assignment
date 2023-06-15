@@ -18,9 +18,14 @@ export const Admin = () => {
   const [bookings, setBookings] = useState(data);
 
   const [show, setShow] = useState(false);
+  const [search, setSearch] = useState(false);
 
   const handleClick = () => {
     setShow(true);
+  };
+
+  const handleSearch = () => {
+    setSearch(true);
   };
 
   useEffect(() => {
@@ -40,7 +45,7 @@ export const Admin = () => {
 
   const html = bookings.map((b, index) => {
     return (
-      <AdminForm key={index}>
+      <>
         <BookingInfoUL>
           <li>Datum: {b.date}</li>
           <li>Tid: {b.sessionstart}</li>
@@ -55,7 +60,7 @@ export const Admin = () => {
             <i className="fa-regular fa-trash-can"></i>
           </AdminEditButton>
         </span>
-      </AdminForm>
+      </>
     );
   });
 
@@ -70,8 +75,9 @@ export const Admin = () => {
             placeholder="00000"
             onChange={filterById}
           ></AdminSearchBookingInput>
+          {/* {search && <div>{html}</div>} */}
           <div>{html}</div>
-          <SearchBookingButton>Sök</SearchBookingButton>
+          <SearchBookingButton onClick={handleSearch}>Sök</SearchBookingButton>
         </AdminForm>
         <SearchBookingButton onClick={handleClick}>
           Hämta alla bokningar

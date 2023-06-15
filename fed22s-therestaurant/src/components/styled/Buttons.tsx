@@ -65,6 +65,10 @@ export const SubmitBookingButton = styled.button`
     transform: scale(1.01);
     box-shadow: 0 0 5px rgba(0, 0, 0, 0.7);
   }
+  &:disabled {
+    background-color: grey;
+    cursor: default;
+  }
 `;
 export const CloseModalBtn = styled.button`
   &:hover {

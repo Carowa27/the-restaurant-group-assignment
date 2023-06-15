@@ -1,11 +1,14 @@
 export interface IBooking {
-  firstname: string;
-  lastname: string;
-  sessionstart: number;
+  user: {
+    firstname: string;
+    lastname: string;
+    email: string;
+    phone: string;
+  };
+  _id?: string;
+  sessionstart: string;
   guests: number;
   date: string;
-  ordernumber: number;
-  _id: number;
 }
 
 export interface IApiReponse {

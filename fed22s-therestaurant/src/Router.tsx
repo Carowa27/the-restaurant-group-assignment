@@ -7,6 +7,7 @@ import { LandingPage } from "./pages/LandingPage";
 import { Layout } from "./pages/Layout";
 import { ErrorPage } from "./pages/ErrorPage";
 import { AdminBookingById } from "./components/Admin/AdminBookingById";
+import { BookingDeleted } from "./pages/BookingDeleted";
 
 export const Router = createBrowserRouter([
   {
@@ -32,8 +33,12 @@ export const Router = createBrowserRouter([
         element: <Admin></Admin>,
       },
       {
-        path: "/bookingconfirmed",
+        path: "/bookingconfirmed/:bookingType/:id",
         element: <BookingConfirmedPage></BookingConfirmedPage>,
+      },
+      {
+        path: "/bookingdeleted",
+        element: <BookingDeleted></BookingDeleted>,
       },
     ],
   },
