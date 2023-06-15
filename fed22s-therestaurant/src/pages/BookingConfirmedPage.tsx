@@ -35,13 +35,13 @@ export const BookingConfirmedPage = () => {
           ) : (
             <h2>Din bokning är nu uppdaterad!</h2>
           )}
+          {userBooking != null && (
+            <BookingConfirmation
+              userBooking={userBooking}
+              msg={bookingType as string}
+            ></BookingConfirmation>
+          )}
         </BookingForm>
-        {userBooking != null && (
-          <BookingConfirmation
-            userBooking={userBooking}
-            msg={bookingType as string}
-          ></BookingConfirmation>
-        )}
       </BookingWrapper>
     </>
   );

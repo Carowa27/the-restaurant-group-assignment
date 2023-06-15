@@ -23,12 +23,12 @@ export const BookButton = styled.button`
 `;
 
 export const SearchBookingButton = styled.button`
-  padding: 10px;
-  border-radius: 10px;
+  padding: 2%;
+  border-radius: 20px;
   margin: 15px;
-  background-color: black;
-  color: white;
+  background-color: #99a0e6;
   border: none;
+  font-size: 13pt;
   &:hover {
     cursor: pointer;
     transform: scale(1.01);
@@ -78,7 +78,7 @@ export const CloseModalBtn = styled.button`
 
 export const AdminEditButton = styled.button`
   border: none;
-  background-color: white;
+  background-color: #e2e2e2;
   cursor: pointer;
   font-size: large;
 `;

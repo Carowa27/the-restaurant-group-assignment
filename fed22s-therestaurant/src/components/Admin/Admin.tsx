@@ -14,7 +14,12 @@ import { AdminWrapper, BookingDetailWrapper } from "../styled/Wrappers";
 import { AdminBookingById } from "./AdminBookingById";
 import { AdminBookingDetails } from "./AdminBookingDetails";
 import { Loading } from "../Loading";
-import { TableData, TableHeader, TableRow } from "../styled/TableStyled";
+import {
+  TableData,
+  TableHeader,
+  TableRow,
+  TableStyled,
+} from "../styled/TableStyled";
 
 export const Admin = () => {
   /*Denna komponent ska vi kunna se bokningar och 
@@ -77,56 +82,52 @@ export const Admin = () => {
             placeholder="00000"
             onChange={filterById}
           ></AdminSearchBookingInput>
-          <BookingDetailWrapper>
-            <table>
-              <thead>
-                <TableRow>
-                  <TableHeader>Datum</TableHeader>
-                  <TableHeader>Tid</TableHeader>
-                  <TableHeader>Gäster</TableHeader>
-                  <TableHeader>Bokningsnummer</TableHeader>
-                </TableRow>
-              </thead>
-              <tbody>
-                {bookings.map((b) => (
-                  <TableRow>
-                    <TableData>{b.date}</TableData>
-                    <TableData>{b.sessionstart}</TableData>
-                    <TableData>{b.guests}</TableData>
-                    <TableData>{b._id}</TableData>
-                    <TableData>
-                      <span>
-                        <AdminEditButton
-                          onClick={() => {
-                            startLoadingScr("update");
-                          }}
-                        >
-                          <i className="fa-regular fa-pen-to-square"></i>
-                        </AdminEditButton>
-                        <AdminEditButton
-                          onClick={() => {
-                            startLoadingScr("delete");
-                            deleteBooking(b._id);
-                          }}
-                        >
-                          <i className="fa-regular fa-trash-can"></i>
-                        </AdminEditButton>
-                      </span>
-                    </TableData>
-                  </TableRow>
-                ))}
-              </tbody>
-            </table>
-          </BookingDetailWrapper>
         </AdminForm>
-        <SearchBookingButton
-          onClick={() => {
-            startLoadingScr("getAll");
-          }}
-        >
-          Hämta alla bokningar
-        </SearchBookingButton>
-        {show && <AdminBookingDetails></AdminBookingDetails>}
+        <BookingDetailWrapper>
+          <TableStyled>
+            <thead>
+              <TableRow>
+                <TableHeader>Datum</TableHeader>
+                <TableHeader>Namn</TableHeader>
+                <TableHeader>Tid</TableHeader>
+                <TableHeader>Gäster</TableHeader>
+                <TableHeader>Bokningsnummer</TableHeader>
+              </TableRow>
+            </thead>
+            <tbody>
+              {bookings.map((b) => (
+                <TableRow>
+                  <TableData>{b.date}</TableData>
+                  <TableData>
+                    {b.user.firstname} {b.user.lastname}
+                  </TableData>
+                  <TableData>{b.sessionstart}</TableData>
+                  <TableData>{b.guests}</TableData>
+                  <TableData>{b._id}</TableData>
+                  <TableData>
+                    <span>
+                      <AdminEditButton
+                        onClick={() => {
+                          startLoadingScr("update");
+                        }}
+                      >
+                        <i className="fa-regular fa-pen-to-square"></i>
+                      </AdminEditButton>
+                      <AdminEditButton
+                        onClick={() => {
+                          startLoadingScr("delete");
+                          deleteBooking(b._id);
+                        }}
+                      >
+                        <i className="fa-regular fa-trash-can"></i>
+                      </AdminEditButton>
+                    </span>
+                  </TableData>
+                </TableRow>
+              ))}
+            </tbody>
+          </TableStyled>
+        </BookingDetailWrapper>
       </AdminWrapper>
       {isLoading && <Loading></Loading>}
     </>

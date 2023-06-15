@@ -1,6 +1,7 @@
 import { useParams } from "react-router-dom";
 import { useState } from "react";
 import { Booking } from "../components/Booking/Booking";
+import { SearchBookingButton } from "../components/styled/Buttons";
 
 export const BookingPage = () => {
   const params = useParams();
@@ -22,8 +23,12 @@ export const BookingPage = () => {
   const updateMsg = "updatePage";
   return (
     <>
-      <button onClick={changeToCreate}>Skapa Bokning</button>
-      <button onClick={changeToMyBooking}>Ändra bokning</button>
+      <SearchBookingButton onClick={changeToCreate}>
+        Skapa Bokning
+      </SearchBookingButton>
+      <SearchBookingButton onClick={changeToMyBooking}>
+        Ändra bokning
+      </SearchBookingButton>
       {showCreateBooking && <Booking msg={createMsg}></Booking>}
       {showUpdateBooking && <Booking msg={updateMsg}></Booking>}
     </>
