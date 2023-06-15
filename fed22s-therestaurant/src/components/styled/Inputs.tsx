@@ -35,11 +35,3 @@ export const MyBookingsSearchBookingInput = styled.input`
   border-radius: 20px;
   text-align: center;
 `;
-
-export const CreateBookingInput = styled.input`
-  border: 1px solid black;
-  margin-top: 5px;
-  padding: 25%;
-  border-radius: 20px;
-  text-align: center;
-`;

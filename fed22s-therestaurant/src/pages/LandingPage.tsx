@@ -8,12 +8,11 @@ import {
   LandingWrapper,
   OpeningWrapper,
 } from "../components/styled/Wrappers";
-import { useState } from "react";
 import icecreamImg from "../assets/PlaceholderCruwa4.png";
 import { IcecreamClicker } from "../components/styled/Images";
 
 export const LandingPage = () => (
-  /* const [icecreamImg] = useState(buttonBackgroundImg);*/ <LandingWrapper>
+  <LandingWrapper>
     <OpeningWrapper>
       <H2>Välkommen till Glass i Stora Lass</H2>
       <IcecreamClicker src={icecreamImg} alt="icecreamImg" />

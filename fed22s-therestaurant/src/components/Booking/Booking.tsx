@@ -348,7 +348,6 @@ export const Booking = (props: IBookingProps) => {
                       onSubmit={(e) => startLoadingScr(e)} /*{handleSubmit}*/
                     >
                       <H3Normal>KONTAKTUPPGIFTER</H3Normal>
-
                       <GuestInformationDiv>
                         <label htmlFor="firstname">FÖRNAMN</label>
                         <input

@@ -9,7 +9,7 @@ import { AdminEditButton, SearchBookingButton } from "../styled/Buttons";
 import { AdminForm } from "../styled/Forms";
 import { H3Bold } from "../styled/Headings";
 import { AdminSearchBookingInput } from "../styled/Inputs";
-import { BookingInfoUL, StyledLi } from "../styled/UnorderdLists";
+import { BookingInfoUL, StyledLi } from "../styled/Lists";
 import { AdminWrapper, BookingDetailWrapper } from "../styled/Wrappers";
 import { AdminBookingById } from "./AdminBookingById";
 import { AdminBookingDetails } from "./AdminBookingDetails";

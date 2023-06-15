@@ -1,6 +1,5 @@
 import { MyEearlyBookingWrapper } from "../styled/Wrappers";
 import { IBooking } from "../../models/IBooking";
-import { deleteBooking } from "../../services/bookingServices";
 import { useNavigate } from "react-router-dom";
 import { DeleteWarningModal } from "./DeleteWarningModal";
 import { useState } from "react";

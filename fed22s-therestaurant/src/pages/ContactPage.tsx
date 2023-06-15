@@ -9,7 +9,6 @@ import {
   ContactWrapper,
   InfoWrapper,
   LandingWrapper,
-  PageWrapper,
 } from "../components/styled/Wrappers";
 
 export const ContactPage = () => {

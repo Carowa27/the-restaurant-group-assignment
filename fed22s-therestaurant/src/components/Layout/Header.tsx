@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import { HeaderStyled } from "../styled/HeaderStyled";
-import { H3Bold, NavLi } from "../styled/Headings";
+import { NavLi } from "../styled/Lists";
 import logo from "../../assets/glasslogo2.png";
 
 export const Header = () => {
@@ -8,11 +8,10 @@ export const Header = () => {
     <>
       <HeaderStyled>
         <nav>
-          <img src={logo} alt="Logga med glass i mitten" id="logo" />
+          <Link to="/">
+            <img src={logo} alt="Logga med glass i mitten" id="logo" />
+          </Link>
           <ul>
-            <NavLi>
-              <Link to="/">Hem</Link>
-            </NavLi>
             <NavLi>
               <Link to="/booking">Bokning</Link>
             </NavLi>

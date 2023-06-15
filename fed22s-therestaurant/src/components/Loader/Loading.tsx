@@ -7,7 +7,6 @@ export const Loading = () => {
     <ModalLoader>
       <LoadingWrapperSun>
         <LoaderSun src={SunLoader} alt="SunLoaderImage"></LoaderSun>
-        {/* <LoaderCloud src={CloudLoader} alt="CloudLoaderImage"></LoaderCloud> */}
       </LoadingWrapperSun>
     </ModalLoader>
   );
