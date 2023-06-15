@@ -30,3 +30,14 @@ export const ModalContent = styled.div`
   overflow-y: scroll;
   box-sizing: content-box;
 `;
+export const ModalFoot = styled(ModalHead)`
+  justify-content: space-evenly;
+`;
+// export const ModalWarning = styled(Modal)`
+// `;
+export const ModalContentWarning = styled(ModalContent)`
+  width: fit-content;
+  height: fit-content;
+  overflow-y: hidden;
+  margin-top: 40vh;
+`;
