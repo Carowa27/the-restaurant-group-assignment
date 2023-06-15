@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import { Icecream } from "../components/Icecream";
 import { H2, H3Bold } from "../components/styled/Headings";
 import { OpeningItalic } from "../components/styled/Paragraphs";
@@ -16,6 +17,7 @@ export const LandingPage = () => {
         <OpeningItalic>
           Vi har det bredaste utbudet av glass med smak och form som passar
           alla!
+          <Link to={"/booking"}> Är du sugen på glass, kom och boka här! </Link>
         </OpeningItalic>
       </OpeningWrapper>
       <InfoWrapper>
