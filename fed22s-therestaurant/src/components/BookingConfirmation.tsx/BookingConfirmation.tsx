@@ -16,7 +16,7 @@ export const BookingConfirmation = (props: IBookingConfirmationProps) => {
   const [showWarning, setShowWarning] = useState(false);
 
   const handleGdprInfo = () => {
-    setShowWarning(!showWarning);
+    setShowWarning(true);
     window.scrollTo({ top: 0, left: 0, behavior: "smooth" });
   };
 
