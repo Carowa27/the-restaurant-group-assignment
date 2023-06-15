@@ -29,7 +29,7 @@ export const SearchBooking = ({
     setIsLoading(true);
     setTimeout(() => {
       setIsLoading(false);
-      handleSearchBooking(bookingId);
+            handleSearchBooking(bookingId.trim());
     }, 1000);
   };
   return (
@@ -39,7 +39,9 @@ export const SearchBooking = ({
         <MyBookingsForm
           onSubmit={(e) => {
             e.preventDefault();
+
             startLoadingScr();
+
           }}
         >
           <H3Bold>Hämta din bokning du ska ändra</H3Bold>

@@ -26,3 +26,9 @@ export const H5 = styled.h5`
   font-size: medium;
   margin: 0.3rem 0;
 `;
+
+export const NavLi = styled.li`
+  font-family: "Bebas Neue";
+  font-size: 18pt;
+  padding: 6%;
+`;

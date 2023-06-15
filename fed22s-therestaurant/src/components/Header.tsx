@@ -1,27 +1,27 @@
 import { Link } from "react-router-dom";
 import { HeaderStyled } from "./styled/HeaderStyled";
-import { H3Bold } from "./styled/Headings";
+import { H3Bold, NavLi } from "./styled/Headings";
+import logo from "../assets/glasslogo2.png";
 
 export const Header = () => {
   return (
     <>
       <HeaderStyled>
         <nav>
+          <img src={logo} alt="Logga med glass i mitten" id="logo" />
           <ul>
-            <li>
-              <Link to="/">
-                <H3Bold>Glass i Stora Lass</H3Bold>
-              </Link>
-            </li>
-            <li>
+            <NavLi>
+              <Link to="/">Hem</Link>
+            </NavLi>
+            <NavLi>
               <Link to="/booking">Bokning</Link>
-            </li>
-            <li>
+            </NavLi>
+            <NavLi>
               <Link to="/contact">Kontakt</Link>
-            </li>
-            <li>
+            </NavLi>
+            <NavLi>
               <Link to="/admin">Admin</Link>
-            </li>
+            </NavLi>
           </ul>
         </nav>
       </HeaderStyled>

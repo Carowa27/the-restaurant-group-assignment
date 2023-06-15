@@ -155,7 +155,7 @@ export const Booking = (props: IBookingProps) => {
   const setTimes = async (date: string) => {
     const data = await getBookings();
 
-    const dateBookings = data.data.filter(
+    const dateBookings = data.filter(
       (booking: IBooking) => booking.date === date
     );
 
@@ -213,7 +213,7 @@ export const Booking = (props: IBookingProps) => {
     e.preventDefault();
     if (!buttonEnabled) return;
 
-    const booking = {
+    const booking: IBooking = {
       user: {
         firstname: userInput.firstname,
         lastname: userInput.lastname,
@@ -223,9 +223,7 @@ export const Booking = (props: IBookingProps) => {
       guests: numberOfGuests,
       date: selectedDate,
       sessionstart: selectedTime,
-      createdAt: new Date().toISOString(),
-      updatedAt: new Date().toISOString(),
-      __v: 0,
+      _id: "",
     };
 
     const response = await createBooking(booking);
