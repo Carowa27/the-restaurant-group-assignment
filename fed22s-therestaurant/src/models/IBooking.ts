@@ -11,6 +11,6 @@ export interface IBooking {
   date: string;
 }
 
-export interface IApiReponse {
+export interface IApiResponse {
   bookings: IBooking[];
 }
