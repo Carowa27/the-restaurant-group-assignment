@@ -6,12 +6,13 @@ const get = async <T>(url: string) => {
   return await axios.get<T>(url);
 };
 
-export const getBookings = async () => {
+export const getBookings = async (): Promise<IBooking[]> => {
   try {
     const dataFromLs = localStorage.getItem("bookings");
 
     if (dataFromLs) {
-      return JSON.parse(dataFromLs);
+      const bookings: IBooking[] = JSON.parse(dataFromLs);
+      return bookings;
     }
 
     //     --
@@ -35,6 +36,8 @@ export const getBookings = async () => {
     return response.data.data;
   } catch (error) {
     console.error("Ett fel uppstod", error);
+
+    return [];
   }
 };
 
@@ -51,7 +54,7 @@ export const getBookingById = async (id: string) => {
   }
 };
 
-export async function createBooking(bookingData: any) {
+export async function createBooking(bookingData: IBooking) {
   try {
     const response = await axios.post(
       "http://localhost:4000/api/v1/bookings/",
