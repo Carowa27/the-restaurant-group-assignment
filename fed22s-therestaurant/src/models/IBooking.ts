@@ -8,6 +8,6 @@ export interface IBooking {
   _id: number;
 }
 
-// export interface IApiReponse {
-//   bookings: IBooking[];
-// }
+export interface IApiReponse {
+  bookings: IBooking[];
+}
