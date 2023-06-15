@@ -18,8 +18,8 @@ export const BookingPage = () => {
     setShowCreateBooking(false);
   };
 
-  const createMsg = "create";
-  const updateMsg = "update";
+  const createMsg = "createPage";
+  const updateMsg = "updatePage";
   return (
     <>
       <button onClick={changeToCreate}>Skapa Bokning</button>

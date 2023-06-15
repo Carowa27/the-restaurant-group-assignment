@@ -25,7 +25,6 @@ import {
   TimeBookingWrapper,
 } from "../styled/Wrappers";
 import { Users } from "./Users";
-import { Modal } from "../styled/Modals";
 import { Loading } from "../Loading";
 
 interface IBookingProps {
@@ -275,21 +274,22 @@ export const Booking = (props: IBookingProps) => {
     if (response?.status === 204) {
       // Send mail
 
-      navigate(`/bookingconfirmed/update/${userBooking?._id}`);
+      navigate(`/bookinginfo/update/${userBooking?._id}`);
     } else {
       console.error("Något gick fel vid bokningen");
     }
   };
 
   const startLoadingScr = (e: FormEvent) => {
-    setIsLoading(true);
+    e.preventDefault();
     window.scrollTo({ top: 0, left: 0, behavior: "smooth" });
+    setIsLoading(true);
     setTimeout(() => {
       setIsLoading(false);
-      if (props.msg === "update") {
+      if (props.msg === "updatePage") {
         handleSubmitChangeBooking(e);
       }
-      if (props.msg === "create") {
+      if (props.msg === "createPage") {
         handleSubmit(e);
       }
     }, 1000);
@@ -299,11 +299,11 @@ export const Booking = (props: IBookingProps) => {
   return (
     <>
       <BookingWrapper>
-        {props.msg === "update" && userBooking === null ? (
+        {props.msg === "updatePage" && userBooking === null ? (
           <></>
         ) : (
           <>
-            {props.msg === "update" && (
+            {props.msg === "updatePage" && (
               <SearchBooking
                 handleSearchBooking={handleSearchBooking}
                 errorMsg={showError}
@@ -361,7 +361,9 @@ export const Booking = (props: IBookingProps) => {
 
                 {showGuestInformation && (
                   <GuestInformationWrapper>
-                    <GuestInformationForm onSubmit={handleSubmit}>
+                    <GuestInformationForm
+                      onSubmit={(e) => startLoadingScr(e)} /*{handleSubmit}*/
+                    >
                       <H3Normal>KONTAKTUPPGIFTER</H3Normal>
                       <UsersContext.Provider value={user}>
                         <Users />
@@ -420,9 +422,9 @@ export const Booking = (props: IBookingProps) => {
                           />
                           <SubmitBookingButton
                             disabled={!buttonEnabled}
-                            onClick={(e) => {
-                              startLoadingScr(e);
-                            }}
+                            // onClick={(e) => {
+                            //   startLoadingScr(e);
+                            // }}
                           >
                             Ändra
                           </SubmitBookingButton>
@@ -436,7 +438,7 @@ export const Booking = (props: IBookingProps) => {
           </>
         )}
         {/* create */}
-        {props.msg === "create" ? (
+        {props.msg === "createPage" ? (
           <>
             <H3Bold>VÄLKOMMEN ATT BOKA BORD</H3Bold>
             <BookingForm onSubmit={handleSubmit}>
