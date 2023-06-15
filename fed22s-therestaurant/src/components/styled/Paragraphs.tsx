@@ -3,6 +3,8 @@ import styled from "styled-components";
 export const StyledParagraph = styled.p`
   font-size: medium;
   margin: 0.2rem;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen,
+    Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
 `;
 
 export const OpeningItalic = styled(StyledParagraph)`

@@ -351,7 +351,7 @@ export const Booking = (props: IBookingProps) => {
                     <UsersContext.Provider value={user}>
                       <Users />
                       <GuestInformationDiv>
-                        <label htmlFor="firstname">FÖRNAMN</label>
+                        <label htmlFor="firstname">Förnamn</label>
                         <input
                           type="text"
                           id="firstname"
@@ -361,7 +361,7 @@ export const Booking = (props: IBookingProps) => {
                           value={userInput.firstname}
                           onChange={handleChange}
                         />
-                        <label htmlFor="lastname">EFTERNAMN</label>
+                        <label htmlFor="lastname">Efternamn</label>
                         <input
                           type="text"
                           id="lastname"
@@ -371,7 +371,7 @@ export const Booking = (props: IBookingProps) => {
                           value={userInput.lastname}
                           onChange={handleChange}
                         />
-                        <label htmlFor="epost">EMAIL</label>
+                        <label htmlFor="epost">Email</label>
                         <input
                           type="email"
                           id="epost"
@@ -381,7 +381,7 @@ export const Booking = (props: IBookingProps) => {
                           value={userInput.email}
                           onChange={handleChange}
                         />
-                        <label htmlFor="phone">MOBILTELEFON</label>
+                        <label htmlFor="phone">Mobiltelefon</label>
                         <input
                           type="tel"
                           id="phone"

@@ -5,7 +5,7 @@ import { AdminEditButton, SearchBookingButton } from "../styled/Buttons";
 import { AdminForm } from "../styled/Forms";
 import { H3Bold } from "../styled/Headings";
 import { AdminSearchBookingInput } from "../styled/Inputs";
-import { BookingInfoUL } from "../styled/UnorderdLists";
+import { BookingInfoUL, StyledLi } from "../styled/UnorderdLists";
 import { AdminWrapper, BookingDetailWrapper } from "../styled/Wrappers";
 import { AdminBookingById } from "./AdminBookingById";
 import { AdminBookingDetails } from "./AdminBookingDetails";
@@ -50,10 +50,18 @@ export const Admin = () => {
     return (
       <BookingDetailWrapper key={index}>
         <BookingInfoUL>
-          <li>Datum: {b.date}</li>
-          <li>Tid: {b.sessionstart}</li>
-          <li>Antal gäster: {b.guests}</li>
-          <li>Bokningsnummer: {b._id}</li>
+          <StyledLi>
+            <strong>Datum:</strong> {b.date}
+          </StyledLi>
+          <StyledLi>
+            <strong>Tid:</strong> {b.sessionstart}
+          </StyledLi>
+          <StyledLi>
+            <strong>Antal gäster:</strong> {b.guests}
+          </StyledLi>
+          <StyledLi>
+            <strong>Bokningsnummer:</strong> {b._id}
+          </StyledLi>
         </BookingInfoUL>
         <span>
           <AdminEditButton>
