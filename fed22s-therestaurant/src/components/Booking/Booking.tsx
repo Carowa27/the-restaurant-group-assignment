@@ -226,10 +226,11 @@ export const Booking = (props: IBookingProps) => {
   //updateBooking logiken
   const [userBooking, setUserBooking] = useState<IBooking>();
   let userGivenId = "";
-  const handleSearchBooking = async (e: ChangeEvent<HTMLInputElement>) => {
-    e.preventDefault();
+  const handleSearchBooking = async (id: string) => {
+    // e.preventDefault();
 
-    userGivenId = e.target.value;
+    userGivenId = id;
+
     const getUserBookingById = async () => {
       try {
         const data = await getBookingById(userGivenId);
@@ -267,7 +268,7 @@ export const Booking = (props: IBookingProps) => {
       console.error("Något gick fel vid bokningen");
     }
   };
-
+  console.log(userBooking);
   return (
     <>
       <BookingWrapper>
@@ -278,6 +279,7 @@ export const Booking = (props: IBookingProps) => {
             {props.msg === "update" && (
               <SearchBooking
                 handleSearchBooking={handleSearchBooking}
+                // onSubmit={() => handleSearchBooking(id)}
               ></SearchBooking>
             )}
             {userBooking != null && (

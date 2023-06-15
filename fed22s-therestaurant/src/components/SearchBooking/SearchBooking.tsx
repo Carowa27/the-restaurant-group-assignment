@@ -6,36 +6,41 @@ import { MyBookingsSearchBookingInput } from "../styled/Inputs";
 import { MyBookingsWrapper } from "../styled/Wrappers";
 
 interface searchBookingProps {
-  handleSearchBooking: (e: ChangeEvent<HTMLInputElement>) => void;
+  handleSearchBooking: (id: string) => void;
 }
 
 export const SearchBooking = ({ handleSearchBooking }: searchBookingProps) => {
   const [bookingId, setBookingId] = useState("");
+  console.log("klicket funkade!");
+
   const handleIdChange = (e: ChangeEvent<HTMLInputElement>) => {
     setBookingId(e.target.value);
   };
 
-  const handleClick = (e: FormEvent) => {
-    e.preventDefault();
-    console.log("klicket funkade !");
-  };
+  // const handleClick = (e: FormEvent) => {
+  //   e.preventDefault();
+  //   console.log("klicket funkade!");
+  // };
   return (
     <>
       <h1>Här är din bokning </h1>
       <MyBookingsWrapper>
-        <MyBookingsForm>
+        <MyBookingsForm
+          onSubmit={(e) => {
+            e.preventDefault();
+            handleSearchBooking(bookingId);
+          }}
+        >
           <H3Bold>Hämta din bokning du ska ändra</H3Bold>
           <MyBookingsSearchBookingInput
             type="text"
             name="id"
-            placeholder="00000"
+            placeholder="ordernummer"
             value={bookingId}
             onChange={handleIdChange}
-            onBlur={handleSearchBooking}
           ></MyBookingsSearchBookingInput>
-          <SearchBookingButton type="submit" onClick={handleClick}>
-            Sök
-          </SearchBookingButton>
+
+          <SearchBookingButton type="submit">Sök</SearchBookingButton>
         </MyBookingsForm>
       </MyBookingsWrapper>
     </>
