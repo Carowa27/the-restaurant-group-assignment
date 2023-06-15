@@ -6,10 +6,15 @@ import {
   ModalContentWarning,
   ModalFoot,
   ModalHead,
+  ModalLoader,
 } from "./styled/Modals";
 import { H3Modal } from "./styled/Headings";
 import { ModalCross } from "./styled/Paragraphs";
 import { CloseModalBtn } from "./styled/Buttons";
+import { useState } from "react";
+import { Loading } from "./Loading";
+import { LoaderSun } from "./styled/Loader";
+import SunLoader from "../assets/SunLoader.png";
 
 interface DeleteWarningModalProps {
   booking: IBooking;
@@ -17,6 +22,7 @@ interface DeleteWarningModalProps {
 }
 export const DeleteWarningModal = (props: DeleteWarningModalProps) => {
   const navigate = useNavigate();
+  const [isLoading, setIsLoading] = useState(false);
   //delete logic
   const handleDelete = async () => {
     const response = await deleteBooking(props.booking._id);
@@ -26,6 +32,13 @@ export const DeleteWarningModal = (props: DeleteWarningModalProps) => {
     } else {
       console.error("Något gick fel vid bokningen");
     }
+  };
+  const startLoadingScr = () => {
+    setIsLoading(true);
+    setTimeout(() => {
+      setIsLoading(false);
+      handleDelete();
+    }, 1000);
   };
   return (
     <>
@@ -37,11 +50,18 @@ export const DeleteWarningModal = (props: DeleteWarningModalProps) => {
           </ModalHead>
           <p> Vill du verkligen ta bort din bokning?</p>
           <ModalFoot>
-            <button onClick={handleDelete}>Ja</button>
+            <button
+              onClick={() => {
+                startLoadingScr();
+              }}
+            >
+              Ja
+            </button>
             <CloseModalBtn onClick={props.closeModal}>Nej</CloseModalBtn>
           </ModalFoot>
         </ModalContentWarning>
       </Modal>
+      {isLoading && <Loading></Loading>}
     </>
   );
 };

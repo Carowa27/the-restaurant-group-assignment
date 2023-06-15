@@ -41,3 +41,10 @@ export const ModalContentWarning = styled(ModalContent)`
   overflow-y: hidden;
   margin-top: 40vh;
 `;
+export const ModalLoader = styled(Modal)`
+  background-color: rgba(0, 0, 0, 0.2);
+  align-items: center;
+
+  width: 100vw;
+  height: 100vh;
+`;
