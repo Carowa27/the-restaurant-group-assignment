@@ -6,7 +6,6 @@ import {
   ModalContentWarning,
   ModalFoot,
   ModalHead,
-  ModalLoader,
 } from "../styled/Modals";
 import { H3Modal } from "../styled/Headings";
 import { ModalCross } from "../styled/Paragraphs";

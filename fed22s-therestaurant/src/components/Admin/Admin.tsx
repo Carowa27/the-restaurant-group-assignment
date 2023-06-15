@@ -13,13 +13,14 @@ import { BookingInfoUL, StyledLi } from "../styled/Lists";
 import { AdminWrapper, BookingDetailWrapper } from "../styled/Wrappers";
 import { AdminBookingById } from "./AdminBookingById";
 import { AdminBookingDetails } from "./AdminBookingDetails";
-import { Loading } from "../Loading";
+import { Loading } from "../Loader/Loading";
 import {
   TableData,
   TableHeader,
   TableRow,
   TableStyled,
 } from "../styled/TableStyled";
+import { Booking } from "../Booking/Booking";
 
 export const Admin = () => {
   /*Denna komponent ska vi kunna se bokningar och 

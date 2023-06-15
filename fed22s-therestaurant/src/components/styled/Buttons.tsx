@@ -1,12 +1,13 @@
 import styled from "styled-components";
 
 export const SearchBookingButton = styled.button`
-  padding: 2%;
+  padding: 5%;
   border-radius: 20px;
   margin: 15px;
-  background-color: #99a0e6;
+  background-color: black;
+  color: white;
   border: none;
-  font-size: 13pt;
+  font-size: 10pt;
   &:hover {
     cursor: pointer;
     transform: scale(1.01);

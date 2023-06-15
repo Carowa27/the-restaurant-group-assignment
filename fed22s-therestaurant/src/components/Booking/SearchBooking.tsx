@@ -4,7 +4,6 @@ import { MyBookingsForm } from "../styled/Forms";
 import { H3Bold } from "../styled/Headings";
 import { MyBookingsSearchBookingInput } from "../styled/Inputs";
 import { MyBookingsWrapper } from "../styled/Wrappers";
-import { ModalLoader } from "../styled/Modals";
 import { Loading } from "../Loader/Loading";
 
 interface searchBookingProps {
@@ -34,8 +33,8 @@ export const SearchBooking = ({
   };
   return (
     <>
-      <h1>Här är din bokning </h1>
       <MyBookingsWrapper>
+        <H3Bold>Här är din bokning </H3Bold>
         <MyBookingsForm
           onSubmit={(e) => {
             e.preventDefault();

@@ -14,6 +14,9 @@ export const MyBookingsForm = styled.form`
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: center;
+  background-color: white;
+  text-align: center;
   padding: 5%;
   margin: 2%;
   box-shadow: 0 0 5px rgba(0, 0, 0, 0.4);
