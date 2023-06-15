@@ -51,6 +51,7 @@ export const Booking = (props: IBookingProps) => {
     },
   });
 
+  //state
   const [noAvailableTimes, setNoAvailableTimes] = useState(false);
   const [numberOfGuests, setNumberOfGuests] = useState(1);
   const [selectedTime, setSelectedTime] = useState("");
@@ -59,6 +60,8 @@ export const Booking = (props: IBookingProps) => {
   const [remainingTables, setRemainingTables] = useState(15);
   const [showError, setShowError] = useState(false);
   const [gdpr, setGdpr] = useState(false);
+
+  const [showGuestInformation, setShowGuestInformation] = useState(false);
 
   const numberOfGuestsOptions = [
     { value: 1, label: "1 person" },
@@ -99,6 +102,13 @@ export const Booking = (props: IBookingProps) => {
         setNoAvailableTimes(false);
       }
     }
+
+    // maisah är här
+    // if (selectedTime) {
+    //   setShowGuestInformation(true);
+    // } else {
+    //   setShowGuestInformation(false);
+    // }
   }, [
     numberOfGuests,
     selectedDate,
@@ -132,12 +142,6 @@ export const Booking = (props: IBookingProps) => {
         phone: e.target.value,
       });
     }
-    // if (e.target.name === "gdpr") {
-    //   setUserInput({
-    //     ...userInput,
-    //     gdpr: e.target.value,
-    //   });
-    // }
   };
 
   const handleNumberOfGuestsChange = (e: ChangeEvent<HTMLSelectElement>) => {
@@ -151,7 +155,6 @@ export const Booking = (props: IBookingProps) => {
 
   const setTimes = async (date: string) => {
     const data = await getBookings();
-
     const dateBookings = data.filter(
       (booking: IBooking) => booking.date === date
     );
@@ -163,7 +166,6 @@ export const Booking = (props: IBookingProps) => {
       const totalTakenTables = getTakenTablesFromBookings(sessionStart);
       const remainingTables = totalAvailableTables - totalTakenTables;
       setRemainingTables(remainingTables);
-
       return remainingTables;
     };
 
@@ -200,6 +202,7 @@ export const Booking = (props: IBookingProps) => {
 
   const handleTimeSelection = (time: string) => {
     setSelectedTime(time);
+    setShowGuestInformation(true);
   };
 
   const handleGdpr = (e: ChangeEvent<HTMLInputElement>) => {
@@ -345,74 +348,76 @@ export const Booking = (props: IBookingProps) => {
                     <p>Tyvärr finns det inga lediga tider!</p>
                   )}
                 </BookingForm>
-                <GuestInformationWrapper>
-                  <GuestInformationForm onSubmit={handleSubmit}>
-                    <H3Normal>KONTAKTUPPGIFTER</H3Normal>
-                    <UsersContext.Provider value={user}>
-                      <Users />
-                      <GuestInformationDiv>
-                        <label htmlFor="firstname">FÖRNAMN</label>
-                        <input
-                          type="text"
-                          id="firstname"
-                          placeholder="FÖRNAMN"
-                          name="firstname"
-                          required
-                          value={userInput.firstname}
-                          onChange={handleChange}
-                        />
-                        <label htmlFor="lastname">EFTERNAMN</label>
-                        <input
-                          type="text"
-                          id="lastname"
-                          placeholder="EFTERNAMN"
-                          name="lastname"
-                          required
-                          value={userInput.lastname}
-                          onChange={handleChange}
-                        />
-                        <label htmlFor="epost">EMAIL</label>
-                        <input
-                          type="email"
-                          id="epost"
-                          placeholder="EMAIL"
-                          name="email"
-                          required
-                          value={userInput.email}
-                          onChange={handleChange}
-                        />
-                        <label htmlFor="phone">MOBILTELEFON</label>
-                        <input
-                          type="tel"
-                          id="phone"
-                          placeholder="TEL -xxxxxxxxxx"
-                          name="phone"
-                          pattern="[0-9]{10}"
-                          required
-                          value={userInput.phone}
-                          onChange={handleChange}
-                        />
+                {showGuestInformation && (
+                  <GuestInformationWrapper>
+                    <GuestInformationForm onSubmit={handleSubmit}>
+                      <H3Normal>KONTAKTUPPGIFTER</H3Normal>
+                      <UsersContext.Provider value={user}>
+                        <Users />
+                        <GuestInformationDiv>
+                          <label htmlFor="firstname">FÖRNAMN</label>
+                          <input
+                            type="text"
+                            id="firstname"
+                            placeholder="FÖRNAMN"
+                            name="firstname"
+                            required
+                            value={userInput.firstname}
+                            onChange={handleChange}
+                          />
+                          <label htmlFor="lastname">EFTERNAMN</label>
+                          <input
+                            type="text"
+                            id="lastname"
+                            placeholder="EFTERNAMN"
+                            name="lastname"
+                            required
+                            value={userInput.lastname}
+                            onChange={handleChange}
+                          />
+                          <label htmlFor="epost">EMAIL</label>
+                          <input
+                            type="email"
+                            id="epost"
+                            placeholder="EMAIL"
+                            name="email"
+                            required
+                            value={userInput.email}
+                            onChange={handleChange}
+                          />
+                          <label htmlFor="phone">MOBILTELEFON</label>
+                          <input
+                            type="tel"
+                            id="phone"
+                            placeholder="TEL -xxxxxxxxxx"
+                            name="phone"
+                            pattern="[0-9]{10}"
+                            required
+                            value={userInput.phone}
+                            onChange={handleChange}
+                          />
 
-                        <label htmlFor="gdpr">
-                          Jag har läst och accepterar GDPR
-                        </label>
-                        <input
-                          id="gdpr"
-                          type="checkbox"
-                          checked={gdpr}
-                          onChange={handleGdpr}
-                          required
-                        />
-                        <SubmitBookingButton
-                          disabled={!buttonEnabled}
-                          onClick={handleSubmitChangeBooking}
-                        >
-                          Ändra
-                        </SubmitBookingButton>
-                      </GuestInformationDiv>
-                    </UsersContext.Provider>
-                  </GuestInformationForm>
-                </GuestInformationWrapper>
+                          <label htmlFor="gdpr">
+                            Jag har läst och accepterar GDPR
+                          </label>
+                          <input
+                            id="gdpr"
+                            type="checkbox"
+                            checked={gdpr}
+                            onChange={handleGdpr}
+                            required
+                          />
+                          <SubmitBookingButton
+                            disabled={!buttonEnabled}
+                            onClick={handleSubmitChangeBooking}
+                          >
+                            Ändra
+                          </SubmitBookingButton>
+                        </GuestInformationDiv>
+                      </UsersContext.Provider>
+                    </GuestInformationForm>
+                  </GuestInformationWrapper>
+                )}
               </>
             )}
           </>
@@ -459,72 +464,74 @@ export const Booking = (props: IBookingProps) => {
               </TimeBookingWrapper>
               {noAvailableTimes && <p>Tyvärr finns det inga lediga tider!</p>}
             </BookingForm>
-            <GuestInformationWrapper>
-              <GuestInformationForm onSubmit={handleSubmit}>
-                <H3Normal>KONTAKTUPPGIFTER</H3Normal>
-                <UsersContext.Provider value={user}>
-                  <Users />
-                  <GuestInformationDiv>
-                    <label htmlFor="firstname">FÖRNAMN</label>
-                    <input
-                      type="text"
-                      id="firstname"
-                      placeholder="FÖRNAMN"
-                      name="firstname"
-                      required
-                      value={userInput.firstname}
-                      onChange={handleChange}
-                    />
-                    <label htmlFor="lastname">EFTERNAMN</label>
-                    <input
-                      type="text"
-                      id="lastname"
-                      placeholder="EFTERNAMN"
-                      name="lastname"
-                      required
-                      value={userInput.lastname}
-                      onChange={handleChange}
-                    />
-                    <label htmlFor="epost">EMAIL</label>
-                    <input
-                      type="email"
-                      id="epost"
-                      placeholder="EMAIL"
-                      name="email"
-                      required
-                      value={userInput.email}
-                      onChange={handleChange}
-                    />
-                    <label htmlFor="phone">MOBILTELEFON</label>
-                    <input
-                      type="tel"
-                      id="phone"
-                      placeholder="TEL -xxxxxxxxxx"
-                      name="phone"
-                      pattern="[0-9]{10}"
-                      required
-                      value={userInput.phone}
-                      onChange={handleChange}
-                    />
-                    <label htmlFor="gdpr">
-                      Jag har läst och accepterar GDPR
-                    </label>
-                    <input
-                      type="checkbox"
-                      checked={gdpr}
-                      onChange={handleGdpr}
-                      required
-                    />
-                    <SubmitBookingButton
-                      disabled={!buttonEnabled}
-                      onClick={handleSubmit}
-                    >
-                      Boka
-                    </SubmitBookingButton>
-                  </GuestInformationDiv>
-                </UsersContext.Provider>
-              </GuestInformationForm>
-            </GuestInformationWrapper>
+            {showGuestInformation && (
+              <GuestInformationWrapper>
+                <GuestInformationForm onSubmit={handleSubmit}>
+                  <H3Normal>KONTAKTUPPGIFTER</H3Normal>
+                  <UsersContext.Provider value={user}>
+                    <Users />
+                    <GuestInformationDiv>
+                      <label htmlFor="firstname">FÖRNAMN</label>
+                      <input
+                        type="text"
+                        id="firstname"
+                        placeholder="FÖRNAMN"
+                        name="firstname"
+                        required
+                        value={userInput.firstname}
+                        onChange={handleChange}
+                      />
+                      <label htmlFor="lastname">EFTERNAMN</label>
+                      <input
+                        type="text"
+                        id="lastname"
+                        placeholder="EFTERNAMN"
+                        name="lastname"
+                        required
+                        value={userInput.lastname}
+                        onChange={handleChange}
+                      />
+                      <label htmlFor="epost">EMAIL</label>
+                      <input
+                        type="email"
+                        id="epost"
+                        placeholder="EMAIL"
+                        name="email"
+                        required
+                        value={userInput.email}
+                        onChange={handleChange}
+                      />
+                      <label htmlFor="phone">MOBILTELEFON</label>
+                      <input
+                        type="tel"
+                        id="phone"
+                        placeholder="TEL -xxxxxxxxxx"
+                        name="phone"
+                        pattern="[0-9]{10}"
+                        required
+                        value={userInput.phone}
+                        onChange={handleChange}
+                      />
+                      <label htmlFor="gdpr">
+                        Jag har läst och accepterar GDPR
+                      </label>
+                      <input
+                        type="checkbox"
+                        checked={gdpr}
+                        onChange={handleGdpr}
+                        required
+                      />
+                      <SubmitBookingButton
+                        disabled={!buttonEnabled}
+                        onClick={handleSubmit}
+                      >
+                        Boka
+                      </SubmitBookingButton>
+                    </GuestInformationDiv>
+                  </UsersContext.Provider>
+                </GuestInformationForm>
+              </GuestInformationWrapper>
+            )}
           </>
         ) : (
           <></>
