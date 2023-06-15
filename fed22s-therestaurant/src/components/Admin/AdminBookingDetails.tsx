@@ -28,7 +28,6 @@ export const AdminBookingDetails = () => {
           <li>Datum: {b.date}</li>
           <li>Tid: {b.sessionstart}</li>
           <li>Antal gäster: {b.guests}</li>
-          <li>Bordsnummer: {b.ordernumber}</li>
           <li>Bokningsnummer: {b._id}</li>
         </BookingInfoUL>
         <span>

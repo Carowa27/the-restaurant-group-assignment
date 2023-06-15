@@ -64,6 +64,8 @@ export const Admin = () => {
     );
   });
 
+  console.log(bookings);
+
   return (
     <>
       <AdminWrapper>
